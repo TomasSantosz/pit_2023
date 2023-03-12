@@ -1,0 +1,10 @@
+{
+  "expo": {
+    "name": "pit_2023_1.0",
+    "slug": "pit_2023_1.0",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
