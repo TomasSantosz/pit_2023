@@ -1,6 +1,8 @@
 import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { ThemeProvider } from 'styled-components';
+import * as SplashScreen from 'expo-splash-screen';
+
 
 import {
   useFonts,
@@ -15,9 +17,14 @@ import { Register } from './src/screens/Register';
 import { InsertCompetition } from './src/screens/InsertCompetition';
 import { InsertSport } from './src/screens/InsertSport';
 import { Login } from './src/screens/Login';
+import { Competicoes } from './src/screens/Competicoes';
+import { Perfil } from './src/screens/Perfil';
+import { Competicao } from './src/screens/Competicao';
 
-
+SplashScreen.preventAutoHideAsync();
 export default function App(){
+
+  
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
@@ -30,7 +37,7 @@ export default function App(){
 
   return (
     <ThemeProvider theme={theme}>
-      <InsertCompetition/>    
+      <Competicoes />    
     </ThemeProvider>
   )
 }

@@ -21,7 +21,7 @@ export function Dashboard(){
           <Header>
             <UserWrapper>
               <UserInfo>
-                <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1620098103863873549/ck6AI5hA_400x400.jpg'}}/>
+              <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
                 <User>
                   <UserName>Tomás Santos</UserName>
                   <NivelName>Nível 3</NivelName>
