@@ -1,7 +1,7 @@
-import React, { useState, useContext} from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { 
-    Modal, Platform, ScrollView,
+    Platform, ScrollView,
     TouchableWithoutFeedback, Keyboard ,
     Alert
 } from 'react-native';
@@ -11,11 +11,10 @@ import {
 
 import { Input } from '../../components/Forms/Input'
 import { Button } from '../../components/Forms/Button'
-import { api } from '../../services/api';
-import AuthContext from '../../contexts/auth';
+import { useAuth } from '../../contexts/auth';
 
 export function Login(){
-    const { signIn, signed, user } = useContext(AuthContext);
+    const { signIn  } = useAuth();
     const navigation = useNavigation();
     const strongRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
     const [email, onChangeTextEmail] = useState("");

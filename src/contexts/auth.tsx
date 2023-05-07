@@ -1,8 +1,9 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { api } from '../services/api';
 import { 
     Alert
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthProviderProps{
     children: ReactNode;
@@ -11,6 +12,7 @@ interface AuthProviderProps{
 interface AuthContextData{
     signed: boolean;
     user: object | null;
+    loading: boolean;
     signIn(
         email: string, 
         password: string
@@ -22,13 +24,37 @@ interface AuthContextData{
 const AuthContext = createContext<AuthContextData>({signed: true} as AuthContextData);
 export function AuthProvider({children}: AuthProviderProps){
     const [user, setUser] = useState<object | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(()=>{
+        async function loadStorageData() {
+            const storageUser = await AsyncStorage.getItem('@RNAuth:user');
+            const storageToken = await AsyncStorage.getItem('@RNAuth:token');
+
+            if(storageUser && storageToken){
+                api.defaults.headers['Authorization'] = `Bearer ${storageToken}`
+                setUser(JSON.parse(storageUser));
+                setLoading(false)
+            }
+        }
+        loadStorageData();
+    },[])
 
     async function signIn(email:string, password:string){
         api.post('/auth/autentica',{
             email,
             password
-        }).then(response => {            
-            setUser(response.data)
+        }).then(async(response) => {            
+            setUser(response.data);
+            await AsyncStorage.setItem(
+                '@RNAuth:user', 
+                JSON.stringify(response.data.Atleta)
+            );
+            await AsyncStorage.setItem(
+                '@RNAuth:token', 
+                JSON.stringify(response.data.token)
+            );
+            api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`
             return response.data;
         }).catch(err => {
             const error = JSON.parse(err.request._response);
@@ -38,14 +64,20 @@ export function AuthProvider({children}: AuthProviderProps){
     }
 
     async function signOut(){
-        setUser(null);
+        AsyncStorage.clear().then(()=>{
+            setUser(null);            
+        });
     }
 
+    
     return (
-        <AuthContext.Provider value={{signed: !!user, signIn, user, signOut}}>
+        <AuthContext.Provider value={{signed: !!user, signIn, user, loading, signOut}}>
             {children}            
         </AuthContext.Provider>
     )
 }
 
-export default AuthContext;
+export function useAuth(){
+    const context = useContext(AuthContext)
+    return context;
+}

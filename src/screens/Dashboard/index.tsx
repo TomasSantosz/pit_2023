@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { RFValue } from 'react-native-responsive-fontsize';
 import { HighlightCars } from '../../components/HighlightCard';
 import { 
   Container,
@@ -14,10 +13,10 @@ import {
   Content,
   Icon
 } from './styles';
-import AuthContext from '../../contexts/auth';
+import {useAuth} from '../../contexts/auth';
 
 export function Dashboard(){
-  const {signOut, user} = useContext(AuthContext);
+  const {signOut, user} = useAuth();
   function handleSignOut(){
     signOut();
   }
