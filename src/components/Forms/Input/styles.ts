@@ -1,9 +1,10 @@
 import { TextInput } from "react-native";
 import styled from "styled-components/native";
-import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 
-export const Container = styled(TextInput)`
+export const Container = styled(TextInput).attrs({
+    placeholderTextColor: "#555555"
+  })`
     width: 100%;
     padding: 16px 18px;
     font-family: ${({ theme }) => theme.fonts.regular};
@@ -12,4 +13,5 @@ export const Container = styled(TextInput)`
     border-radius: 15px;
     margin-bottom: 30px;
     color: ${({ theme }) => theme.colors.text_geral};
+    
 `;
