@@ -156,7 +156,7 @@ export function Register(){
                 />
             </Form>
             
-            </ScrollView>
+            
             <Modal visible={generoModal}>
                 <GeneroSelect 
                     genero={genero}
@@ -164,7 +164,7 @@ export function Register(){
                     closeSelectGenero={handleCloseSelectGenero}                
                 />
             </Modal>  
-                  
+            </ScrollView>      
         </Container>
         </TouchableWithoutFeedback>  
     );

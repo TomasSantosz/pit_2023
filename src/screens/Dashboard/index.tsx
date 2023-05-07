@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { RFValue } from 'react-native-responsive-fontsize';
 import { HighlightCars } from '../../components/HighlightCard';
@@ -14,8 +14,13 @@ import {
   Content,
   Icon
 } from './styles';
+import AuthContext from '../../contexts/auth';
 
 export function Dashboard(){
+  const {signOut, user} = useContext(AuthContext);
+  function handleSignOut(){
+    signOut();
+  }
     return(
         <Container>
           <Header>
@@ -27,7 +32,10 @@ export function Dashboard(){
                   <NivelName>Nível 3</NivelName>
                 </User>
               </UserInfo>
-              <Icon name="power"/>
+              <Icon 
+                name="power"
+                onPress={handleSignOut}
+              />
             </UserWrapper>            
           </Header>
           <Content>

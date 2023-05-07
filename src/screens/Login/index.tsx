@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState, useContext} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { 
     Modal, Platform, ScrollView,
@@ -12,12 +12,15 @@ import {
 import { Input } from '../../components/Forms/Input'
 import { Button } from '../../components/Forms/Button'
 import { api } from '../../services/api';
+import AuthContext from '../../contexts/auth';
 
 export function Login(){
+    const { signIn, signed, user } = useContext(AuthContext);
     const navigation = useNavigation();
     const strongRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
     const [email, onChangeTextEmail] = useState("");
     const [password, onChangeTextPassword] = useState("");
+    
 
     function openRegister(){
         navigation.navigate('Register')
@@ -30,19 +33,7 @@ export function Login(){
         if(!password || !email){
             return Alert.alert('Preencha os campos obrigatórios (*).');
         }
-        async function login(){
-            api.post('/auth/autentica',{
-                email,
-                password
-            }).then(response => {
-                return navigation.navigate('Dashboard');
-            }).catch(err => {
-                const error = JSON.parse(err.request._response);
-                //console.log(err.request.status)
-                return Alert.alert(error.error);
-            });           
-        }
-        login();
+        signIn(email,password)
     }
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
