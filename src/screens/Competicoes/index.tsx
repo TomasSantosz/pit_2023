@@ -54,10 +54,22 @@ export function Competicoes(){
     fetchCompeticoes();
   },[]);
 
+  function VerificarDisponibilidade(dataTermino: Date){
+    var dateHoje = moment(new Date(Date.now())).format("YYYY/MM/DD")
+    var date = moment(new Date(dataTermino)).format("YYYY/MM/DD")
+    if(date >= dateHoje){
+      return true;
+    }
+    return false;
+  }
+
   function openMoreDetails(_id:string){
     navigation.navigate('Competicao', { 
       _id 
     });
+  }
+  function openInsertCompetition(){
+    navigation.navigate('InserirCompeticoes');
   }
   
   return(
@@ -81,7 +93,8 @@ export function Competicoes(){
           <ScrollView>
             {competitions.map((item:Item, index)=>{
               console.log(item,"---");
-              return(
+              
+              return VerificarDisponibilidade(new Date(item.DataTermino)) === true && (
                 <SingleCompetitions key={item._id}>
                   <TypesCompetition>
                     <NameCompetition>{item.nome}</NameCompetition>
@@ -97,7 +110,7 @@ export function Competicoes(){
             })}             
           </ScrollView>
         </ContentCompetitions>      
-      <Button title="Inserir Competição"/>
+      <Button title="Inserir Competição" onPress={openInsertCompetition}/>
       </Content>
     </Container>
   );   

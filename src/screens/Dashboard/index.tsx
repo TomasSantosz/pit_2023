@@ -24,7 +24,11 @@ export function Dashboard(){
   function openEsportes(){
     console.log('oi')
     navigation.navigate('Esportes')
-}
+  }
+  function openCompeticoes(){
+    console.log('oi')
+    navigation.navigate('Competicoes')
+  }
     return(
         <Container>
           <Header>
@@ -47,7 +51,7 @@ export function Dashboard(){
             <HighlightCars name="user"/>          
           </Content>
           <Content>
-            <HighlightCars name="Competições"/>          
+            <HighlightCars name="Competições" onPress={openCompeticoes}/>          
           </Content>
         </Container>
       );   

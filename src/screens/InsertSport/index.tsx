@@ -18,7 +18,7 @@ export function InsertSport(){
             Regras
         }).then(async(response) => {
             console.log(response.data);
-            Alert.alert('Sucesso', 'Cadastrado com sucesso!', [
+            Alert.alert('Cadastrado com sucesso!', 'O esporte foi enviado para analise', [
                 {text: 'OK', onPress: () => navigation.navigate('Esportes')},
             ]);
             return response.data;

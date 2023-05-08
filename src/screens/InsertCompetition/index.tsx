@@ -18,7 +18,7 @@ export function InsertCompetition(){
                         placeholder='nome *'
                     />
                     <Input 
-                        placeholder='Participantes *'
+                        placeholder='Número de Participantes *'
                     />
                     <Input 
                         placeholder='Esporte *'

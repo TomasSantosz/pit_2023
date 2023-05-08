@@ -46,6 +46,10 @@ export function AppRoutes(){
                 name="InserirEsportes"
                 component={InsertSport}         
             />
+            <Screen
+                name="InserirCompeticoes"
+                component={InsertCompetition}         
+            />
         </Navigator>
     )
 }

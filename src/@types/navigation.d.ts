@@ -7,7 +7,8 @@ export declare global {
             Competicoes: undefined;
             Competicao: undefined;
             Esportes: undefined;
-            InserirEsportes: undefined
+            InserirEsportes: undefined;
+            InserirCompeticoes: undefined;
         }
     }
 }

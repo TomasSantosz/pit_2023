@@ -29,6 +29,7 @@ interface Item {
   _id: string;
   nome: string;
   Regras: string;
+  aproved: boolean;
 }
 
 export function Esportes(){
@@ -67,13 +68,13 @@ export function Esportes(){
           <NameCompetitions>Esportes Disponíveis</NameCompetitions>
           <ScrollView>
             {esportes.map((item:Item, index)=>{
-              return(
+              return item.aproved === false && (
                 <SingleCompetitions key={item._id}>
                   <TypesCompetition>
                     <NameCompetition>{item.nome}</NameCompetition>
                   </TypesCompetition>                            
                 </SingleCompetitions>
-              )
+              )              
             })}             
           </ScrollView>
         </ContentCompetitions>      
