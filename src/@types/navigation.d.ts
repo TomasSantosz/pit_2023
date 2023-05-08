@@ -4,6 +4,10 @@ export declare global {
             Login: undefined;
             Register: undefined;
             Dashboard: undefined;
+            Competicoes: undefined;
+            Competicao: undefined;
+            Esportes: undefined;
+            InserirEsportes: undefined
         }
     }
 }

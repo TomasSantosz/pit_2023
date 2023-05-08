@@ -5,12 +5,14 @@ import {
     Icon,
     Title,
 } from "./styles";
-
-export function HighlightCars(){
+type Props = {
+    name: string;
+}
+export function HighlightCars({name, ...rest}: Props){
     return (
-        <Container >
-                <Icon name="user" />
-                <Title>Atleta</Title>
+        <Container {...rest}>
+                <Icon name='user' />
+                <Title>{name}</Title>
         </Container>
     )
 }

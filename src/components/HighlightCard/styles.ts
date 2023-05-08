@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { TouchableOpacity } from "react-native";
 
-export const Container = styled.View`
+export const Container = styled(TouchableOpacity)`
     background-color: ${({ theme }) => theme.colors.background_card};
 
     width: ${RFValue(150)}px ;

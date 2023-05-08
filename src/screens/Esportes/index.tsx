@@ -9,10 +9,8 @@ import {
   NameCompetitions,
   SingleCompetitions,
   NameCompetition,
-  TypeSport,
-  DateCompetition,
-  NumberOfMembers,
   MoreCompetition,
+  TypeSport,
   Header,
   UserWrapper,
   UserInfo,
@@ -30,38 +28,27 @@ import { ScrollView } from 'react-native';
 interface Item {
   _id: string;
   nome: string;
-  esporte: {
-    nome: string;
-    Regras: string;
-  }
-  DataInicio:string;
-  DataTermino: string;
-  NumPart: number;
-
+  Regras: string;
 }
 
-export function Competicoes(){
+export function Esportes(){
   const navigation = useNavigation();
   
-  const [competitions, setCompetitions] = useState([]);
+  const [esportes, setEsportes] = useState([]);
 
   useEffect(() => {
-    async function fetchCompeticoes() {
-      const response = await api.get('/Competicoes')
-      setCompetitions(response.data);
-      console.log(competitions);
+    async function fetchEsportes() {
+      const response = await api.get('/Esportes');
+      setEsportes(response.data);
     }
-    fetchCompeticoes();
+    fetchEsportes();
   },[]);
 
-  function openMoreDetails(_id:string){
-    navigation.navigate('Competicao', { 
-      _id 
-    });
-  }
+  function openInsertSport(){
+    navigation.navigate('InserirEsportes');
+  }  
   
-  return(
-    
+  return(    
     <Container>
       <Header>
         <UserWrapper>
@@ -77,27 +64,20 @@ export function Competicoes(){
       </Header>
       <Content>
         <ContentCompetitions>              
-          <NameCompetitions>Competições Disponíveis</NameCompetitions>
+          <NameCompetitions>Esportes Disponíveis</NameCompetitions>
           <ScrollView>
-            {competitions.map((item:Item, index)=>{
-              console.log(item,"---");
+            {esportes.map((item:Item, index)=>{
               return(
                 <SingleCompetitions key={item._id}>
                   <TypesCompetition>
                     <NameCompetition>{item.nome}</NameCompetition>
-                    <MoreCompetition ><IconStar onPress={()=> openMoreDetails(item._id)} name="more" /></MoreCompetition>
-                  </TypesCompetition>                
-                  <TypeSport>{item.esporte.nome}</TypeSport>                
-                  <TypesCompetition>      
-                    <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                    <NumberOfMembers>Participantes: 8/{item.NumPart}</NumberOfMembers>                  
-                  </TypesCompetition>                
+                  </TypesCompetition>                            
                 </SingleCompetitions>
               )
             })}             
           </ScrollView>
         </ContentCompetitions>      
-      <Button title="Inserir Competição"/>
+      <Button title="Inserir Esporte" onPress={openInsertSport} />
       </Content>
     </Container>
   );   

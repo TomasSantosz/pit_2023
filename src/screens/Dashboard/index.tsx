@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { useNavigation } from '@react-navigation/native';
 import { HighlightCars } from '../../components/HighlightCard';
 import { 
   Container,
@@ -16,10 +16,15 @@ import {
 import {useAuth} from '../../contexts/auth';
 
 export function Dashboard(){
+  const navigation = useNavigation();
   const {signOut, user} = useAuth();
   function handleSignOut(){
     signOut();
   }
+  function openEsportes(){
+    console.log('oi')
+    navigation.navigate('Esportes')
+}
     return(
         <Container>
           <Header>
@@ -38,11 +43,11 @@ export function Dashboard(){
             </UserWrapper>            
           </Header>
           <Content>
-            <HighlightCars />  
-            <HighlightCars />          
+            <HighlightCars name="Esportes" onPress={openEsportes}/>  
+            <HighlightCars name="user"/>          
           </Content>
           <Content>
-            <HighlightCars />          
+            <HighlightCars name="Competições"/>          
           </Content>
         </Container>
       );   
