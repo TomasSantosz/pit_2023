@@ -42,6 +42,7 @@ export const Fields = styled.View`
 
 export const TextSoftware = styled.Text`
     font-size: ${RFValue(46)}px;
+    text-align: center;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.bold};
 `;

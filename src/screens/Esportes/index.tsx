@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Button } from '../../components/Forms/Button'
+
+
 import { 
   Container,
   TypesCompetition,
@@ -13,10 +15,10 @@ import {
   TypeSport,
   Header,
   UserWrapper,
-  UserInfo,
+  SportInfo,
   Photo,
   User,
-  UserName,
+  SportName,
   NivelName,
   Content,
   Icon,
@@ -48,19 +50,20 @@ export function Esportes(){
   function openInsertSport(){
     navigation.navigate('InserirEsportes');
   }  
+
+  function openCompetitionWithSport(nome:string){
+    navigation.navigate('CompeticoesEsportes', { 
+      nome 
+    });
+  }
   
   return(    
     <Container>
       <Header>
         <UserWrapper>
-          <UserInfo>
-            <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-            <User>
-              <UserName>Tomás Santos</UserName>
-              <NivelName>Nível 3</NivelName>
-            </User>
-          </UserInfo>
-          <Icon name="power"/>
+          <SportInfo>
+            <SportName>Esportes</SportName>
+          </SportInfo>
         </UserWrapper>            
       </Header>
       <Content>
@@ -69,7 +72,7 @@ export function Esportes(){
           <ScrollView>
             {esportes.map((item:Item, index)=>{
               return item.aproved === false && (
-                <SingleCompetitions key={item._id}>
+                <SingleCompetitions key={item._id} onPress={()=>openCompetitionWithSport(item.nome)}>
                   <TypesCompetition>
                     <NameCompetition>{item.nome}</NameCompetition>
                   </TypesCompetition>                            

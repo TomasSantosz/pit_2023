@@ -1,8 +1,38 @@
 import styled from 'styled-components/native';
 import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { TouchableOpacity } from "react-native";
 
 
+export const Header = styled.View`
+    width: 100%;
+    height: ${RFPercentage(25)}px;
+    background-color: ${({ theme }) => theme.colors.primary};
+
+    justify-content: center;
+    align-items: center;
+    
+    flex-direction: row;
+`;
+export const UserWrapper = styled.View`
+    margin-top: ${RFValue(24)}px;
+    justify-content: center;    
+    align-items: center;
+`;
+
+export const SportInfo = styled.View`
+    margin-top: ${RFValue(24)}px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const SportName = styled.Text`
+    color: ${({ theme }) => theme.colors.shape};
+
+    font-size: ${RFValue(26)}px;
+    font-family: ${({ theme }) => theme.fonts.bold};
+`;
 
 export const Container = styled.View`
     flex-direction: column;
@@ -35,7 +65,7 @@ export const NameCompetitions = styled.Text`
     align-items: flex-end;
     margin-bottom: ${RFValue(10)}px;
 `;
-export const SingleCompetitions = styled.View`
+export const SingleCompetitions = styled(TouchableOpacity)`
     margin-top: 10px;
     width: ${RFValue(275)}px ;
     
@@ -96,24 +126,6 @@ export const Content = styled.View`
     width: 100%;
     align-items: center;
     flex-direction: column;
-`;
-export const Header = styled.View`
-    width: 100%;
-    height: ${RFPercentage(25)}px;
-    background-color: ${({ theme }) => theme.colors.primary};
-
-    justify-content: center;
-    align-items: flex-end;
-    
-    flex-direction: row;
-`;
-export const UserWrapper = styled.View`
-    width: 100%;
-    padding: 0 18px 24px 18px;
-
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
 `;
 
 export const UserInfo = styled.View`

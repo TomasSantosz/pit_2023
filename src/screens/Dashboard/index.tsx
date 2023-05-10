@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { HighlightCars } from '../../components/HighlightCard';
+import Nivel from '../../util/Nivel';
 import { 
   Container,
   Header,
@@ -18,15 +19,18 @@ import {useAuth} from '../../contexts/auth';
 export function Dashboard(){
   const navigation = useNavigation();
   const {signOut, user} = useAuth();
+  console.log()
+  
   function handleSignOut(){
     signOut();
   }
   function openEsportes(){
-    console.log('oi')
     navigation.navigate('Esportes')
   }
+  function openPefil(){
+    navigation.navigate('Perfil')
+  }
   function openCompeticoes(){
-    console.log('oi')
     navigation.navigate('Competicoes')
   }
     return(
@@ -36,8 +40,8 @@ export function Dashboard(){
               <UserInfo>
               <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
                 <User>
-                  <UserName>Tomás Santos</UserName>
-                  <NivelName>Nível 3</NivelName>
+                  <UserName>{user.nome}</UserName>
+                  <NivelName>Nível {Nivel()}</NivelName>
                 </User>
               </UserInfo>
               <Icon 
@@ -48,7 +52,7 @@ export function Dashboard(){
           </Header>
           <Content>
             <HighlightCars name="Esportes" onPress={openEsportes}/>  
-            <HighlightCars name="user"/>          
+            <HighlightCars name="user" onPress={openPefil}/>          
           </Content>
           <Content>
             <HighlightCars name="Competições" onPress={openCompeticoes}/>          

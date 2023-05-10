@@ -21,6 +21,7 @@ export const Header = styled.View`
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
     font-size: ${RFValue(18)}px;
+    
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 export const TextRegister = styled.Text`
@@ -44,6 +45,7 @@ export const Fields = styled.View`
 
 export const TextSoftware = styled.Text`
     font-size: ${RFValue(46)}px;
+    text-align: center;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.bold};
     padding: 40px 0px;

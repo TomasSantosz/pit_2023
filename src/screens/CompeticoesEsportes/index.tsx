@@ -2,8 +2,10 @@ import React, {useEffect, useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Button } from '../../components/Forms/Button'
+import { useAuth } from '../../contexts/auth';
 import { 
   Container,
+  SportName,
   TypesCompetition,
   ContentCompetitions,
   NameCompetitions,
@@ -15,10 +17,10 @@ import {
   MoreCompetition,
   Header,
   UserWrapper,
-  CompetitionInfo,
+  SportInfo,
   Photo,
   User,
-  CompetitionName,
+  UserName,
   NivelName,
   Content,
   Icon,
@@ -40,16 +42,25 @@ interface Item {
 
 }
 
-export function Competicoes(){
+interface Route{
+  route:{
+    params: {
+      nome: string;
+    };
+  }
+
+}
+
+export function CompeticoesEsporte({ route }:Route){
   const navigation = useNavigation();
   
+  
   const [competitions, setCompetitions] = useState([]);
-
+  console.log(route.params.nome)
   useEffect(() => {
     async function fetchCompeticoes() {
       const response = await api.get('/Competicoes')
       setCompetitions(response.data);
-      console.log(competitions);
     }
     fetchCompeticoes();
   },[]);
@@ -77,23 +88,17 @@ export function Competicoes(){
     <Container>
       <Header>
         <UserWrapper>
-          <Header>
-            <UserWrapper>
-              <CompetitionInfo>
-                <CompetitionName>Competições</CompetitionName>
-              </CompetitionInfo>
-            </UserWrapper>            
-          </Header>
+          <SportInfo>
+            <SportName>{route.params.nome}</SportName>
+          </SportInfo>
         </UserWrapper>            
       </Header>
       <Content>
         <ContentCompetitions>              
           <NameCompetitions>Competições Disponíveis</NameCompetitions>
           <ScrollView>
-            {competitions.map((item:Item, index)=>{
-              console.log(item,"---");
-              
-              return VerificarDisponibilidade(new Date(item.DataTermino)) === true && (
+            {competitions.map((item:Item, index)=>{              
+              return VerificarDisponibilidade(new Date(item.DataTermino)) === true && item.esporte.nome === route.params.nome && (
                 <SingleCompetitions key={item._id}>
                   <TypesCompetition>
                     <NameCompetition>{item.nome}</NameCompetition>

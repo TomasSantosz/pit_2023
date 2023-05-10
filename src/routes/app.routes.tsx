@@ -11,6 +11,7 @@ import { Competicoes } from '../screens/Competicoes';
 import { Perfil } from '../screens/Perfil';
 import { Competicao } from '../screens/Competicao';
 import { GeneroSelect } from '../screens/Genero'; 
+import { CompeticoesEsporte } from '../screens/CompeticoesEsportes';
 import { Esportes } from "../screens/Esportes";
 
 export function AppRoutes(){
@@ -32,6 +33,10 @@ export function AppRoutes(){
             <Screen
                 name="Competicoes"
                 component={Competicoes}
+            />
+            <Screen
+                name="CompeticoesEsportes"
+                component={CompeticoesEsporte}
             />
             <Screen
                 name="Competicao"

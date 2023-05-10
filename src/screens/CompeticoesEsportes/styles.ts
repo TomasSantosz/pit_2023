@@ -97,7 +97,6 @@ export const Content = styled.View`
     align-items: center;
     flex-direction: column;
 `;
-
 export const Header = styled.View`
     width: 100%;
     height: ${RFPercentage(25)}px;
@@ -105,38 +104,32 @@ export const Header = styled.View`
 
     justify-content: center;
     align-items: center;
+    
+    flex-direction: row;
 `;
 export const UserWrapper = styled.View`
+    margin-top: ${RFValue(24)}px;
     justify-content: center;    
     align-items: center;
 `;
 
-export const CompetitionInfo = styled.View`
+export const SportInfo = styled.View`
     margin-top: ${RFValue(24)}px;
     flex-direction: row;
     align-items: center;
     justify-content: center;
 `;
 
-export const CompetitionName = styled.Text`
+export const SportName = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
 
     font-size: ${RFValue(26)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
-
-
-export const UserInfo = styled.View`
-    flex-direction: row;
-    align-items: center;
-`;
 export const Photo = styled.Image`
     width: ${RFValue(75)}px;
     height: ${RFValue(75)}px;
     border-radius: 50px;
-`;
-export const User = styled.View`
-    margin-left: 17px;
 `;
 export const UserName = styled.Text`
     color: ${({ theme }) => theme.colors.shape};

@@ -9,7 +9,21 @@ export const Container = styled.View`
     background-color: ${({ theme }) => theme.colors.shape};
     align-items: center;   
 `;
+export const NumberOfMembers = styled.Text`
+    font-size: ${RFValue(14)}px;
+    color: ${({ theme }) => theme.colors.primary};
+    font-family: ${({ theme }) => theme.fonts.regular};
+`;
+export const TypeSport = styled.Text`
+    font-size: ${RFValue(15)}px;
+    color: ${({ theme }) => theme.colors.primary};
+    font-family: ${({ theme }) => theme.fonts.regular};
+`;
 
+export const IconStar = styled(MaterialIcons)`
+    font-size: ${RFValue(25)}px;
+    color: ${({ theme }) => theme.colors.primary};
+`;
 export const Content = styled.View`
     padding: 20px;    
     flex-direction: column;
