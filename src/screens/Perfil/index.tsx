@@ -36,6 +36,9 @@ interface Item {
     nome: string;
     Regras: string;
   }
+  atletas: {
+    forEach:() => void
+  };
   DataInicio:string;
   DataTermino: string;
   NumPart: number;
@@ -44,25 +47,28 @@ interface Item {
 export function Perfil(){
   const [competitions, setCompetitions] = useState([]);
   const [nivel_atual, setNivelAtual] = useState(0);
-  const {signOut, user} = useAuth();
+  const {signOut, user, nivelAtual } = useAuth();
   const navigation = useNavigation();
   useEffect(()=>{    
-    setNivelAtual(Nivel());
+    console.log(nivelAtual)
     const competicoesUsuario = [];
 
     async function fetchCompeticoes() {
       const response = await api.get('/Competicoes');
-      response.data.forEach((competicoes) => {        
+      response.data.forEach((competicoes:Item) => {        
         competicoes.atletas.forEach((atletas) => {
-          if(atletas._id === '6445c317eed1376432399c68'){
+          if(atletas._id === user._id){
             competicoesUsuario.push(competicoes)
           }
         });        
       });
+      setNivelAtual(Nivel(competicoesUsuario.length));
       setCompetitions(competicoesUsuario);
     }
     fetchCompeticoes();
-  },[]);
+    
+  },[nivel_atual]);
+
   
   function openMoreDetails(_id:string){
     navigation.navigate('Competicao', { 
@@ -95,8 +101,7 @@ export function Perfil(){
           <UserLevel>
             <Level>Nível {nivel_atual}</Level>
           </UserLevel>
-        </User>   
-                
+        </User>                   
         <Content>          
           <Participacoes>
             <TitleParticipacoes>Competições</TitleParticipacoes>
@@ -115,8 +120,7 @@ export function Perfil(){
                     </TypesCompetition>                
                   </SingleCompetitions>
                 )
-              })}
-              
+              })}              
             </ScrollView>              
           </Participacoes>
           {/* <Participacoes>

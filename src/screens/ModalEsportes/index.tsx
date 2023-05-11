@@ -10,7 +10,7 @@ import { Button } from '../../components/Forms/Button';
 
 interface Esporte {
     Regras: string;
-    aproved: boolean;
+    _id: string;
     nome: string;
 }
 
@@ -27,7 +27,7 @@ export function ModalEsportes({
 }: Props){
     const [esportes, setEsportes] = useState<Esporte>({
         nome: '',
-        aproved: false,
+        _id: '',
         Regras: ''
     });
     function handleEsporteSelect(esporte: Esporte){

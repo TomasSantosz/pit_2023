@@ -19,7 +19,7 @@ import {useAuth} from '../../contexts/auth';
 export function Dashboard(){
   const navigation = useNavigation();
   const {signOut, user} = useAuth();
-  console.log()
+  console.log(user)
   
   function handleSignOut(){
     signOut();

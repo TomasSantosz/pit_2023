@@ -9,9 +9,19 @@ interface AuthProviderProps{
     children: ReactNode;
 }
 
+interface User{
+    _id ?: string; 
+    nome ?: string;
+    email ?: string; 
+    competicoes ?: object; 
+    idade  ?: number; 
+    altura ?: number; 
+    genero ?: string;  
+}
+
 interface AuthContextData{
     signed: boolean;
-    user: object | null;
+    user: User | null;
     loading: boolean;
     signIn(
         email: string, 
@@ -23,7 +33,7 @@ interface AuthContextData{
     
 const AuthContext = createContext<AuthContextData>({signed: true} as AuthContextData);
 export function AuthProvider({children}: AuthProviderProps){
-    const [user, setUser] = useState<object | null>(null);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(()=>{
@@ -37,6 +47,7 @@ export function AuthProvider({children}: AuthProviderProps){
                 setLoading(false)
             }
         }
+        
         loadStorageData();
     },[])
 

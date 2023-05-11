@@ -1,6 +1,6 @@
-export default function base_nivel(){  
+export default function base_nivel(n_competicoes: number){  
     let nivel_atual = 0;
-    const xpAtual = 56 * 50;
+    const xpAtual = n_competicoes * 50;
 
     const nivel = {
       nivel_1: Math.round((100 * (1.1 ** 1))),

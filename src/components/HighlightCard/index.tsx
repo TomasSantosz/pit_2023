@@ -1,5 +1,5 @@
 import React from "react";
-
+import { GestureResponderEvent } from "react-native";
 import { 
     Container,
     Icon,
@@ -7,6 +7,7 @@ import {
 } from "./styles";
 type Props = {
     name: string;
+    onPress: (event: GestureResponderEvent) => void;
 }
 export function HighlightCars({name, ...rest}: Props){
     return (

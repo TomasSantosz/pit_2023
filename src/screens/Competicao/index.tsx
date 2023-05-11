@@ -3,7 +3,7 @@ import { api } from '../../services/api';
 import moment from 'moment';
 import { Button } from '../../components/Forms/Button';
 
-import { View, ActivityIndicator} from 'react-native';
+import { View, ActivityIndicator, Alert} from 'react-native';
 import { 
   Container,
   MoreCompetition,
@@ -20,6 +20,7 @@ import {
   Content,
 } from './styles';
 import { ScrollView } from 'react-native';
+import {useAuth} from '../../contexts/auth';
 interface Route{
   route:{
     params: {
@@ -45,93 +46,95 @@ interface Item {
 
 export function Competicao({ route }:Route){
   const [loading, setLoading] = useState(true);
-  const [competition, setCompetition] = useState<Item>({
-    _id: '',
-    nome: '',
-    esporte: {
-      nome: '',
-      Regras: '',
-    },
-    DataInicio:'',
-    DataTermino: '',
-    NumPart: 0,
-    Local: '',
-  });
+  const [competition, setCompetition] = useState(null);
+  const [permiteButton, setPermiteButton] = useState({});
+  const {signOut, user} = useAuth();
+  
+  useEffect(()=>{
+    async function getCompetition() {      
+      const response = await api.get(`/Competicoes/${route.params._id}`);
+      setCompetition(response.data);
+      function participa(p) {
+        return p._id === user._id;
+      }
+      setPermiteButton(!!response.data.atletas.find(participa))
+      setLoading(false);        
+    }
+    getCompetition();    
+  },[]);
 
   useEffect(()=>{
-      async function getCompetition() {
-        const competition = await api.get(`/Competicoes/${route.params._id}`);
-        setCompetition(competition.data);
-        setLoading(false);        
-      }
-      getCompetition();
-  },[])
     
-    if(loading){
-      return (
-          <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
-              <ActivityIndicator size={'large'} color="#555"/>
-          </View>
-      )
+    console.log(permiteButton)
+  },[permiteButton])
+  function HandleCadastrado(){
+    Alert.alert('Falha!', 'Você já está cadastrado!');
+  }
+
+  function HandleCadastrar(){
+
+    if(competition.atletas.length >= competition.NumPart){
+      Alert.alert('Não permitido!', 'Campeonato lotado!');
     }
-    return(
-        <Container>
-          <Header>
-            <InfoCompetition>
-                  <Title>{competition.nome}</Title>
-                  <SubTitles>Data: {moment(competition.DataInicio).format("DD/MM/YYYY")}</SubTitles>
-                  <SubTitles>Local: {competition.Local}</SubTitles>
-            </InfoCompetition>            
-          </Header>
-          <Content>
-            <ContentParticipacao>
-              
-              <NameCompetitions>Participantes  9/{competition.NumPart}</NameCompetitions>
-              <ScrollView>
-                <SingleParticipantes>
-                    <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-                    <NameCompetition>Tomas Santos</NameCompetition> 
-                    <MoreCompetition><Icon name="stars" /></MoreCompetition>             
+    api.post('/competicoes/atleta',{
+      idCompeticao: competition._id, 
+	    idAtleta: user._id
+    })
+    .then(async(response) => {
+        Alert.alert('Cadastrado com sucesso!', 'Você foi cadastrado no campeonato!');
+        setPermiteButton(true);
+        return response.data;
+    }).catch(err => {
+        const error = JSON.parse(err.request._response);
+        console.log(error.message)
+        return Alert.alert(error.message);
+    });
+  }
+  if(loading){
+    return (
+      <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} color="#555"/>
+      </View>
+    )
+  }
+  
+
+  return competition._id === route.params._id && (
+    <Container>
+      <Header>
+        <InfoCompetition>
+          <Title>{competition.nome}</Title>
+          <SubTitles>Data: {moment(competition.DataInicio).format("DD/MM/YYYY")}</SubTitles>
+          <SubTitles>Local: {competition.Local}</SubTitles>
+        </InfoCompetition>            
+      </Header>
+      <Content>
+        <ContentParticipacao>          
+          <NameCompetitions>Participantes {competition.atletas.length}/{competition.NumPart}</NameCompetitions>
+          <ScrollView>          
+            {competition.atletas.map((e,index)=>{
+              return (
+                <SingleParticipantes key={e._id}>
+                  <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
+                  <NameCompetition>{e.nome}</NameCompetition> 
+                  <MoreCompetition>
+                    {e._id === competition.criador && (<Icon name="stars" />)}
+                  </MoreCompetition>                                     
                 </SingleParticipantes>
-                <SingleParticipantes>
-                    <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-                    <NameCompetition>Tomas Santos</NameCompetition> 
-                    <MoreCompetition></MoreCompetition>             
-                </SingleParticipantes>
-                <SingleParticipantes>
-                    <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-                    <NameCompetition>Tomas Santos</NameCompetition> 
-                    <MoreCompetition></MoreCompetition>             
-                </SingleParticipantes>
-                <SingleParticipantes>
-                    <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-                    <NameCompetition>Tomas Santos</NameCompetition> 
-                    <MoreCompetition></MoreCompetition>             
-                </SingleParticipantes>
-                <SingleParticipantes>
-                    <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-                    <NameCompetition>Tomas Santos</NameCompetition> 
-                    <MoreCompetition></MoreCompetition>             
-                </SingleParticipantes>
-                <SingleParticipantes>
-                    <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-                    <NameCompetition>Tomas Santos</NameCompetition> 
-                    <MoreCompetition></MoreCompetition>             
-                </SingleParticipantes>
-                <SingleParticipantes>
-                    <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-                    <NameCompetition>Tomas Santos</NameCompetition> 
-                    <MoreCompetition></MoreCompetition>             
-                </SingleParticipantes>
-                <SingleParticipantes>
-                    <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-                    <NameCompetition>Tomas Santos</NameCompetition> 
-                    <MoreCompetition></MoreCompetition>             
-                </SingleParticipantes>
-              </ScrollView>
-            </ContentParticipacao>  
-            <Button title="Participar"/>                     
-          </Content>
-        </Container>
-      );   
+              )
+            })}            
+          </ScrollView>
+        </ContentParticipacao>
+        {permiteButton ? 
+          <Button  onPress={()=>{
+            HandleCadastrado();
+          }} title="Participar"/>
+        :
+        <Button onPress={()=>{
+          HandleCadastrar();
+        }} title="Participar"/>
+      }                             
+      </Content>
+    </Container>
+  );   
 }
