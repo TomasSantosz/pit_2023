@@ -52,8 +52,8 @@ export const ContentParticipacao = styled.View`
     align-items: center;    
 `;
 export const Photo = styled.Image`
-    width: ${RFValue(40)}px;
-    height: ${RFValue(40)}px;
+    width: ${RFValue(45)}px;
+    height: ${RFValue(45)}px;
     border-radius: 50px;
 `;
 export const Icon = styled(MaterialIcons)`

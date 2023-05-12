@@ -20,7 +20,8 @@ import {
   Content,
 } from './styles';
 import { ScrollView } from 'react-native';
-import {useAuth} from '../../contexts/auth';
+import { ImagemPerfil } from '../../assets/alfabeto';
+import { useAuth } from '../../contexts/auth';
 
 interface Route{
   route:{
@@ -117,7 +118,7 @@ export function Competicao({ route }:Route){
             {competition.atletas.map((e:any)=>{
               return (
                 <SingleParticipantes key={e._id}>
-                  <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
+                  <Photo source={ImagemPerfil(e.nome.substring(0,1).toUpperCase())}/>
                   <NameCompetition>{e.nome}</NameCompetition> 
                   <MoreCompetition>
                     {e._id === competition.criador && (<Icon name="stars" />)}

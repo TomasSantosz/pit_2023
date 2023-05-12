@@ -5,6 +5,7 @@ import Nivel from '../../util/Nivel';
 import { api } from '../../services/api';
 import { View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { ImagemPerfil } from '../../assets/alfabeto';
 import { 
   Container,
   Header,
@@ -69,7 +70,6 @@ export function Perfil(){
       setLoading(false); 
     }
     fetchCompeticoes();
-    
   },[nivel_atual]);
 
   
@@ -99,14 +99,12 @@ export function Perfil(){
       </View>
     )
   }
-
   return(
       <Container>
         
         <Header>
           <UserWrapper>
-              <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
-              
+              <Photo source={ImagemPerfil(user?.nome.substring(0,1).toUpperCase())}/>              
           </UserWrapper>    
           <Icon name="settings" onPress={openEditPerfil}/>    
         </Header>

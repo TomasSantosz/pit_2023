@@ -75,7 +75,6 @@ export const UserWrapper = styled.View`
 export const Photo = styled.Image`
     width: ${RFValue(150)}px;
     height: ${RFValue(150)}px;
-    border-radius: 100px;
     margin-top: ${RFValue(125)}px;
 `;
 export const User = styled.View`

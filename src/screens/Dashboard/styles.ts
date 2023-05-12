@@ -40,7 +40,6 @@ export const UserInfo = styled.View`
 export const Photo = styled.Image`
     width: ${RFValue(75)}px;
     height: ${RFValue(75)}px;
-    border-radius: 50px;
 `;
 export const User = styled.View`
     margin-left: 17px;
