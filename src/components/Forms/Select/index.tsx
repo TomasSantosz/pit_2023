@@ -4,7 +4,7 @@ import { Container, Option, Icon } from './styles';
 import { GestureResponderEvent } from "react-native";
 
 type Props = {
-    title: string;
+    title: string | any;
     onPress: (event: GestureResponderEvent) => void
 };
 

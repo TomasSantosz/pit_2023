@@ -35,7 +35,7 @@ export function InsertCompetition(){
     const [nome, onChangeTextNome] = useState("");
     const [descricao, onChangeTextDescricao] = useState("");
     const {signOut, user} = useAuth();
-    const [numeroParticipantes, onChangeTextNumeroParticipantes] = useState(0);
+    const [numeroParticipantes, onChangeTextNumeroParticipantes] = useState<any>(0);
     const [local, onChangeTextLocal] = useState("");
     
     const [esporte, setEsporte] = useState({
@@ -64,7 +64,7 @@ export function InsertCompetition(){
         const compepe = {
             nome,
             esporte: esporteId,
-            criador: user._id,
+            criador: user?._id,
             descricao,
             NumPart: Number(numeroParticipantes),
             Local: local,
@@ -75,15 +75,10 @@ export function InsertCompetition(){
         console.log(compepe)
         api.post('/competicoes',compepe)
         .then(async(response) => {
-            Alert.alert('Cadastrado com sucesso!', 'O esporte foi enviado para analise', [
-                {text: 'OK', onPress: () => navigation.navigate('Esportes')},
-            ]);
+            Alert.alert('Cadastrado com sucesso!', `A competição ${compepe.nome} já está disponível`);
             return response.data;
         }).catch(err => {
-            const error = JSON.parse(err.request._response);
-            //console.log(err.request._response)
-            console.log(err.request)
-            //return Alert.alert(error.error);
+            return Alert.alert('Falha', 'Falha ao cadastrar!');
         });
     }
 

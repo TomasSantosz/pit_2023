@@ -11,6 +11,7 @@ export declare global {
             InserirCompeticoes: undefined;
             CompeticoesEsportes: undefined;
             Perfil: undefined;
+            EditarAtleta: undefined;
             
         }
     }

@@ -16,7 +16,7 @@ interface User{
     competicoes ?: object; 
     idade  ?: number; 
     altura ?: number; 
-    genero ?: string;  
+    genero ?: string;      
 }
 
 interface AuthContextData{
@@ -55,8 +55,9 @@ export function AuthProvider({children}: AuthProviderProps){
         api.post('/auth/autentica',{
             email,
             password
-        }).then(async(response) => {            
-            setUser(response.data);
+        }).then(async(response) => {  
+            console.log(user)          
+            setUser(response.data.Atleta);
             await AsyncStorage.setItem(
                 '@RNAuth:user', 
                 JSON.stringify(response.data.Atleta)
@@ -66,7 +67,7 @@ export function AuthProvider({children}: AuthProviderProps){
                 JSON.stringify(response.data.token)
             );
             api.defaults.headers['Authorization'] = `Bearer ${response.data.token}`
-            return response.data;
+            return response.data.Atleta;
         }).catch(err => {
             const error = JSON.parse(err.request._response);
             //console.log(err.request.status)

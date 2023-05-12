@@ -18,7 +18,7 @@ interface Genero {
 }
 
 interface Props{
-    genero: Genero;
+    genero: Genero | any;
     setGenero: (genero: Genero) => void; 
     closeSelectGenero: () => void;
 }

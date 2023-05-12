@@ -25,10 +25,10 @@ export function ModalEsportes({
     setEsporte,
     closeSelectEsporte   
 }: Props){
-    const [esportes, setEsportes] = useState<Esporte>({
-        nome: '',
-        _id: '',
-        Regras: ''
+    const [esportes, setEsportes] = useState<any>({
+        nome: "",
+        _id: "",
+        Regras: ""
     });
     function handleEsporteSelect(esporte: Esporte){
         setEsporte(esporte);
@@ -41,6 +41,7 @@ export function ModalEsportes({
         }
         fetchEsportes();
       },[]); 
+      
     return(
         <Container>
             <Header>
@@ -51,28 +52,20 @@ export function ModalEsportes({
                 style={{flex: 1, width: '100%'}}
                 keyExtractor={(item) => item.key}
                 ItemSeparatorComponent={(item)=> {
-                    return  item.nome ? (
-                        <Separator /> 
-                    ) :(
-                        <></>
-                    )                
+                    return <Separator />              
                 }}
                 renderItem={({ item})=>{
                     console.log(item, '-')
-                    return  item.nome ? (
+                    return  item.nome && (
                         <EsporteOption
                             onPress={()=> handleEsporteSelect(item)}
                             isActive={esporte.nome === item.nome}
                         >
                             <Name>{item.nome}</Name>
                         </EsporteOption>
-                    ):(
-                        <></>
                     )
-                }}
-                
+                }}                
             />
-
             <Footer>
                 <Button title="selecionar" 
                 onPress={closeSelectEsporte}

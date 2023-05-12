@@ -40,7 +40,7 @@ export function Dashboard(){
               <UserInfo>
               <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
                 <User>
-                  <UserName>{user.nome}</UserName>
+                  <UserName>{ user?.nome }</UserName>
                   <NivelName>Nível {Nivel()}</NivelName>
                 </User>
               </UserInfo>

@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import moment from 'moment';
 import Nivel from '../../util/Nivel';
 import { api } from '../../services/api';
+import { View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { 
   Container,
@@ -37,7 +38,8 @@ interface Item {
     Regras: string;
   }
   atletas: {
-    forEach:() => void
+    forEach:(atleta: object) => void,
+    length: any,
   };
   DataInicio:string;
   DataTermino: string;
@@ -45,25 +47,26 @@ interface Item {
 
 }
 export function Perfil(){
-  const [competitions, setCompetitions] = useState([]);
+  const [competitions, setCompetitions] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
   const [nivel_atual, setNivelAtual] = useState(0);
-  const {signOut, user, nivelAtual } = useAuth();
+  const {signOut, user } = useAuth();
   const navigation = useNavigation();
   useEffect(()=>{    
-    console.log(nivelAtual)
-    const competicoesUsuario = [];
+    const competicoesUsuario: Item[] = [];
 
     async function fetchCompeticoes() {
       const response = await api.get('/Competicoes');
       response.data.forEach((competicoes:Item) => {        
-        competicoes.atletas.forEach((atletas) => {
-          if(atletas._id === user._id){
+        competicoes.atletas.forEach((atleta: any) => {
+          if(atleta._id === user?._id){
             competicoesUsuario.push(competicoes)
           }
         });        
       });
       setNivelAtual(Nivel(competicoesUsuario.length));
       setCompetitions(competicoesUsuario);
+      setLoading(false); 
     }
     fetchCompeticoes();
     
@@ -72,8 +75,12 @@ export function Perfil(){
   
   function openMoreDetails(_id:string){
     navigation.navigate('Competicao', { 
-      _id 
+      _id
     });
+  }
+
+  function openEditPerfil(_id:string){
+    navigation.navigate('EditarAtleta');
   }
 
   function VerificarDisponibilidade(dataTermino: Date){
@@ -85,6 +92,14 @@ export function Perfil(){
     return false;
   }
 
+  if(loading){
+    return (
+      <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} color="#555"/>
+      </View>
+    )
+  }
+
   return(
       <Container>
         
@@ -93,11 +108,11 @@ export function Perfil(){
               <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
               
           </UserWrapper>    
-          <Icon name="settings"/>    
+          <Icon name="settings" onPress={openEditPerfil}/>    
         </Header>
-        <ScrollView horizontal={false}> 
+        {/* <ScrollView horizontal={false}>  */}
         <User>
-          <UserName>{user.nome}</UserName>
+          <UserName>{user?.nome}</UserName>
           <UserLevel>
             <Level>Nível {nivel_atual}</Level>
           </UserLevel>
@@ -106,7 +121,7 @@ export function Perfil(){
           <Participacoes>
             <TitleParticipacoes>Competições</TitleParticipacoes>
             <ScrollView>
-              {competitions.map((item:Item, index)=>{              
+              {competitions.map((item:Item)=>{              
                 return VerificarDisponibilidade(new Date(item.DataTermino)) === true &&(
                   <SingleCompetitions key={item._id}>
                     <TypesCompetition>
@@ -116,7 +131,7 @@ export function Perfil(){
                     <TypeSport>{item.esporte.nome}</TypeSport>                
                     <TypesCompetition>      
                       <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                      <NumberOfMembers>Participantes: 8/{item.NumPart}</NumberOfMembers>                  
+                      <NumberOfMembers>Participantes: {item.atletas.length} /{item.NumPart}</NumberOfMembers>                  
                     </TypesCompetition>                
                   </SingleCompetitions>
                 )
@@ -130,7 +145,7 @@ export function Perfil(){
             </ScrollView>              
           </Participacoes> */}  
         </Content>
-        </ScrollView>
+        {/* </ScrollView> */}
       </Container>
     );   
 }

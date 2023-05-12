@@ -29,7 +29,7 @@ export const Content = styled.View`
     flex-direction: column;
 `;
 export const Participacoes = styled.View`
-    height: ${RFPercentage(55)}px;
+    height: ${RFPercentage(50)}px;
     padding: 15px;
     border-radius: 30px;
     background-color: ${({ theme }) => theme.colors.background_card};

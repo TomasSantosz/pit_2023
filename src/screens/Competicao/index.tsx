@@ -21,6 +21,7 @@ import {
 } from './styles';
 import { ScrollView } from 'react-native';
 import {useAuth} from '../../contexts/auth';
+
 interface Route{
   route:{
     params: {
@@ -37,6 +38,7 @@ interface Item {
     nome: string;
     Regras: string;
   }
+  atletas: any;
   DataInicio?:string;
   DataTermino?: string;
   NumPart?: number;
@@ -46,7 +48,7 @@ interface Item {
 
 export function Competicao({ route }:Route){
   const [loading, setLoading] = useState(true);
-  const [competition, setCompetition] = useState(null);
+  const [competition, setCompetition] = useState<Item | any>(null);
   const [permiteButton, setPermiteButton] = useState({});
   const {signOut, user} = useAuth();
   
@@ -54,8 +56,8 @@ export function Competicao({ route }:Route){
     async function getCompetition() {      
       const response = await api.get(`/Competicoes/${route.params._id}`);
       setCompetition(response.data);
-      function participa(p) {
-        return p._id === user._id;
+      function participa(p: any) {
+        return p._id === user?._id;
       }
       setPermiteButton(!!response.data.atletas.find(participa))
       setLoading(false);        
@@ -78,7 +80,7 @@ export function Competicao({ route }:Route){
     }
     api.post('/competicoes/atleta',{
       idCompeticao: competition._id, 
-	    idAtleta: user._id
+	    idAtleta: user?._id
     })
     .then(async(response) => {
         Alert.alert('Cadastrado com sucesso!', 'Você foi cadastrado no campeonato!');
@@ -112,7 +114,7 @@ export function Competicao({ route }:Route){
         <ContentParticipacao>          
           <NameCompetitions>Participantes {competition.atletas.length}/{competition.NumPart}</NameCompetitions>
           <ScrollView>          
-            {competition.atletas.map((e,index)=>{
+            {competition.atletas.map((e:any)=>{
               return (
                 <SingleParticipantes key={e._id}>
                   <Photo source={{ uri:'https://pbs.twimg.com/profile_images/1649875394097553408/Ky0gXom4_400x400.jpg'}}/>
