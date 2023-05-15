@@ -8,12 +8,15 @@ import {
   Container,
   MoreCompetition,
   Icon,
+  IconAccept,
+  IconDecline,
   ContentParticipacao,
   NameCompetitions,
   SingleParticipantes,
   NameCompetition,
   Photo,
   Header,
+  Accept,
   InfoCompetition,
   SubTitles,
   Title,
@@ -29,7 +32,6 @@ interface Route{
       _id: string;
     };
   }
-
 }
 
 interface Item {
@@ -39,6 +41,10 @@ interface Item {
     nome: string;
     Regras: string;
   }
+  competicoes: [{
+    _id: string;
+    nome: string;
+  }]
   atletas: any;
   DataInicio?:string;
   DataTermino?: string;
@@ -51,7 +57,7 @@ export function Competicao({ route }:Route){
   const [loading, setLoading] = useState(true);
   const [competition, setCompetition] = useState<Item | any>(null);
   const [permiteButton, setPermiteButton] = useState({});
-  const {signOut, user} = useAuth();
+  const { signOut, user } = useAuth();
   
   useEffect(()=>{
     async function getCompetition() {      
@@ -63,7 +69,7 @@ export function Competicao({ route }:Route){
       setPermiteButton(!!response.data.atletas.find(participa))
       setLoading(false);        
     }
-    getCompetition();    
+    getCompetition();   
   },[]);
 
   useEffect(()=>{
@@ -74,24 +80,55 @@ export function Competicao({ route }:Route){
     Alert.alert('Falha!', 'Você já está cadastrado!');
   }
 
+  async function HandleSair(){
+    Alert.alert('Deletar', 'Deseja sair dessa competição?', [
+      {text: 'Sim', onPress: () => {
+        api.delete(`/competicoes/${competition._id}/atletas/${user?._id}`)
+        .then(async(response) => {
+            Alert.alert('Removido com sucesso!, Você saiu da competição');
+            return response.data;
+        }).catch(err => {
+          console.log(err.request._response)
+            return Alert.alert('Falha');
+        });
+      }},
+      {text: 'Cancelar'}
+    ]);    
+  }
+
+  async function HandleExcluirCompeticao(){    
+    Alert.alert('Deseja deletar essa competição?', 'A competição será encerrada e todos sairão dela!', [
+      {text: 'Sim', onPress: () => {
+        api.delete(`/Competicoes/${competition._id}`)
+        .then(async(response) => {
+            Alert.alert('Removido com sucesso!, Você removeu a competição');
+            return response.data;
+        }).catch(err => {
+          console.log(err.request._response)
+            return Alert.alert('Falha');
+        });
+      }},
+      {text: 'Cancelar'}
+    ]);
+  }
+
   function HandleCadastrar(){
 
     if(competition.atletas.length >= competition.NumPart){
       Alert.alert('Não permitido!', 'Campeonato lotado!');
     }
+
     api.post('/competicoes/atleta',{
       idCompeticao: competition._id, 
 	    idAtleta: user?._id
-    })
-    .then(async(response) => {
+    }).then(async(response) => {
         Alert.alert('Cadastrado com sucesso!', 'Você foi cadastrado no campeonato!');
         setPermiteButton(true);
         return response.data;
     }).catch(err => {
-        const error = JSON.parse(err.request._response);
-        console.log(error.message)
-        return Alert.alert(error.message);
+        return Alert.alert('Error!', 'Não foi possível entrar na competição!');
     });
+    
   }
   if(loading){
     return (
@@ -99,8 +136,7 @@ export function Competicao({ route }:Route){
         <ActivityIndicator size={'large'} color="#555"/>
       </View>
     )
-  }
-  
+  } 
 
   return competition._id === route.params._id && (
     <Container>
@@ -121,7 +157,13 @@ export function Competicao({ route }:Route){
                   <Photo source={ImagemPerfil(e.nome.substring(0,1).toUpperCase())}/>
                   <NameCompetition>{e.nome}</NameCompetition> 
                   <MoreCompetition>
-                    {e._id === competition.criador && (<Icon name="stars" />)}
+                    {e._id === competition.criador 
+                      ? (<Icon name="stars" />) 
+                      : 
+                      (<Accept>
+                        <IconAccept onPress={()=>{Alert.alert('Aceito')}} name="plus-circle" />
+                        <IconDecline onPress={()=>{Alert.alert('removido')}} name="minus-circle" />
+                      </Accept>)}
                   </MoreCompetition>                                     
                 </SingleParticipantes>
               )
@@ -129,9 +171,15 @@ export function Competicao({ route }:Route){
           </ScrollView>
         </ContentParticipacao>
         {permiteButton ? 
-          <Button  onPress={()=>{
-            HandleCadastrado();
-          }} title="Participar"/>
+          user?._id === competition.criador ? (
+            <Button  onPress={()=>{
+              HandleExcluirCompeticao();
+            }} title="Excluir Competição"/>
+          ): (
+            <Button  onPress={()=>{
+              HandleSair();
+            }} title="Sair"/>
+          )
         :
         <Button onPress={()=>{
           HandleCadastrar();

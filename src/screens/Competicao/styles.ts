@@ -56,9 +56,31 @@ export const Photo = styled.Image`
     height: ${RFValue(45)}px;
     border-radius: 50px;
 `;
+
+
+
 export const Icon = styled(MaterialIcons)`
     font-size: ${RFValue(25)}px;
     color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const IconAccept = styled(Feather)`
+    font-size: ${RFValue(30)}px;
+    color: ${({ theme }) => theme.colors.success};
+`;
+export const IconDecline = styled(Feather)`
+    font-size: ${RFValue(30)}px;
+    color: ${({ theme }) => theme.colors.attention};
+`;
+
+export const Accept = styled.View`
+    flex-direction: row;
+    align-items: center;
+    background-color : aliceblue;
+    width: ${RFValue(80)}px;
+    justify-content: space-around;
+    align-items: center;  
+    
 `;
 
 
@@ -83,7 +105,7 @@ export const SingleParticipantes = styled.View`
     align-items: center;   
     margin-bottom: 10px;
     border-bottom-color: ${({ theme }) => theme.colors.primary} ;
-    border-bottom-width: 1px;
+    border-bottom-width: 0.5px;
     padding-bottom: 5px;
 `;
 
@@ -120,7 +142,7 @@ export const NumberOfMembers = styled.Text`
 `;
 
 export const MoreCompetition = styled.Text`
-    width: ${RFValue(40)}px;
+    width: ${RFValue(80)}px;
 `;
 
 

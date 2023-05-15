@@ -21,6 +21,10 @@ import {useAuth} from '../../contexts/auth';
 interface Item {
   _id: string;
   nome: string;
+  competicoes:[{
+    _id?: string;
+    nome: string;
+  }]
   esporte: {
     nome: string;
     Regras: string;
@@ -36,26 +40,20 @@ interface Item {
 }
 
 export function Dashboard(){
+  const [competitions, setCompetitions] = useState<any>([]);
+  const [nivel_atual, setNivelAtual] = useState(0);
   const navigation = useNavigation();
   const {signOut, user} = useAuth();
-  const [nivel_atual, setNivelAtual] = useState(0);
-  useEffect(()=>{    
-    const competicoesUsuario: Item[] = [];
 
+  useEffect(()=>{    
     async function fetchCompeticoes() {
-      const response = await api.get('/Competicoes');
-      response.data.forEach((competicoes:Item) => {        
-        competicoes.atletas.forEach((atleta: any) => {
-          if(atleta._id === user?._id){
-            competicoesUsuario.push(competicoes)
-          }
-        });        
-      });
-      setNivelAtual(Nivel(competicoesUsuario.length));
+      const response = await api.get(`/atletas/${user?._id}/competicoes`);
+      setCompetitions(response.data);      
+      setNivelAtual(Nivel(response.data.length));
     }
     fetchCompeticoes();
   },[nivel_atual]);
-  
+
   function handleSignOut(){
     signOut();
   }

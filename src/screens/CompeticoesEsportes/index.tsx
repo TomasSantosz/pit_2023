@@ -19,7 +19,6 @@ import {
   UserWrapper,
   SportInfo,
   Photo,
-  User,
   UserName,
   NivelName,
   Content,
@@ -36,6 +35,7 @@ interface Item {
     nome: string;
     Regras: string;
   }
+  atletas: any;
   DataInicio:string;
   DataTermino: string;
   NumPart: number;
@@ -107,7 +107,7 @@ export function CompeticoesEsporte({ route }:Route){
                   <TypeSport>{item.esporte.nome}</TypeSport>                
                   <TypesCompetition>      
                     <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                    <NumberOfMembers>Participantes: 8/{item.NumPart}</NumberOfMembers>                  
+                    <NumberOfMembers>Participantes: {item.atletas.length}/{item.NumPart}</NumberOfMembers>                  
                   </TypesCompetition>                
                 </SingleCompetitions>
               )

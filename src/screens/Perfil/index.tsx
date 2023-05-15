@@ -53,20 +53,12 @@ export function Perfil(){
   const [nivel_atual, setNivelAtual] = useState(0);
   const {signOut, user } = useAuth();
   const navigation = useNavigation();
-  useEffect(()=>{    
-    const competicoesUsuario: Item[] = [];
 
+  useEffect(()=>{    
     async function fetchCompeticoes() {
-      const response = await api.get('/Competicoes');
-      response.data.forEach((competicoes:Item) => {        
-        competicoes.atletas.forEach((atleta: any) => {
-          if(atleta._id === user?._id){
-            competicoesUsuario.push(competicoes)
-          }
-        });        
-      });
-      setNivelAtual(Nivel(competicoesUsuario.length));
-      setCompetitions(competicoesUsuario);
+      const response = await api.get(`/atletas/${user?._id}/competicoes`);
+      setCompetitions(response.data);      
+      setNivelAtual(Nivel(response.data.length));
       setLoading(false); 
     }
     fetchCompeticoes();
@@ -119,7 +111,7 @@ export function Perfil(){
           <Participacoes>
             <TitleParticipacoes>Competições</TitleParticipacoes>
             <ScrollView>
-              {competitions.map((item:Item)=>{              
+              {competitions.map((item:Item)=>{          
                 return VerificarDisponibilidade(new Date(item.DataTermino)) === true &&(
                   <SingleCompetitions key={item._id}>
                     <TypesCompetition>

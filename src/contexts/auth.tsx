@@ -13,7 +13,10 @@ interface User{
     _id ?: string; 
     nome ?: string;
     email ?: string; 
-    competicoes ?: object; 
+    competicoes:[{
+        _id?: string;
+        nome: string;
+    }]
     idade  ?: number; 
     altura ?: number; 
     genero ?: string;      
@@ -46,8 +49,7 @@ export function AuthProvider({children}: AuthProviderProps){
                 setUser(JSON.parse(storageUser));
                 setLoading(false)
             }
-        }
-        
+        }        
         loadStorageData();
     },[])
 
@@ -55,8 +57,7 @@ export function AuthProvider({children}: AuthProviderProps){
         api.post('/auth/autentica',{
             email,
             password
-        }).then(async(response) => {  
-            console.log(user)          
+        }).then(async(response) => {                       
             setUser(response.data.Atleta);
             await AsyncStorage.setItem(
                 '@RNAuth:user', 
