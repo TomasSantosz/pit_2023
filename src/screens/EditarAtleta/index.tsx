@@ -26,35 +26,17 @@ export function EditarAtleta(){
     function openRegister(){
         navigation.navigate('Login')
     }
-    const [generoModal, setGeneroModal] = useState(false);
-    const [nome, onChangeTextNome] = useState("");
+    const [generoModal, setGeneroModal] = useState(user?.genero);
+    const [nome, onChangeTextNome] = useState(user?.nome);
     const [password, onChangeTextSenha] = useState("");
-    const [email, onChangeTextEmail] = useState("");
-    const [idade, onChangeTextIdade] = useState(0);
-    const [altura, onChangeTextAltura] = useState(0);
+    const [email, onChangeTextEmail] = useState(user?.email);
+    const [idade, onChangeTextIdade] = useState(user?.idade);
+    const [altura, onChangeTextAltura] = useState(user?.altura);
     
     const [confirmarSenha, onChangeTextConfirmarSenha] = useState(""); 
     async function handleRegister(){
         const strongRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
-        if(!nome || !password || !email){
-            return Alert.alert('Preencha os campos obrigatórios (*).');
-        }
-        if(genero.key === "genero"){
-            return Alert.alert('Selecione o campo: Gênero.');
-        }
-        if(idade < 18){
-            return Alert.alert('O campo idade deve ser acima de 18 anos.');
-        }
-        if(confirmarSenha !== password){
-            return Alert.alert('o campo senha e confirmar senha não possuem o mesmo valor! .');
-        }
-        if (!strongRegex.test(email)) {
-            return Alert.alert('O Email não é válido.');
-        }
-
-        if(altura < 54.6 || altura > 246.5){
-            return Alert.alert('Altura inválida. Resgistre-se no Guiness Book');
-        }
+       
         async function register(){
             api.put(`/atleta/${user?._id}`,{
                 nome,
@@ -102,6 +84,7 @@ export function EditarAtleta(){
                     <Input 
                         placeholder='Email *'
                         defaultValue={user?.email}
+                        editable={false}
                         onChangeText={(text)=>{
                             onChangeTextEmail(text)
                         }}
@@ -151,7 +134,7 @@ export function EditarAtleta(){
                     />
                 </Fields>
                 <Button 
-                    title="Cadastrar"
+                    title="Editar dados"
                     onPress={handleRegister} 
                 />
             </Form>

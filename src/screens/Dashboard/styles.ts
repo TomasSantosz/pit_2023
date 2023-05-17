@@ -38,16 +38,17 @@ export const UserInfo = styled.View`
     align-items: center;
 `;
 export const Photo = styled.Image`
-    width: ${RFValue(75)}px;
-    height: ${RFValue(75)}px;
+    width: ${RFValue(60)}px;
+    height: ${RFValue(60)}px;
 `;
 export const User = styled.View`
     margin-left: 17px;
+    width: 170px;
 `;
 export const UserName = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
 
-    font-size: ${RFValue(18)}px;
+    font-size: ${RFValue(16)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 

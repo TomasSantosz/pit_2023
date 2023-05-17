@@ -59,6 +59,7 @@ export function Perfil(){
       const response = await api.get(`/atletas/${user?._id}/competicoes`);
       setCompetitions(response.data);      
       setNivelAtual(Nivel(response.data.length));
+      console.log(response.data.length)
       setLoading(false); 
     }
     fetchCompeticoes();

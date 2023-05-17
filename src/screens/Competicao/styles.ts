@@ -5,13 +5,13 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 //Header
 
 export const InfoCompetition = styled.View`
-    width: 100%;
     padding: 0 18px 24px 18px;
 
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    margin-top: ${RFValue(80)}px;
 `;
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
@@ -52,12 +52,17 @@ export const ContentParticipacao = styled.View`
     align-items: center;    
 `;
 export const Photo = styled.Image`
-    width: ${RFValue(45)}px;
-    height: ${RFValue(45)}px;
+    width: ${RFValue(35)}px;
+    height: ${RFValue(35)}px;
     border-radius: 50px;
 `;
 
 
+export const IconSettings = styled(MaterialIcons)`
+    font-size: ${RFValue(30)}px;
+    color: ${({ theme }) => theme.colors.shape};
+    margin-left: ${RFValue(260)}px;
+`;
 
 export const Icon = styled(MaterialIcons)`
     font-size: ${RFValue(25)}px;
@@ -65,28 +70,24 @@ export const Icon = styled(MaterialIcons)`
 `;
 
 export const IconAccept = styled(Feather)`
-    font-size: ${RFValue(30)}px;
-    color: ${({ theme }) => theme.colors.success};
+    font-size: ${RFValue(25)}px;
+    color: ${({ theme }) => theme.colors.primary};
 `;
 export const IconDecline = styled(Feather)`
-    font-size: ${RFValue(30)}px;
-    color: ${({ theme }) => theme.colors.attention};
+    font-size: ${RFValue(25)}px;
+    color: ${({ theme }) => theme.colors.primary};
 `;
 
 export const Accept = styled.View`
     flex-direction: row;
     align-items: center;
-    background-color : aliceblue;
     width: ${RFValue(80)}px;
-    justify-content: space-around;
-    align-items: center;  
-    
+    justify-content: space-around;    
 `;
 
 
 export const NameCompetitions = styled.Text`
     color: ${({ theme }) => theme.colors.primary};
-    //background-color: green;
     font-size: ${RFValue(26)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 
@@ -119,6 +120,7 @@ export const TypesCompetition = styled.View`
 `;
 export const NameCompetition = styled.Text`
     font-size: ${RFValue(16)}px;
+    max-Width: ${RFValue(150)}px;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.regular};
 `;
@@ -142,7 +144,9 @@ export const NumberOfMembers = styled.Text`
 `;
 
 export const MoreCompetition = styled.Text`
-    width: ${RFValue(80)}px;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
 `;
 
 
@@ -161,8 +165,8 @@ export const Header = styled.View`
     height: ${RFPercentage(25)}px;
     background-color: ${({ theme }) => theme.colors.primary};
 
-    justify-content: center;
-    align-items: flex-end;
+    justify-content: space-around;
+    align-items: center;
     
     flex-direction: row;
 `;

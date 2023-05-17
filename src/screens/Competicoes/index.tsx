@@ -92,8 +92,6 @@ export function Competicoes(){
           <NameCompetitions>Competições Disponíveis</NameCompetitions>
           <ScrollView>
             {competitions.map((item:Item, index)=>{
-              console.log(item,"---");
-              
               return VerificarDisponibilidade(new Date(item.DataTermino)) === true && (
                 <SingleCompetitions key={item._id}>
                   <TypesCompetition>
@@ -103,7 +101,7 @@ export function Competicoes(){
                   <TypeSport>{item.esporte.nome}</TypeSport>                
                   <TypesCompetition>      
                     <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                    <NumberOfMembers>Participantes: {item.atletas.length}/{item.NumPart}</NumberOfMembers>                  
+                    <NumberOfMembers>Participantes: {item.atletasArray.length}/{item.NumPart}</NumberOfMembers>                  
                   </TypesCompetition>                
                 </SingleCompetitions>
               )

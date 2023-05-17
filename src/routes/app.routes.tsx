@@ -12,6 +12,7 @@ import { Perfil } from '../screens/Perfil';
 import { Competicao } from '../screens/Competicao';
 import { GeneroSelect } from '../screens/Genero'; 
 import { EditarAtleta } from '../screens/EditarAtleta';
+import { EditarCompetition } from '../screens/EditCompetition';
 import { CompeticoesEsporte } from '../screens/CompeticoesEsportes';
 import { Esportes } from "../screens/Esportes";
 
@@ -34,6 +35,10 @@ export function AppRoutes(){
             <Screen
                 name="EditarAtleta"
                 component={EditarAtleta}
+            />
+            <Screen
+                name="EditarCompetition"
+                component={EditarCompetition}
             />
             <Screen
                 name="Competicoes"

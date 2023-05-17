@@ -12,6 +12,7 @@ export declare global {
             CompeticoesEsportes: undefined;
             Perfil: undefined;
             EditarAtleta: undefined;
+            EditarCompetition: undefined;
             
         }
     }

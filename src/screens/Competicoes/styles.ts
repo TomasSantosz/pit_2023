@@ -36,7 +36,6 @@ export const NameCompetitions = styled.Text`
     margin-bottom: ${RFValue(10)}px;
 `;
 export const SingleCompetitions = styled.View`
-    margin-top: 10px;
     width: ${RFValue(275)}px ;
     
     
@@ -44,10 +43,10 @@ export const SingleCompetitions = styled.View`
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;   
-    margin-bottom: ${RFValue(10)}px;;
     border-bottom-color: ${({ theme }) => theme.colors.primary} ;
-    border-bottom-width: 1px;
-    padding-bottom: 5px;
+    border-bottom-width: 0.5px;
+    padding-top: 15px;
+    padding-bottom:15px;
 `;
 
 export const TypesCompetition = styled.View`
@@ -55,8 +54,6 @@ export const TypesCompetition = styled.View`
     width: 100% ;
     justify-content: space-between;
     align-items: flex-start;
-    
-    
 `;
 export const NameCompetition = styled.Text`
     font-size: ${RFValue(16)}px;
@@ -74,12 +71,14 @@ export const DateCompetition = styled.Text`
     font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.regular};
+    margin-top: 10px;
 `;
 
 export const NumberOfMembers = styled.Text`
     font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.regular};
+    margin-top: 10px;
 `;
 
 export const MoreCompetition = styled.Text`
