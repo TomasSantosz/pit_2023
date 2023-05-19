@@ -54,19 +54,17 @@ export function Register(){
             return Alert.alert('Altura inválida. Resgistre-se no Guiness Book');
         }
         async function register(){
-            api.post('/auth/registro',{
-                nome,
+            api.post('/auth/registro',{nome,
                 email,    
                 idade,  
                 altura,  
                 genero: genero.key,         
-                password            
-            }).then(res => {
-                return navigation.navigate('Login');
+                password}).then(res => {
+                return Alert.alert('Cadastrado com sucesso!', 'Você foi cadastrado na plataforma', [
+                    {text: 'OK', onPress: () => navigation.navigate('Login')},
+                ]);
             }).catch(err => {
-                console.log("oi")
                 const error = JSON.parse(err.request._response);
-                //console.log(err.request.status)
                 return Alert.alert(error.error);
             }); 
         }
