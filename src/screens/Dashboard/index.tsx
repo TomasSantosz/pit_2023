@@ -66,6 +66,9 @@ export function Dashboard(){
   function openCompeticoes(){
     navigation.navigate('Competicoes')
   }
+  function openRank(){
+    navigation.navigate('Rank')
+  }
     return(
         <Container>
           <Header>
@@ -85,10 +88,11 @@ export function Dashboard(){
           </Header>
           <Content>
             <HighlightCars name="Esportes" onPress={openEsportes}/>  
-            <HighlightCars name="user" onPress={openPefil}/>          
+            <HighlightCars name="Perfil" onPress={openPefil}/>          
           </Content>
           <Content>
-            <HighlightCars name="Competições" onPress={openCompeticoes}/>          
+            <HighlightCars name="Competições" onPress={openCompeticoes}/>  
+            <HighlightCars name="Rank" onPress={openRank}/>          
           </Content>
         </Container>
       );   

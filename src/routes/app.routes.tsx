@@ -15,6 +15,7 @@ import { EditarAtleta } from '../screens/EditarAtleta';
 import { EditarCompetition } from '../screens/EditCompetition';
 import { CompeticoesEsporte } from '../screens/CompeticoesEsportes';
 import { Esportes } from "../screens/Esportes";
+import { Rank } from "../screens/Rank";
 
 export function AppRoutes(){
     return(
@@ -64,6 +65,10 @@ export function AppRoutes(){
             <Screen
                 name="InserirCompeticoes"
                 component={InsertCompetition}         
+            />
+            <Screen
+                name="Rank"
+                component={Rank}         
             />
         </Navigator>
     )
