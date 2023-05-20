@@ -17,45 +17,27 @@ import {
   Icon
 } from './styles';
 import {useAuth} from '../../contexts/auth';
-
-interface Item {
-  _id: string;
-  nome: string;
-  competicoes:[{
-    _id?: string;
-    nome: string;
-  }]
-  esporte: {
-    nome: string;
-    Regras: string;
-  }
-  atletas: {
-    forEach:(atleta: object) => void,
-    length: any,
-  };
-  DataInicio:string;
-  DataTermino: string;
-  NumPart: number;
-
-}
+import { Alert } from 'react-native';
 
 export function Dashboard(){
-  const [competitions, setCompetitions] = useState<any>([]);
   const [nivel_atual, setNivelAtual] = useState(0);
   const navigation = useNavigation();
   const {signOut, user} = useAuth();
 
   useEffect(()=>{    
     async function fetchCompeticoes() {
-      const response = await api.get(`/atletas/${user?._id}/competicoes`);
-      setCompetitions(response.data);      
+      const response = await api.get(`/atletas/${user?._id}/competicoes`);      
       setNivelAtual(Nivel(response.data.length));
     }
     fetchCompeticoes();
-  },[nivel_atual]);
+  },[]);
 
   function handleSignOut(){
-    signOut();
+    Alert.alert('Sair', 'Você realmente deseja sair?', [
+      {text: 'Sair', onPress: () => signOut()},
+      {text: 'Cancelar'},
+    ]);
+    
   }
   function openEsportes(){
     navigation.navigate('Esportes')
@@ -70,30 +52,30 @@ export function Dashboard(){
     navigation.navigate('Rank')
   }
     return(
-        <Container>
-          <Header>
-            <UserWrapper>
-              <UserInfo>
-              <Photo source={ImagemPerfil(user?.nome.substring(0,1).toUpperCase())}/>  
-                <User>
-                  <UserName>{ user?.nome }</UserName>
-                  <NivelName>Nível {nivel_atual}</NivelName>
-                </User>
-              </UserInfo>
-              <Icon 
-                name="power"
-                onPress={handleSignOut}
-              />
-            </UserWrapper>            
-          </Header>
-          <Content>
-            <HighlightCars name="Esportes" onPress={openEsportes}/>  
-            <HighlightCars name="Perfil" onPress={openPefil}/>          
-          </Content>
-          <Content>
-            <HighlightCars name="Competições" onPress={openCompeticoes}/>  
-            <HighlightCars name="Rank" onPress={openRank}/>          
-          </Content>
-        </Container>
-      );   
+      <Container>
+        <Header>
+          <UserWrapper>
+            <UserInfo>
+            <Photo source={ImagemPerfil(user?.nome.substring(0,1).toUpperCase())}/>  
+              <User>
+                <UserName>{ user?.nome }</UserName>
+                <NivelName>Nível {nivel_atual}</NivelName>
+              </User>
+            </UserInfo>
+            <Icon 
+              name="exit-to-app"
+              onPress={handleSignOut}
+            />
+          </UserWrapper>            
+        </Header>
+        <Content>
+          <HighlightCars name="Esportes" icon={'basketball-hoop-outline'} onPress={openEsportes}/>  
+          <HighlightCars name="Perfil" icon={'account-outline'} onPress={openPefil}/>          
+        </Content>
+        <Content>
+          <HighlightCars name="Competições" icon={'whistle-outline'} onPress={openCompeticoes}/>  
+          <HighlightCars name="Rank" icon={'podium-gold'} onPress={openRank}/>          
+        </Content>
+      </Container>
+    );   
 }

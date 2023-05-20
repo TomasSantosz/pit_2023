@@ -1,58 +1,68 @@
 import React, {useState} from 'react';
 import { api } from '../../services/api';
-import { Container, Header, Title, Form, Fields, TextSoftware} from './styles';
+import { Container, Header, Title, Form, Fields, UserWrapper} from './styles';
 
 import { Input } from '../../components/Forms/Input'
 import { Button } from '../../components/Forms/Button'
 import { useNavigation } from '@react-navigation/native';
 import { 
-    Alert
+    Alert,
+    Keyboard,
+    TouchableWithoutFeedback
 } from 'react-native';
 export function InsertSport(){
     const [nome, onChangeTextNome] = useState("");
-    const [Regras, onChangeTextRegras] = useState("");
+    const [regras, onChangeTextRegras] = useState("");
     const navigation = useNavigation();
+
     function InserirEsporte(){
+        if(!nome || !regras){
+            return Alert.alert('Preencha os campos obrigatórios (*).');
+        }
+
         api.post('/esportes',{
             nome,
-            Regras
+            Regras: regras
         }).then(async(response) => {
-            console.log(response.data);
-            Alert.alert('Cadastrado com sucesso!', 'O esporte foi enviado para analise', [
+            Alert.alert('Cadastrado com sucesso!', 'O esporte foi enviado para analise, favor aguardar confirmação', [
                 {text: 'OK', onPress: () => navigation.navigate('Esportes')},
             ]);
             return response.data;
         }).catch(err => {
-            const error = JSON.parse(err.request._response);
-            //console.log(err.request.status)
-            return Alert.alert(error.error);
+            return Alert.alert('Falha!', 'Falha ao cadastrar esporte, entre em contato com o administrador do app.');
         });
     }
     
     return (
-        <Container>
-            <Header>
-                <Title>Inserir Esporte</Title>   
-            </Header>
-            <Form>
-                <Fields>
-                    <Input 
-                        placeholder='nome *'
-                        onChangeText={(text)=>{
-                            onChangeTextNome(text)
-                        }}
-                        autoCapitalize='none'
-                    />
-                    <Input 
-                        placeholder='Regras *'
-                        onChangeText={(text)=>{
-                            onChangeTextRegras(text)
-                        }}
-                        autoCapitalize='none'               
-                    />
-                </Fields>
-                <Button title="Inserir Esporte" onPress={InserirEsporte}/>
-            </Form>
-        </Container>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Container>
+                <Header>
+                    <UserWrapper>
+                        <Title>Inserir Esporte</Title>   
+                    </UserWrapper>
+                </Header>
+                <Form>
+                    <Fields>
+                        <Input 
+                            placeholder='Nome *'
+                            onChangeText={(text)=>{
+                                onChangeTextNome(text)
+                            }}
+                            autoCapitalize='sentences'
+                        />
+                        <Input 
+                            placeholder='Regras *'
+                            multiline
+                            numberOfLines={4}
+                            onChangeText={(text)=>{
+                                onChangeTextRegras(text)
+                            }}
+                            autoCapitalize='sentences'               
+                        />
+                    </Fields>
+                    <Button title="Inserir Esporte" onPress={InserirEsporte}/>
+                </Form>
+            </Container>
+        </TouchableWithoutFeedback>
     );
 }

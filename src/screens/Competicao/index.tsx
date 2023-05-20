@@ -17,6 +17,7 @@ import {
   Photo,
   Header,
   Accept,
+  IconWait,
   IconSettings,
   InfoCompetition,
   SubTitles,
@@ -46,7 +47,7 @@ interface Item {
     _id: string;
     nome: string;
   }]
-  atletas: any;
+  atletasArray: any;
   DataInicio?:string;
   DataTermino?: string;
   NumPart?: number;
@@ -59,21 +60,29 @@ export function Competicao({ route }:Route){
   const [loading, setLoading] = useState(true);
   const [competition, setCompetition] = useState<Item | any>(null);
   const [permiteButton, setPermiteButton] = useState({});
+  const [aprovados, setAprovados] = useState(0);
   const { signOut, user } = useAuth();
   
   useEffect(()=>{
     async function getCompetition() { 
       const response = await api.get(`/competicoes/${route.params._id}`);   
       setCompetition(response.data);
-      console.log(response.data)
+      let numeroAprovados = []
+      response.data.atletasArray.forEach((res:any)=>{
+        if(res.aprovado === true){
+          numeroAprovados.push(res)
+        }
+      })
+      setAprovados(numeroAprovados.length)
       function participa(p: any) {
         return p.atleta._id === user?._id;
       }
       setPermiteButton(!!response.data.atletasArray.find(participa))
-      setLoading(false);        
+      setLoading(false);
+      
     }
     getCompetition();   
-  },[]);
+  },[competition]);
 
   function HandleCadastrado(){
     Alert.alert('Falha!', 'Você já está cadastrado!');
@@ -83,10 +92,9 @@ export function Competicao({ route }:Route){
       
     api.put(`/competicoes/${competition._id}/atletas/${idRecused}`)
     .then(async(response) => {
-        Alert.alert('Aprovado com sucesso!, Usuário foi aprovado na competição');
+        Alert.alert('Aprovado com sucesso!', 'Usuário foi aprovado na competição');
         return response.data;
     }).catch(err => {
-      console.log(err.request._response)
         return Alert.alert('Falha');
     });
 }
@@ -94,10 +102,9 @@ export function Competicao({ route }:Route){
       
         api.delete(`/competicoes/${competition._id}/atletas/${idRecused}`)
         .then(async(response) => {
-            Alert.alert('Recusado com sucesso!, Usuário foi recusado da competição');
+            Alert.alert('Recusado com sucesso!', 'Usuário foi recusado da competição');
             return response.data;
         }).catch(err => {
-          console.log(err.request._response)
             return Alert.alert('Falha');
         });
   }
@@ -106,10 +113,9 @@ export function Competicao({ route }:Route){
       {text: 'Sim', onPress: () => {
         api.delete(`/competicoes/${competition._id}/atletas/${user?._id}`)
         .then(async(response) => {
-            Alert.alert('Removido com sucesso!, Você saiu da competição');
+            Alert.alert('Removido com sucesso!', 'Você saiu da competição');
             return response.data;
         }).catch(err => {
-          console.log(err.request._response)
             return Alert.alert('Falha');
         });
       }},
@@ -122,10 +128,9 @@ export function Competicao({ route }:Route){
       {text: 'Sim', onPress: () => {
         api.delete(`/Competicoes/${competition._id}`)
         .then(async(response) => {
-            Alert.alert('Removido com sucesso!, Você removeu a competição');
+            Alert.alert('Removido com sucesso!', 'Você removeu a competição');
             return response.data;
         }).catch(err => {
-          console.log(err.request._response)
             return Alert.alert('Falha');
         });
       }},
@@ -134,14 +139,14 @@ export function Competicao({ route }:Route){
   }
 
   function openEditCompetition(_id:string){
-    navigation.navigate('EditarCompetition', { 
+    navigation.navigate('InserirCompeticoes', { 
       _id
     });
   }
 
   function HandleCadastrar(){
 
-    if(competition.atletas.length >= competition.NumPart){
+    if(competition.atletasArray.length >= competition.NumPart){
       Alert.alert('Não permitido!', 'Campeonato lotado!');
     }
 
@@ -172,15 +177,14 @@ export function Competicao({ route }:Route){
       <Header>
         <InfoCompetition>
             <Title>{competition.nome}</Title>
-            {user?._id === competition.criador && (<IconSettings name="settings" onPress={()=>{openEditCompetition(competition._id)}}/> )} 
+            {user?._id === competition.criador && (<IconSettings name="square-edit-outline" onPress={()=>{openEditCompetition(competition._id)}}/> )} 
             <SubTitles>Data: {moment(competition.DataInicio).format("DD/MM/YYYY")}</SubTitles>
             <SubTitles>Local: {competition.Local}</SubTitles>
-        </InfoCompetition>  
-                 
+        </InfoCompetition>                   
       </Header>
       <Content>
         <ContentParticipacao>          
-          <NameCompetitions>Participantes {competition.atletasArray.length}/{competition.NumPart}</NameCompetitions>
+          <NameCompetitions>Participantes {aprovados}/{competition.NumPart}</NameCompetitions>
           {user?._id === competition.criador ? (
             <ScrollView>          
               {competition.atletasArray.map((e:any)=>{
@@ -190,13 +194,13 @@ export function Competicao({ route }:Route){
                     <NameCompetition>{e.atleta.nome}</NameCompetition> 
                     <MoreCompetition>
                       {e.atleta._id === competition.criador 
-                        ? (<Icon name="stars" />) 
+                        ? (<Icon name="crown-circle-outline" />) 
                         : user?._id === competition.criador && e.aprovado === false ? 
                         (<Accept>
-                          <IconAccept onPress={()=>{HandleAproved(e.atleta._id)}} name="check-circle" />
-                          <IconDecline onPress={()=>{HandleRecused(e.atleta._id)}} name="x-circle" />
+                          <IconAccept onPress={()=>{HandleAproved(e.atleta._id)}} name="check-bold" />
+                          <IconDecline onPress={()=>{HandleRecused(e.atleta._id)}} name="close-thick" />
                         </Accept>) : 
-                        (<IconDecline onPress={()=>{HandleRecused(e.atleta._id)}} name="x-circle" />)
+                        (<IconDecline onPress={()=>{HandleRecused(e.atleta._id)}} name="close-thick" />)
                       }
                     </MoreCompetition>                                     
                   </SingleParticipantes>
@@ -207,13 +211,20 @@ export function Competicao({ route }:Route){
           (
             <ScrollView>          
               {competition.atletasArray.map((e:any)=>{
-                return (
+                return e.aprovado ? (
+                  <SingleParticipantes key={e._id}>
+                    <Photo source={ImagemPerfil(e.atleta.nome.substring(0,1).toUpperCase())}/>
+                    <NameCompetition>{e.atleta.nome}</NameCompetition> 
+                    <MoreCompetition>  
+                      {e.atleta._id === competition.criador && (<Icon name="crown-circle-outline" />)}                    
+                    </MoreCompetition>                                     
+                  </SingleParticipantes>
+                ) : (
                   <SingleParticipantes key={e._id}>
                     <Photo source={ImagemPerfil(e.atleta.nome.substring(0,1).toUpperCase())}/>
                     <NameCompetition>{e.atleta.nome}</NameCompetition> 
                     <MoreCompetition>
-                      {e.atleta._id === competition.criador 
-                        && (<Icon name="stars" />)}
+                      <IconWait name="timelapse" />
                     </MoreCompetition>                                     
                   </SingleParticipantes>
                 )

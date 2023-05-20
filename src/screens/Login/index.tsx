@@ -48,7 +48,7 @@ export function Login(){
             <Form>
                 <Fields>
                     <Input 
-                        placeholder='email *'
+                        placeholder='E-mail *'
                         onChangeText={(text)=>{
                             onChangeTextEmail(text)
                         }}
@@ -56,7 +56,7 @@ export function Login(){
                         autoCorrect={false}  
                     />
                     <Input 
-                        placeholder='senha *'
+                        placeholder='Senha *'
                         onChangeText={(text)=>{
                             onChangeTextPassword(text)
                         }}

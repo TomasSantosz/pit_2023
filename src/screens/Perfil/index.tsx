@@ -122,7 +122,7 @@ export function Perfil(){
                     <TypeSport>{item.esporte.nome}</TypeSport>                
                     <TypesCompetition>      
                       <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                      <NumberOfMembers>Participantes: {item.atletas.length} /{item.NumPart}</NumberOfMembers>                  
+                      <NumberOfMembers>Participantes: {item.atletasArray.length} /{item.NumPart}</NumberOfMembers>                  
                     </TypesCompetition>                
                   </SingleCompetitions>
                 )

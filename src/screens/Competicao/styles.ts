@@ -1,22 +1,22 @@
 import styled from 'styled-components/native';
-import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 //Header
 
 export const InfoCompetition = styled.View`
-    padding: 0 18px 24px 18px;
-
-    flex-direction: column;
-    justify-content: center;
+    padding: 0 0px 24px 0px;
     align-items: center;
-    text-align: center;
-    margin-top: ${RFValue(80)}px;
+    margin-top: ${RFPercentage(10)}px;    
+    color: ${({ theme }) => theme.colors.shape};
+    font-size: ${RFValue(26)}px;
+    font-family: ${({ theme }) => theme.fonts.bold};
 `;
+
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
 
-    font-size: ${RFValue(24)}px;
+    font-size: ${RFValue(26)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 export const SubTitles = styled.Text`
@@ -39,14 +39,9 @@ export const Container = styled.View`
 //Div participacao
 
 export const ContentParticipacao = styled.View`
-    
-    background-color: ${({ theme }) => theme.colors.background_card};
-
-    width: ${RFValue(320)}px ;
-    height: ${RFValue(420)}px ;
+    width: ${RFPercentage(100)}px; 
+    height: ${RFPercentage(64)}px; 
     border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 15px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;    
@@ -57,24 +52,28 @@ export const Photo = styled.Image`
     border-radius: 50px;
 `;
 
-
-export const IconSettings = styled(MaterialIcons)`
+export const IconSettings = styled(MaterialCommunityIcons)`
     font-size: ${RFValue(30)}px;
     color: ${({ theme }) => theme.colors.shape};
     margin-left: ${RFValue(260)}px;
 `;
 
-export const Icon = styled(MaterialIcons)`
-    font-size: ${RFValue(25)}px;
+export const Icon = styled(MaterialCommunityIcons)`
+    font-size: ${RFValue(35)}px;
     color: ${({ theme }) => theme.colors.primary};
 `;
 
-export const IconAccept = styled(Feather)`
-    font-size: ${RFValue(25)}px;
+export const IconAccept = styled(MaterialCommunityIcons)`
+    font-size: ${RFValue(30)}px;
     color: ${({ theme }) => theme.colors.primary};
 `;
-export const IconDecline = styled(Feather)`
-    font-size: ${RFValue(25)}px;
+export const IconDecline = styled(MaterialCommunityIcons)`
+    font-size: ${RFValue(30)}px;
+    color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const IconWait = styled(MaterialCommunityIcons)`
+    font-size: ${RFValue(30)}px;
     color: ${({ theme }) => theme.colors.primary};
 `;
 
@@ -84,7 +83,6 @@ export const Accept = styled.View`
     width: ${RFValue(80)}px;
     justify-content: space-around;    
 `;
-
 
 export const NameCompetitions = styled.Text`
     color: ${({ theme }) => theme.colors.primary};
@@ -97,26 +95,22 @@ export const NameCompetitions = styled.Text`
 `;
 export const SingleParticipantes = styled.View`
     margin-top: 10px;
-    width: ${RFValue(280)}px ;
-    
+    width: ${RFPercentage(46)}px;   
     
     //background-color: green;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;   
-    margin-bottom: 10px;
+    align-items: center;  
     border-bottom-color: ${({ theme }) => theme.colors.primary} ;
     border-bottom-width: 0.5px;
-    padding-bottom: 5px;
+    padding: 10px;
 `;
 
 export const TypesCompetition = styled.View`
     flex-direction: row;
     width: 100% ;
     justify-content: space-between;
-    align-items: flex-start;
-    
-    
+    align-items: flex-start;   
 `;
 export const NameCompetition = styled.Text`
     font-size: ${RFValue(16)}px;
@@ -149,11 +143,6 @@ export const MoreCompetition = styled.Text`
     justify-content: center;
 `;
 
-
-
-
-
-
 export const Content = styled.View`
     padding-top: 15px;
     width: 100%;
@@ -161,16 +150,19 @@ export const Content = styled.View`
     align-items: center;
 `;
 export const Header = styled.View`
-    width: 100%;
-    height: ${RFPercentage(25)}px;
-    background-color: ${({ theme }) => theme.colors.primary};
-
     justify-content: space-around;
     align-items: center;
     
     flex-direction: row;
-`;
+    padding-bottom: 10px;
+    width: 100%;
+    height: ${RFPercentage(25)}px;
+    background-color: ${({ theme }) => theme.colors.primary};
+    margin-bottom: ${RFValue(15)}px;
 
+    border-bottom-left-radius: ${RFValue(40)}px;
+    border-bottom-right-radius: ${RFValue(40)}px;
+`;
 
 export const UserInfo = styled.View`
     flex-direction: row;

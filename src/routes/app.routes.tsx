@@ -12,8 +12,6 @@ import { Perfil } from '../screens/Perfil';
 import { Competicao } from '../screens/Competicao';
 import { GeneroSelect } from '../screens/Genero'; 
 import { EditarAtleta } from '../screens/EditarAtleta';
-import { EditarCompetition } from '../screens/EditCompetition';
-import { CompeticoesEsporte } from '../screens/CompeticoesEsportes';
 import { Esportes } from "../screens/Esportes";
 import { Rank } from "../screens/Rank";
 
@@ -38,16 +36,9 @@ export function AppRoutes(){
                 component={EditarAtleta}
             />
             <Screen
-                name="EditarCompetition"
-                component={EditarCompetition}
-            />
-            <Screen
                 name="Competicoes"
                 component={Competicoes}
-            />
-            <Screen
-                name="CompeticoesEsportes"
-                component={CompeticoesEsporte}
+                initialParams={{ nome: null }}
             />
             <Screen
                 name="Competicao"
@@ -64,7 +55,8 @@ export function AppRoutes(){
             />
             <Screen
                 name="InserirCompeticoes"
-                component={InsertCompetition}         
+                component={InsertCompetition}   
+                initialParams={{ _id: null }}      
             />
             <Screen
                 name="Rank"

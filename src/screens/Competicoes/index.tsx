@@ -6,7 +6,6 @@ import {
   Container,
   TypesCompetition,
   ContentCompetitions,
-  NameCompetitions,
   SingleCompetitions,
   NameCompetition,
   TypeSport,
@@ -14,18 +13,12 @@ import {
   NumberOfMembers,
   MoreCompetition,
   Header,
-  UserWrapper,
-  CompetitionInfo,
-  Photo,
-  User,
   CompetitionName,
-  NivelName,
   Content,
-  Icon,
-  IconStar
+  IconMore
 } from './styles';
 import { api } from '../../services/api';
-import { ScrollView } from 'react-native';
+import { ScrollView, View, ActivityIndicator } from 'react-native';
 
 interface Item {
   _id: string;
@@ -34,26 +27,47 @@ interface Item {
     nome: string;
     Regras: string;
   }
-  atletas: any;
+  atletasArray: any;
   DataInicio:string;
   DataTermino: string;
   NumPart: number;
-
 }
 
-export function Competicoes(){
+interface Route{
+  route:{
+    params: {
+      nome: string;
+    };
+  }
+}
+
+export function Competicoes({ route }:Route){
   const navigation = useNavigation();
   
   const [competitions, setCompetitions] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchCompeticoes() {
+      
+      
       const response = await api.get('/Competicoes')
-      setCompetitions(response.data);
-      console.log(competitions);
+      
+      if(route.params.nome){
+        let competitionsSport:any = [];
+        response.data.forEach((e:any)=>{
+          if(e.esporte.nome === route.params.nome){
+            competitionsSport.push(e)
+          }
+        })
+        setCompetitions(competitionsSport)
+      }else{
+        setCompetitions(response.data);
+      }     
+      setLoading(false);
     }
     fetchCompeticoes();
-  },[]);
+  },[competitions]);
 
   function VerificarDisponibilidade(dataTermino: Date){
     var dateHoje = moment(new Date(Date.now())).format("YYYY/MM/DD")
@@ -73,42 +87,47 @@ export function Competicoes(){
     navigation.navigate('InserirCompeticoes');
   }
   
+  if(loading){
+    return (
+      <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} color="#555"/>
+      </View>
+    )
+  } 
+
   return(
     
     <Container>
       <Header>
-        <UserWrapper>
-          <Header>
-            <UserWrapper>
-              <CompetitionInfo>
-                <CompetitionName>Competições</CompetitionName>
-              </CompetitionInfo>
-            </UserWrapper>            
-          </Header>
-        </UserWrapper>            
+        <CompetitionName>Competições</CompetitionName>        
       </Header>
       <Content>
-        <ContentCompetitions>              
-          <NameCompetitions>Competições Disponíveis</NameCompetitions>
+        <ContentCompetitions>
           <ScrollView>
             {competitions.map((item:Item, index)=>{
+              let numeroAprovados = 0
+              item.atletasArray.forEach((res:any)=>{
+                if(res.aprovado === true){
+                  numeroAprovados++;
+                }
+              })
               return VerificarDisponibilidade(new Date(item.DataTermino)) === true && (
                 <SingleCompetitions key={item._id}>
                   <TypesCompetition>
                     <NameCompetition>{item.nome}</NameCompetition>
-                    <MoreCompetition ><IconStar onPress={()=> openMoreDetails(item._id)} name="more" /></MoreCompetition>
+                    <MoreCompetition ><IconMore onPress={()=> openMoreDetails(item._id)} name="page-next-outline" /></MoreCompetition>
                   </TypesCompetition>                
                   <TypeSport>{item.esporte.nome}</TypeSport>                
                   <TypesCompetition>      
                     <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                    <NumberOfMembers>Participantes: {item.atletasArray.length}/{item.NumPart}</NumberOfMembers>                  
+                    <NumberOfMembers>Participantes: {numeroAprovados}/{item.NumPart}</NumberOfMembers>                  
                   </TypesCompetition>                
                 </SingleCompetitions>
               )
             })}             
           </ScrollView>
         </ContentCompetitions>      
-      <Button title="Inserir Competição" onPress={openInsertCompetition}/>
+        <Button title="Inserir Competição" onPress={openInsertCompetition}/>
       </Content>
     </Container>
   );   

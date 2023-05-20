@@ -1,4 +1,4 @@
-import { RFValue } from 'react-native-responsive-fontsize';
+import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
 export const Container = styled.KeyboardAvoidingView`
@@ -9,20 +9,22 @@ export const Container = styled.KeyboardAvoidingView`
 `;
 
 export const Header = styled.View`
-    background-color: ${({ theme }) => theme.colors.primary};
-
     width: 100%;
-    height: ${RFValue(113)}px;
+    height: ${RFPercentage(25)}px;
+    background-color: ${({ theme }) => theme.colors.primary};
+    margin-bottom: ${RFValue(15)}px;
 
-    align-items: center;
-    justify-content: flex-end;
-    padding-bottom: 19px;
+    justify-content: center;
+    align-items: center; 
+
+    border-bottom-left-radius: ${RFValue(40)}px;
+    border-bottom-right-radius: ${RFValue(40)}px;
 `;
 
 export const Title = styled.Text`
+    margin-top: ${RFValue(50)}px;
     color: ${({ theme }) => theme.colors.shape};
-
-    font-size: ${RFValue(18)}px;
+    font-size: ${RFValue(26)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 
@@ -79,11 +81,13 @@ export const DateView = styled.TouchableOpacity.attrs({
     flex-direction: row;
     justify-content: space-between;
     padding: 16px 18px;
+    width:100%;
     
-    
-    background-color: ${({ theme }) => theme.colors.background_card};
     border-radius: 15px;
     margin-bottom: 30px;
+    
+    border-bottom-color: ${({ theme }) => theme.colors.primary} ;
+    border-bottom-width: 0.5px;
     
 `;
 

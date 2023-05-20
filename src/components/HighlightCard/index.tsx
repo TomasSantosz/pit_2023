@@ -7,12 +7,13 @@ import {
 } from "./styles";
 type Props = {
     name: string;
+    icon: string
     onPress: (event: GestureResponderEvent) => void;
 }
-export function HighlightCars({name, ...rest}: Props){
+export function HighlightCars({name, icon, ...rest}: Props){
     return (
         <Container {...rest}>
-                <Icon name='user' />
+                <Icon name={icon} />
                 <Title>{name}</Title>
         </Container>
     )

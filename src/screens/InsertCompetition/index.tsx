@@ -8,6 +8,7 @@ import {
     ScrollView,
     Platform,
     View,
+    ActivityIndicator
 } from 'react-native';
 import { useAuth } from '../../contexts/auth';
 import { Input } from '../../components/Forms/Input'
@@ -21,8 +22,19 @@ import {
     Alert
 } from 'react-native';
 
-export function InsertCompetition(){
+interface Route{
+    route:{
+      params: {
+        _id: string;
+      };
+    }
+  }
+
+export function InsertCompetition({ route }:Route){
     const navigation = useNavigation();
+    const [loading, setLoading] = useState(true);
+    const [competition, setCompetition] = useState(null);
+
     const [openDateModalInicio, setOpenDateModalInicio ] = useState(false);
     const [openDateModalTermino, setOpenDateModalTermino] = useState(false);
     
@@ -49,13 +61,59 @@ export function InsertCompetition(){
         const endDate = getFormatedDate(new Date(new Date(dataInicio).setDate(new Date(dataInicio).getDate() + 1)), 'YYYY/MM/DD');
 
     useEffect(()=>{
-        
-    },[dataInicio])
+        if(route.params._id){
+            api.get(`/competicoes/${route.params._id}`).then((response)=>{
+                const dataInicioSplit = response.data.DataInicio.split('T')
+                const dataTerminoSplit = response.data.Datatermino.split('T')
+                setOpenDateInicio(moment(dataInicioSplit[0]).format("MM/DD/YYYY"))
+                setOpenDateTermino(moment(dataTerminoSplit[0]).format("MM/DD/YYYY"))
+                setOpenTimeInicio(dataInicioSplit[1].substring(0,5))
+                setOpenTimeTermino(dataTerminoSplit[1].substring(0,5))
+                setCompetition(response.data);
+                onChangeTextNome(response.data.nome)
+                onChangeTextNumeroParticipantes(response.data.NumPart)
+                onChangeTextLocal(response.data.Local)
+                onChangeTextDescricao(response.data.descricao)
+                setEsporte({nome: response.data.esporte.nome, _id: response.data.esporte._id, Regras: response.data.esporte.Regras})
+                setLoading(false);
+            }).catch((err)=>{
+                console.log('eeror')
+            })
+        }        
+    },[])
     
-    
+    if(route.params._id){
+        if(loading){
+            return (
+              <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
+                <ActivityIndicator size={'large'} color="#555"/>
+              </View>
+            )
+        } 
+    }
     function handleCloseSelectEsporte(){
-        setEsporteModal(!esporteModal);
-        
+        setEsporteModal(!esporteModal);        
+    }
+    function EditarCompetition(){
+        const esporteId = esporte._id;
+        const compepe = {
+            nome,
+            esporte: esporteId,
+            criador: user?._id,
+            descricao,
+            NumPart: Number(numeroParticipantes),
+            Local: local,
+            DataInicio: `${moment(new Date(dataInicio)).format("MM/DD/YYYY")} ${timeInicio}`,
+            Datatermino: `${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`
+        }
+        console.log(compepe)
+        api.put(`/competicoes/${competition?._id}`,compepe)
+        .then(async(response) => {
+            Alert.alert('Editado com sucesso!', `A competição ${compepe.nome} foi editada.`);
+            return response.data;
+        }).catch(err => {
+            return Alert.alert('Falha', 'Falha ao cadastrar!');
+        });
     }
 
     function InserirCompetition(){
@@ -72,9 +130,15 @@ export function InsertCompetition(){
             Datatermino: `${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`,
             atletas
         }
-        console.log(compepe)
         api.post('/competicoes',compepe)
         .then(async(response) => {
+            api.post('/competicoes/atleta',{
+                idCompeticao: response.data._id, 
+                  atletasArray:{
+                  atleta: response.data.criador,
+                  aprovado: true,
+                }
+            });
             Alert.alert('Cadastrado com sucesso!', `A competição ${compepe.nome} já está disponível`);
             return response.data;
         }).catch(err => {
@@ -93,7 +157,6 @@ export function InsertCompetition(){
 
     function handleTimeInicioChange(propDate:string){
         setOpenTimeInicio(propDate);
-        console.log(dataInicio)
     }
 
     function handleTimeTerminoChange(propDate:string){
@@ -110,13 +173,14 @@ export function InsertCompetition(){
         <Container behavior={Platform.OS == "ios" ? "padding" : "height"}
         keyboardVerticalOffset={20}>
             <Header>
-                <Title>Inserir Competição</Title>   
+                <Title>{route.params._id ? "Editar Competição" : "Inserir Competição"}</Title>   
             </Header>
             <ScrollView>
                 <Form>
                     <Fields>
                         <Input 
                             placeholder='Nome *'
+                            defaultValue={route.params._id && nome}
                             onChangeText={(text)=>{
                                 onChangeTextNome(text)
                             }}
@@ -129,11 +193,13 @@ export function InsertCompetition(){
                                 onChangeTextNumeroParticipantes(text)
                             }}
                             autoCapitalize='none'
+                            defaultValue={route.params._id && String(numeroParticipantes)}
                             keyboardType='numeric'
                             autoCorrect={false}  
                         />
                         <Input 
-                            placeholder='Descricao *'
+                            placeholder='Descrição *'
+                            defaultValue={route.params._id && String(descricao)}
                             onChangeText={(text)=>{
                                 onChangeTextDescricao(text)
                             }}
@@ -144,15 +210,16 @@ export function InsertCompetition(){
                             onPress={handleCloseSelectEsporte}  
                         />
                         <DateView onPress={handleDateInicioPress}>
-                            <DateText>{moment(new Date(dataInicio)).format("DD/MM/YYYY")} {timeInicio}</DateText>
+                            <DateText>{moment(new Date(dataInicio)).format("DD/MM/YYYY")} {timeInicio} *</DateText>
                         </DateView>
 
                         <DateView onPress={handleDateTerminoPress}>
-                            <DateText>{moment(new Date(dataTermino)).format("DD/MM/YYYY")} {timeTermino}</DateText>
+                            <DateText>{moment(new Date(dataTermino)).format("DD/MM/YYYY")} {timeTermino} *</DateText>
                         </DateView>
                         
                         <Input 
                             placeholder='Local *'
+                            defaultValue={route.params._id && String(local)}
                             onChangeText={(text)=>{
                                 onChangeTextLocal(text)
                             }}
@@ -160,7 +227,7 @@ export function InsertCompetition(){
                             autoCapitalize='none'
                         />
                     </Fields>
-                    <Button title="Inserir Competição" onPress={InserirCompetition} />
+                    <Button title={route.params._id ? "Editar Competição" : "Inserir Competição"} onPress={route.params._id ? EditarCompetition : InserirCompetition} />
                 </Form>
                 <Modal visible={esporteModal}>
                     <ModalEsportes 

@@ -8,12 +8,13 @@ export const Container = styled.TouchableOpacity.attrs({
     flex-direction: row;
     justify-content: space-between;
     padding: 16px 18px;
+    width:100%;
     
-    
-    background-color: ${({ theme }) => theme.colors.background_card};
     border-radius: 15px;
     margin-bottom: 30px;
     
+    border-bottom-color: ${({ theme }) => theme.colors.primary} ;
+    border-bottom-width: 0.5px;
 `;
 
 export const Option = styled.Text`

@@ -1,31 +1,19 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'moment';
 import { Button } from '../../components/Forms/Button'
-
 
 import { 
   Container,
   TypesCompetition,
   ContentCompetitions,
-  NameCompetitions,
   SingleCompetitions,
   NameCompetition,
-  MoreCompetition,
-  TypeSport,
   Header,
-  UserWrapper,
-  SportInfo,
-  Photo,
-  User,
   SportName,
-  NivelName,
-  Content,
-  Icon,
-  IconStar
+  Content
 } from './styles';
 import { api } from '../../services/api';
-import { ScrollView } from 'react-native';
+import { ScrollView, View, ActivityIndicator } from 'react-native';
 
 interface Item {
   _id: string;
@@ -35,40 +23,44 @@ interface Item {
 }
 
 export function Esportes(){
-  const navigation = useNavigation();
-  
+  const navigation = useNavigation();  
   const [esportes, setEsportes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchEsportes() {
       const response = await api.get('/Esportes');
       setEsportes(response.data);
+      setLoading(false); 
     }
     fetchEsportes();
-  },[]);
+  },[esportes]);
 
   function openInsertSport(){
     navigation.navigate('InserirEsportes');
   }  
 
   function openCompetitionWithSport(nome:string){
-    navigation.navigate('CompeticoesEsportes', { 
+    navigation.navigate('Competicoes', { 
       nome 
     });
   }
   
+  if(loading){
+    return (
+      <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size={'large'} color="#555"/>
+      </View>
+    )
+  } 
+
   return(    
     <Container>
       <Header>
-        <UserWrapper>
-          <SportInfo>
-            <SportName>Esportes</SportName>
-          </SportInfo>
-        </UserWrapper>            
+        <SportName>Esportes</SportName>        
       </Header>
       <Content>
         <ContentCompetitions>              
-          <NameCompetitions>Esportes Disponíveis</NameCompetitions>
           <ScrollView>
             {esportes.map((item:Item, index)=>{
               return item.aproved === false && (

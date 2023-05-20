@@ -9,9 +9,9 @@ export const Container = styled(TextInput).attrs({
     padding: 16px 18px;
     font-family: ${({ theme }) => theme.fonts.regular};
     font-size: ${RFValue(14)}px;
-    background-color: ${({ theme }) => theme.colors.background_card};
     border-radius: 15px;
     margin-bottom: 30px;
     color: ${({ theme }) => theme.colors.text_geral};
-    
+    border-bottom-color: ${({ theme }) => theme.colors.primary} ;
+    border-bottom-width: 0.5px;
 `;

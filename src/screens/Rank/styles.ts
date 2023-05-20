@@ -11,7 +11,7 @@ export const Container = styled.View`
 `;
 
 export const Header = styled.View`
-    padding: 20px;
+    padding: ${RFPercentage(3)}px;
     width: 100%;
     height: ${RFPercentage(40)}px;
     background-color: ${({ theme }) => theme.colors.primary};
@@ -45,22 +45,19 @@ export const ScoreText = styled.Text`
 `;
 //Body
 export const Content = styled.View`
-    padding: 10px;    
+    padding-top: ${RFPercentage(3)}px; 
     flex-direction: column;
 `;
 
 export const RankContent = styled.View`
-    height: ${RFPercentage(50)}px;
-    padding: 15px;
-    border-radius: 30px;
-    //background-color: ${({ theme }) => theme.colors.background_card};
+    height: ${RFPercentage(61)}px;
+    padding: ${RFPercentage(1)}px;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
 `;
 
 export const SingleAtleta = styled.View`
-    width: ${RFValue(300)}px; 
+    width: 97%; 
     height:  ${RFValue(80)}px;
     //background-color: green;
     flex-direction: column;
@@ -68,33 +65,33 @@ export const SingleAtleta = styled.View`
     align-items: flex-start; 
     border-bottom-color: ${({ theme }) => theme.colors.primary} ;
     border-bottom-width: 0.4px;
-    padding-bottom: 5px;
+    padding-bottom: ${RFPercentage(1)}px;  ;    
 `;
 
 export const Photo = styled.Image`
-    width: ${RFValue(55)}px;
-    height: ${RFValue(55)}px;
+    width: ${RFValue(45)}px;
+    height: ${RFValue(45)}px;
     border-radius: 50px;
 `;
 
 export const DadosAtleta = styled.View`
-    margin-top: 10px;
-    width: ${RFValue(300)}px ; 
+    margin-top: ${RFPercentage(1)}px;  
+    width: 100%; 
     flex-direction: row;
     justify-items: center;
     align-items: center;   
 `;
 
 export const AtributosAtleta = styled.View`
-    width: ${RFValue(200)}px ; 
+    width: 70%; 
     flex-direction: column;  
-    margin-left: 10px;
+    margin-left: ${RFPercentage(1)}px;  
 `;
 export const NameAtleta = styled.Text`
     font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.regular};
-    max-width: 200px;
+    max-width: 210px;
 `;
 export const PontuacaoAtleta = styled.Text`
     font-size: ${RFValue(14)}px;
@@ -107,5 +104,3 @@ export const PosicaoAtleta = styled.Text`
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
-
-

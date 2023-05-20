@@ -9,10 +9,8 @@ export declare global {
             Esportes: undefined;
             InserirEsportes: undefined;
             InserirCompeticoes: undefined;
-            CompeticoesEsportes: undefined;
             Perfil: undefined;
             EditarAtleta: undefined;
-            EditarCompetition: undefined;
             Rank: undefined;
         }
     }
