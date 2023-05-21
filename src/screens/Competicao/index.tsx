@@ -124,15 +124,14 @@ export function Competicao({ route }:Route){
   }
 
   async function HandleExcluirCompeticao(){    
-    Alert.alert('Deseja deletar essa competição?', 'A competição será encerrada e todos sairão dela!', [
-      {text: 'Sim', onPress: () => {
-        api.delete(`/Competicoes/${competition._id}`)
+    await Alert.alert('Deseja deletar essa competição?', 'A competição será encerrada e todos sairão dela!', [
+      {text: 'Sim', onPress: async() => {
+        await api.delete(`/Competicoes/${competition._id}`)
         .then(async(response) => {
-            Alert.alert('Removido com sucesso!', 'Você removeu a competição', [
+          Alert.alert('Removido com sucesso!', 'Você removeu a competição', [
               {text: 'ok', onPress: () => openCompetition()},
               {text: 'Cancelar'},
           ]);
-            return response.data;
         }).catch(err => {
             return Alert.alert('Falha');
         });

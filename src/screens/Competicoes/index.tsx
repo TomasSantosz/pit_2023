@@ -48,11 +48,8 @@ export function Competicoes({ route }:Route){
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchCompeticoes() {
-      
-      
-      const response = await api.get('/Competicoes')
-      
+    async function fetchCompeticoes() {        
+      const response = await api.get('/Competicoes')      
       if(route.params.nome){
         let competitionsSport:any = [];
         response.data.forEach((e:any)=>{

@@ -126,7 +126,21 @@ export function InsertCompetition({ route }:Route){
     }
 
     function InserirCompetition(){
-        const atletas = [user]
+        if(!nome || !descricao || !numeroParticipantes || !local ){
+            return Alert.alert('Atenção', 'Preencha os campos OBRIGATÓRIOS (*)!');
+        }
+
+        if(Number(numeroParticipantes) <= 1){
+            return Alert.alert('Atenção', 'Preencha o número de participantes tem que ser superior à um!');
+        }
+
+        if(esporte._id == ''){
+            return Alert.alert('Atenção', 'Selecione o campo: ESPORTE.');
+        }
+
+        if(new Date(`${moment(new Date(dataInicio)).format("MM/DD/YYYY")} ${timeInicio}`) >= new Date(`${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`)){
+            return Alert.alert('Atenção', 'Selecione uma data e hora de termino posterior à de início');
+        }
         const esporteId = esporte._id;
         const compepe = {
             nome,
@@ -136,8 +150,7 @@ export function InsertCompetition({ route }:Route){
             NumPart: Number(numeroParticipantes),
             Local: local,
             DataInicio: `${moment(new Date(dataInicio)).format("MM/DD/YYYY")} ${timeInicio}`,
-            Datatermino: `${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`,
-            atletas
+            Datatermino: `${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`
         }
         api.post('/competicoes',compepe)
         .then(async(response) => {

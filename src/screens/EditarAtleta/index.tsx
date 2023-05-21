@@ -35,9 +35,7 @@ export function EditarAtleta(){
         async function register(){
             api.put(`/atleta/${user?._id}`,{
                 nome,
-                email,    
-                idade,  
-                altura,  
+                email,   
                 genero: genero.key,        
             }).then(res => {
                 Alert.alert('Sucesso','Seus dados foram alterados com sucesso! Você será redirecionado para tela de login', [
@@ -79,7 +77,7 @@ export function EditarAtleta(){
                         autoCapitalize='words'
                         autoCorrect={false}  
                     />
-                    <Input 
+                    {/* <Input 
                         placeholder='Email *'
                         defaultValue={user?.email}
                         editable={false}
@@ -108,7 +106,7 @@ export function EditarAtleta(){
                             const textNumber = Number(text)
                             onChangeTextAltura(textNumber)
                         }}
-                    />
+                    /> */}
                     <Select 
                         title={genero.name}
                         onPress={handleCloseSelectGenero}  
