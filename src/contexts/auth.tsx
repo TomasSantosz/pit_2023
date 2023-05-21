@@ -10,16 +10,16 @@ interface AuthProviderProps{
 }
 
 interface User{
-    _id ?: string; 
-    nome ?: string;
-    email ?: string; 
+    _id ?: any; 
+    nome ?: any;
+    email ?: any; 
     competicoes:[{
-        _id?: string;
-        nome: string;
+        _id?: any;
+        nome: any;
     }]
     idade  ?: number; 
     altura ?: number; 
-    genero ?: string;      
+    genero ?: any;      
 }
 
 interface AuthContextData{
@@ -27,8 +27,8 @@ interface AuthContextData{
     user: User | null;
     loading: boolean;
     signIn(
-        email: string, 
-        password: string
+        email: any, 
+        password: any
         ): Promise<void>;
     signOut(): void;
     };

@@ -9,15 +9,12 @@ import { ImagemPerfil } from '../../assets/alfabeto';
 import { 
   Container,
   Header,
-  UserWrapper,
   Photo,
   UserName,
   Content,
-  Icon,
   User,
   UserLevel,
   Level,
-  Participacoes,
   TitleParticipacoes,
   TypesCompetition,
   SingleCompetitions,
@@ -27,10 +24,11 @@ import {
   TypeSport,
   NumberOfMembers,
   IconStar,
-  IconMore,
-  
+  IconEdit
 } from './styles';
+
 import {useAuth} from '../../contexts/auth';
+
 interface Item {
   _id: string;
   nome: string;
@@ -38,10 +36,7 @@ interface Item {
     nome: string;
     Regras: string;
   }
-  atletas: {
-    forEach:(atleta: object) => void,
-    length: any,
-  };
+  atletasArray: any;
   DataInicio:string;
   DataTermino: string;
   NumPart: number;
@@ -59,11 +54,10 @@ export function Perfil(){
       const response = await api.get(`/atletas/${user?._id}/competicoes`);
       setCompetitions(response.data);      
       setNivelAtual(Nivel(response.data.length));
-      console.log(response.data.length)
       setLoading(false); 
     }
     fetchCompeticoes();
-  },[nivel_atual]);
+  },[competitions]);
 
   
   function openMoreDetails(_id:string){
@@ -93,50 +87,37 @@ export function Perfil(){
     )
   }
   return(
-      <Container>
-        
-        <Header>
-          <UserWrapper>
-              <Photo source={ImagemPerfil(user?.nome.substring(0,1).toUpperCase())}/>              
-          </UserWrapper>    
-          <Icon name="settings" onPress={openEditPerfil}/>    
+      <Container>        
+        <Header>              
+            <Photo source={ImagemPerfil(user?.nome.substring(0,1).toUpperCase())}/>              
         </Header>
-        {/* <ScrollView horizontal={false}>  */}
+        <IconEdit onPress={()=> openEditPerfil(user?._id)} name="account-edit" />
         <User>
           <UserName>{user?.nome}</UserName>
           <UserLevel>
             <Level>Nível {nivel_atual}</Level>
           </UserLevel>
-        </User>                   
-        <Content>          
-          <Participacoes>
-            <TitleParticipacoes>Competições</TitleParticipacoes>
-            <ScrollView>
-              {competitions.map((item:Item)=>{          
-                return VerificarDisponibilidade(new Date(item.DataTermino)) === true &&(
-                  <SingleCompetitions key={item._id}>
-                    <TypesCompetition>
-                      <NameCompetition>{item.nome}</NameCompetition>
-                      <MoreCompetition ><IconStar onPress={()=> openMoreDetails(item._id)} name="more" /></MoreCompetition>
-                    </TypesCompetition>                
-                    <TypeSport>{item.esporte.nome}</TypeSport>                
-                    <TypesCompetition>      
-                      <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                      <NumberOfMembers>Participantes: {item.atletasArray.length} /{item.NumPart}</NumberOfMembers>                  
-                    </TypesCompetition>                
-                  </SingleCompetitions>
-                )
-              })}              
-            </ScrollView>              
-          </Participacoes>
-          {/* <Participacoes>
-            <TitleParticipacoes>FeedBack</TitleParticipacoes>
-            <ScrollView>
-              
-            </ScrollView>              
-          </Participacoes> */}  
+        </User>  
+        <ScrollView>                 
+        <TitleParticipacoes>Competições</TitleParticipacoes>
+        <Content>              
+          {competitions.map((item:Item)=>{          
+            return VerificarDisponibilidade(new Date(item.DataTermino)) === true &&(
+              <SingleCompetitions key={item._id}>
+                <TypesCompetition>
+                  <NameCompetition>{item.nome}</NameCompetition>
+                  <MoreCompetition ><IconStar onPress={()=> openMoreDetails(item._id)} name="page-next-outline" /></MoreCompetition>
+                </TypesCompetition>                
+                <TypeSport>{item.esporte.nome}</TypeSport>                
+                <TypesCompetition>      
+                  <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
+                  <NumberOfMembers>Participantes: {item.atletasArray.length} /{item.NumPart}</NumberOfMembers>                  
+                </TypesCompetition>                
+              </SingleCompetitions>
+            )
+          })}             
         </Content>
-        {/* </ScrollView> */}
+      </ScrollView>
       </Container>
     );   
 }

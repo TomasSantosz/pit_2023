@@ -33,13 +33,13 @@ interface Route{
 export function InsertCompetition({ route }:Route){
     const navigation = useNavigation();
     const [loading, setLoading] = useState(true);
-    const [competition, setCompetition] = useState(null);
+    const [competition, setCompetition] = useState<any>(null);
 
     const [openDateModalInicio, setOpenDateModalInicio ] = useState(false);
     const [openDateModalTermino, setOpenDateModalTermino] = useState(false);
     
-    const [dataInicio, setOpenDateInicio ] = useState<Date>(new Date(Date.now()));
-    const [dataTermino, setOpenDateTermino ] = useState<Date>(new Date(Date.now()));
+    const [dataInicio, setOpenDateInicio ] = useState<any>(new Date(Date.now()));
+    const [dataTermino, setOpenDateTermino ] = useState<any>(new Date(Date.now()));
     const [timeInicio, setOpenTimeInicio ] = useState('00:00');
     const [timeTermino, setOpenTimeTermino ] = useState('00:00');
 
@@ -94,6 +94,12 @@ export function InsertCompetition({ route }:Route){
     function handleCloseSelectEsporte(){
         setEsporteModal(!esporteModal);        
     }
+
+    function openCompetition(){
+        navigation.navigate('Competicoes');
+    }
+
+
     function EditarCompetition(){
         const esporteId = esporte._id;
         const compepe = {
@@ -109,7 +115,10 @@ export function InsertCompetition({ route }:Route){
         console.log(compepe)
         api.put(`/competicoes/${competition?._id}`,compepe)
         .then(async(response) => {
-            Alert.alert('Editado com sucesso!', `A competição ${compepe.nome} foi editada.`);
+            Alert.alert('Editado com sucesso!', `A competição ${compepe.nome} foi editada.`, [
+                {text: 'ok', onPress: () => openCompetition()},
+                {text: 'Cancelar'},
+            ]);
             return response.data;
         }).catch(err => {
             return Alert.alert('Falha', 'Falha ao cadastrar!');
@@ -139,7 +148,10 @@ export function InsertCompetition({ route }:Route){
                   aprovado: true,
                 }
             });
-            Alert.alert('Cadastrado com sucesso!', `A competição ${compepe.nome} já está disponível`);
+            Alert.alert('Cadastrado com sucesso!', `A competição ${compepe.nome} já está disponível`, [
+                {text: 'ok', onPress: () => openCompetition()},
+                {text: 'Cancelar'},
+            ]);
             return response.data;
         }).catch(err => {
             return Alert.alert('Falha', 'Falha ao cadastrar!');

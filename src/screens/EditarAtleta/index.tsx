@@ -23,17 +23,12 @@ export function EditarAtleta(){
         name: user?.genero
     });
 
-    function openRegister(){
-        navigation.navigate('Login')
-    }
     const [generoModal, setGeneroModal] = useState(user?.genero);
     const [nome, onChangeTextNome] = useState(user?.nome);
-    const [password, onChangeTextSenha] = useState("");
     const [email, onChangeTextEmail] = useState(user?.email);
     const [idade, onChangeTextIdade] = useState(user?.idade);
     const [altura, onChangeTextAltura] = useState(user?.altura);
-    
-    const [confirmarSenha, onChangeTextConfirmarSenha] = useState(""); 
+
     async function handleRegister(){
         const strongRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
        
@@ -45,8 +40,11 @@ export function EditarAtleta(){
                 altura,  
                 genero: genero.key,        
             }).then(res => {
-                console.log(res)
-                return Alert.alert('Sucesso','Seus dados foram alterados com sucesso!');
+                Alert.alert('Sucesso','Seus dados foram alterados com sucesso! Você será redirecionado para tela de login', [
+                    {text: 'Sair', onPress: () => signOut()},
+                    {text: 'Cancelar'},
+                  ]);
+                return signOut();
             }).catch(err => {
                 const error = JSON.parse(err.request._response);
                 //console.log(err.request.status)
@@ -90,23 +88,6 @@ export function EditarAtleta(){
                         }}
                         autoCapitalize='none'
                         autoCorrect={false}                        
-                    />
-                    <Input 
-                        placeholder='Senha *'
-                        onChangeText={(text)=>{
-                            onChangeTextSenha(text)
-                        }}
-                        secureTextEntry={true}
-                        autoCorrect={false} 
-                    />
-                    <Input 
-                        placeholder='Confirmar senha *'
-                        onChangeText={(text)=>{
-                            onChangeTextConfirmarSenha(text)
-                        }}
-
-                        secureTextEntry={true}
-                        autoCorrect={false} 
                     />
                     <Input 
                         placeholder='Idade *'
