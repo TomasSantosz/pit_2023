@@ -14,6 +14,7 @@ import {
 } from './styles';
 import { api } from '../../services/api';
 import { ScrollView, View, ActivityIndicator } from 'react-native';
+import Lottie from 'lottie-react-native';
 
 interface Item {
   _id: string;
@@ -31,7 +32,9 @@ export function Esportes(){
     async function fetchEsportes() {
       const response = await api.get('/Esportes');
       setEsportes(response.data);
-      setLoading(false); 
+      setTimeout(function(){
+        setLoading(false); 
+      },100);
     }
     fetchEsportes();
   },[esportes]);
@@ -49,7 +52,7 @@ export function Esportes(){
   if(loading){
     return (
       <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size={'large'} color="#555"/>
+        <Lottie source={require('../../assets/lottie/70493-loading-spinner.json')} autoPlay loop />
       </View>
     )
   } 

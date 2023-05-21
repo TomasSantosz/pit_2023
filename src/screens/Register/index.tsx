@@ -80,16 +80,13 @@ export function Register(){
         <Container 
             behavior={Platform.OS == "ios" ? "padding" : "height"}
             keyboardVerticalOffset={20}
-            >
-            
+            >            
             <Header>
                 <Title>Cadastro</Title>   
-            </Header>
-
-            
-            <ScrollView>
+            </Header>            
             <TextSoftware> Software de Competição esportiva </TextSoftware>
             
+            <ScrollView>            
             <Form>
                 <Fields>
                     <Input 
@@ -147,11 +144,12 @@ export function Register(){
                         title={genero.name}
                         onPress={handleCloseSelectGenero}  
                     />
+                    
                 </Fields>
                 <Button 
-                    title="Cadastrar"
-                    onPress={handleRegister} 
-                />
+                        title="Cadastrar"
+                        onPress={handleRegister} 
+                    />
             </Form>
             
             

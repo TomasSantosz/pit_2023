@@ -28,7 +28,7 @@ import {
 } from './styles';
 
 import {useAuth} from '../../contexts/auth';
-
+import Lottie from 'lottie-react-native';
 interface Item {
   _id: string;
   nome: string;
@@ -54,7 +54,9 @@ export function Perfil(){
       const response = await api.get(`/atletas/${user?._id}/competicoes`);
       setCompetitions(response.data);      
       setNivelAtual(Nivel(response.data.length));
-      setLoading(false); 
+      setTimeout(function(){
+        setLoading(false); 
+      },100); 
     }
     fetchCompeticoes();
   },[competitions]);
@@ -82,7 +84,7 @@ export function Perfil(){
   if(loading){
     return (
       <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size={'large'} color="#555"/>
+        <Lottie source={require('../../assets/lottie/70493-loading-spinner.json')} autoPlay loop />
       </View>
     )
   }

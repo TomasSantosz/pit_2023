@@ -18,6 +18,7 @@ import { ModalEsportes } from '../ModalEsportes';
 import { api } from '../../services/api';
 import DatePicker, {getToday, getFormatedDate} from 'react-native-modern-datepicker';
 import { useNavigation } from '@react-navigation/native';
+import Lottie from 'lottie-react-native';
 import { 
     Alert
 } from 'react-native';
@@ -75,7 +76,9 @@ export function InsertCompetition({ route }:Route){
                 onChangeTextLocal(response.data.Local)
                 onChangeTextDescricao(response.data.descricao)
                 setEsporte({nome: response.data.esporte.nome, _id: response.data.esporte._id, Regras: response.data.esporte.Regras})
-                setLoading(false);
+                setTimeout(function(){
+                    setLoading(false); 
+                  },100);
             }).catch((err)=>{
                 console.log('eeror')
             })
@@ -85,9 +88,9 @@ export function InsertCompetition({ route }:Route){
     if(route.params._id){
         if(loading){
             return (
-              <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
-                <ActivityIndicator size={'large'} color="#555"/>
-              </View>
+                <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
+                    <Lottie source={require('../../assets/lottie/70493-loading-spinner.json')} autoPlay loop />
+                </View>
             )
         } 
     }

@@ -28,6 +28,8 @@ import { ScrollView } from 'react-native';
 import { ImagemPerfil } from '../../assets/alfabeto';
 import { useAuth } from '../../contexts/auth';
 import { useNavigation } from '@react-navigation/native';
+import Lottie from 'lottie-react-native';
+
 interface Route{
   route:{
     params: {
@@ -78,7 +80,9 @@ export function Competicao({ route }:Route){
         return p.atleta._id === user?._id;
       }
       setPermiteButton(!!response.data.atletasArray.find(participa))
-      setLoading(false);
+      setTimeout(function(){
+        setLoading(false); 
+      },100);
       
     }
     getCompetition();   
@@ -169,7 +173,7 @@ export function Competicao({ route }:Route){
   if(loading){
     return (
       <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size={'large'} color="#555"/>
+        <Lottie source={require('../../assets/lottie/70493-loading-spinner.json')} autoPlay loop />
       </View>
     )
   } 

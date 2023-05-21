@@ -21,7 +21,7 @@ import {
   ScoreText
 } from './styles';
 import {useAuth} from '../../contexts/auth';
-
+import Lottie from 'lottie-react-native';
 export function Rank(){
   const [rank, setRank] = useState<any>([]);
   const [loading, setLoading] = useState(true);
@@ -37,7 +37,10 @@ export function Rank(){
           setPosicao(posicao + 1)
         }
       })  
-      setLoading(false); 
+      
+      setTimeout(function(){
+        setLoading(false); 
+      },100);
     }
     fetchCompeticoes();
   },[]);
@@ -45,7 +48,7 @@ export function Rank(){
   if(loading){
     return (
       <View style={{flex: 1, backgroundColor: '#EBEBEB',justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size={'large'} color="#555"/>
+        <Lottie source={require('../../assets/lottie/70493-loading-spinner.json')} autoPlay loop />
       </View>
     )
   }

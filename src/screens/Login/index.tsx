@@ -5,6 +5,7 @@ import {
     TouchableWithoutFeedback, Keyboard ,
     Alert
 } from 'react-native';
+
 import { 
     Container, Header, Title, 
     Form, Fields, TextSoftware, TextRegister} from './styles';
@@ -26,12 +27,14 @@ export function Login(){
     }
 
     function handleLogin(){
-        if (!strongRegex.test(email)) {
-            return Alert.alert('O Email não é válido.');
-        }
         if(!password || !email){
             return Alert.alert('Preencha os campos obrigatórios (*).');
         }
+
+        if (!strongRegex.test(email)) {
+            return Alert.alert('O Email não é válido.');
+        }
+        
         signIn(email,password)
     }
     return (
@@ -43,8 +46,8 @@ export function Login(){
             <Header>
                 <Title>Login</Title>   
             </Header>
-            <ScrollView>
             <TextSoftware> Software de Competição esportiva </TextSoftware>
+            
             <Form>
                 <Fields>
                     <Input 
@@ -63,17 +66,16 @@ export function Login(){
                         secureTextEntry={true}
                         autoCorrect={false}
                     />
+                    <Button title="Login"
+                        onPress={handleLogin}                
+                    />
+                
+                    <TextRegister
+                        onPress={openRegister} 
+                    >Registar</TextRegister>
                 </Fields>
-                <Button title="Login"
-                    onPress={handleLogin}                
-                />
-                <TextRegister
-                    onPress={openRegister} 
-                >
-                    Registar
-                </TextRegister>
+                
             </Form>
-            </ScrollView>
         </Container>
         </TouchableWithoutFeedback>
     );

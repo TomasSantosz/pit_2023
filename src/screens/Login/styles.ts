@@ -1,4 +1,4 @@
-import { RFValue } from 'react-native-responsive-fontsize';
+import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
 export const Container = styled.KeyboardAvoidingView`
@@ -8,39 +8,22 @@ export const Container = styled.KeyboardAvoidingView`
 `;
 
 export const Header = styled.View`
+    width: 100%;
+    height: ${RFPercentage(20)}px;
     background-color: ${({ theme }) => theme.colors.primary};
 
-    width: 100%;
-    height: ${RFValue(113)}px;
+    justify-content: center;
+    align-items: center; 
 
-    align-items: center;
-    justify-content: flex-end;
-    padding-bottom: 19px;
+    border-bottom-left-radius: ${RFValue(40)}px;
+    border-bottom-right-radius: ${RFValue(40)}px;
 `;
 
 export const Title = styled.Text`
+    margin-top: ${RFPercentage(5)}px;
     color: ${({ theme }) => theme.colors.shape};
-    font-size: ${RFValue(18)}px;
-    
+    font-size: ${RFValue(20)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
-`;
-export const TextRegister = styled.Text`
-    color: ${({ theme }) => theme.colors.primary};
-    font-size: ${RFValue(14)}px;
-    font-family: ${({ theme }) => theme.fonts.bold};
-`;
-
-export const Form = styled.View`
-    flex: 1;
-    width: 100%;
-    padding-top: ${RFValue(24)}px;
-    align-items: center;
-    justify-content: space-between;
-
-`;
-
-export const Fields = styled.View`
-    width: 100%;
 `;
 
 export const TextSoftware = styled.Text`
@@ -48,5 +31,26 @@ export const TextSoftware = styled.Text`
     text-align: center;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.bold};
-    padding: 40px 0px;
+    margin-top: ${RFPercentage(5)}px;
+`;
+
+export const Fields = styled.View`
+    width: 95%;
+    text-align: center;
+    align-items: center;
+`;
+
+export const Form = styled.View`
+    flex: 1;
+    width: 100%;
+    padding-top: ${RFPercentage(5)}px;
+    align-items: center;
+    justify-content: space-between;
+
+`;
+
+export const TextRegister = styled.Text`
+    color: ${({ theme }) => theme.colors.primary};
+    font-size: ${RFValue(14)}px;
+    font-family: ${({ theme }) => theme.fonts.bold};
 `;
