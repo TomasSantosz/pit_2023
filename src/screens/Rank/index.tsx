@@ -65,7 +65,7 @@ export function Rank(){
         <Content>          
           <RankContent>
             <ScrollView>
-              {rank.map((item:any, posicao:number)=>{    
+              {rank && rank.map((item:any, posicao:number)=>{    
                 return (
                   <SingleAtleta key={item.atleta._id}>
                     <DadosAtleta>

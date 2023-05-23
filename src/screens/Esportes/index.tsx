@@ -66,7 +66,7 @@ export function Esportes(){
         <ContentCompetitions>              
           <ScrollView>
             {esportes.map((item:Item, index)=>{
-              return item.aproved === false && (
+              return item.aproved && (
                 <SingleCompetitions key={item._id} onPress={()=>openCompetitionWithSport(item.nome)}>
                   <TypesCompetition>
                     <NameCompetition>{item.nome}</NameCompetition>

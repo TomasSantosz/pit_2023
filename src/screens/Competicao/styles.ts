@@ -5,9 +5,7 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 //Header
 
 export const InfoCompetition = styled.View`
-    padding: 0 0px 24px 0px;
-    align-items: center;
-    margin-top: ${RFPercentage(10)}px;    
+    align-items: center; 
     color: ${({ theme }) => theme.colors.shape};
     font-size: ${RFValue(26)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
@@ -15,18 +13,17 @@ export const InfoCompetition = styled.View`
 
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
-
+    text-align: center;
+    width: 350px;
     font-size: ${RFValue(26)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 export const SubTitles = styled.Text`
-     color: ${({ theme }) => theme.colors.shape};
+    color: ${({ theme }) => theme.colors.shape};
     text-align: center;  
     font-size: ${RFValue(14)}px;
     font-family: ${({ theme }) => theme.fonts.regular};
 `;
-
-
 
 export const Container = styled.View`
     flex-direction: column;
@@ -40,7 +37,7 @@ export const Container = styled.View`
 
 export const ContentParticipacao = styled.View`
     width: ${RFPercentage(100)}px; 
-    height: ${RFPercentage(64)}px; 
+    height: ${RFPercentage(54)}px; 
     border-radius: 15px;
     flex-direction: column;
     justify-content: flex-start;
@@ -154,9 +151,8 @@ export const Header = styled.View`
     align-items: center;
     
     flex-direction: row;
-    padding-bottom: 10px;
     width: 100%;
-    height: ${RFPercentage(25)}px;
+    height: ${RFPercentage(35)}px;
     background-color: ${({ theme }) => theme.colors.primary};
     margin-bottom: ${RFValue(15)}px;
 
