@@ -79,14 +79,14 @@ export function Register(){
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container 
             behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={20}
-            >            
+            keyboardVerticalOffset={10}
+            >       
             <Header>
                 <Title>Cadastro</Title>   
             </Header>            
+            <ScrollView>  
             <TextSoftware> Software de Competição esportiva </TextSoftware>
-            
-            <ScrollView>            
+                      
             <Form>
                 <Fields>
                     <Input 
@@ -98,7 +98,7 @@ export function Register(){
                         autoCorrect={false}  
                     />
                     <Input 
-                        placeholder='Email *'
+                        placeholder='E-mail *'
                         onChangeText={(text)=>{
                             onChangeTextEmail(text)
                         }}
@@ -160,7 +160,7 @@ export function Register(){
                     closeSelectGenero={handleCloseSelectGenero}                
                 />
             </Modal>  
-            </ScrollView>      
+            </ScrollView>       
         </Container>
         </TouchableWithoutFeedback>  
     );

@@ -24,7 +24,8 @@ import {
   Title,
   Content,
 } from './styles';
-import { ScrollView } from 'react-native';
+import { StatusBar as ExpoStatusBar} from 'expo-status-bar';
+import { ScrollView, StatusBar } from 'react-native';
 import { ImagemPerfil } from '../../assets/alfabeto';
 import { useAuth } from '../../contexts/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -179,7 +180,8 @@ export function Competicao({ route }:Route){
   } 
 
   return competition._id === route.params._id && (
-    <Container>
+    <Container style={{marginTop: StatusBar.currentHeight}}>
+      <Content>
       <Header>
         <InfoCompetition>
             <Title>{competition.nome}</Title>
@@ -188,57 +190,56 @@ export function Competicao({ route }:Route){
             <SubTitles>Local: {competition.Local}</SubTitles>
         </InfoCompetition>                   
       </Header>
-      <Content>
-        <ContentParticipacao>          
-          <NameCompetitions>Participantes {aprovados}/{competition.NumPart}</NameCompetitions>
-          {user?._id === competition.criador ? (
-            <ScrollView>          
-              {competition.atletasArray.map((e:any)=>{
-                return (
-                  <SingleParticipantes key={e._id}>
-                    <Photo source={ImagemPerfil(e.atleta.nome.substring(0,1).toUpperCase())}/>
-                    <NameCompetition>{e.atleta.nome}</NameCompetition> 
-                    <MoreCompetition>
-                      {e.atleta._id === competition.criador 
-                        ? (<Icon name="crown-circle-outline" />) 
-                        : user?._id === competition.criador && e.aprovado === false ? 
-                        (<Accept>
-                          <IconAccept onPress={()=>{HandleAproved(e.atleta._id)}} name="check-bold" />
-                          <IconDecline onPress={()=>{HandleRecused(e.atleta._id)}} name="close-thick" />
-                        </Accept>) : 
-                        (<IconDecline onPress={()=>{HandleRecused(e.atleta._id)}} name="close-thick" />)
-                      }
-                    </MoreCompetition>                                     
-                  </SingleParticipantes>
-                )
-              })}            
-            </ScrollView>
-          ):
-          (
-            <ScrollView>          
-              {competition.atletasArray.map((e:any)=>{
-                return e.aprovado ? (
-                  <SingleParticipantes key={e._id}>
-                    <Photo source={ImagemPerfil(e.atleta.nome.substring(0,1).toUpperCase())}/>
-                    <NameCompetition>{e.atleta.nome}</NameCompetition> 
-                    <MoreCompetition>  
-                      {e.atleta._id === competition.criador && (<Icon name="crown-circle-outline" />)}                    
-                    </MoreCompetition>                                     
-                  </SingleParticipantes>
-                ) : (
-                  <SingleParticipantes key={e._id}>
-                    <Photo source={ImagemPerfil(e.atleta.nome.substring(0,1).toUpperCase())}/>
-                    <NameCompetition>{e.atleta.nome}</NameCompetition> 
-                    <MoreCompetition>
-                      <IconWait name="timelapse" />
-                    </MoreCompetition>                                     
-                  </SingleParticipantes>
-                )
-              })}            
-            </ScrollView>
-          )}
-          
-        </ContentParticipacao>
+      <ContentParticipacao>          
+        <NameCompetitions>Participantes {aprovados}/{competition.NumPart}</NameCompetitions>
+        {user?._id === competition.criador ? (
+          <ScrollView>          
+            {competition.atletasArray.map((e:any)=>{
+              return (
+                <SingleParticipantes key={e._id}>
+                  <Photo source={ImagemPerfil(e.atleta.nome.substring(0,1).toUpperCase())}/>
+                  <NameCompetition>{e.atleta.nome}</NameCompetition> 
+                  <MoreCompetition>
+                    {e.atleta._id === competition.criador 
+                      ? (<Icon name="crown-circle-outline" />) 
+                      : user?._id === competition.criador && e.aprovado === false ? 
+                      (<Accept>
+                        <IconAccept onPress={()=>{HandleAproved(e.atleta._id)}} name="check-bold" />
+                        <IconDecline onPress={()=>{HandleRecused(e.atleta._id)}} name="close-thick" />
+                      </Accept>) : 
+                      (<IconDecline onPress={()=>{HandleRecused(e.atleta._id)}} name="close-thick" />)
+                    }
+                  </MoreCompetition>                                     
+                </SingleParticipantes>
+              )
+            })}            
+          </ScrollView>
+        ):
+        (
+          <ScrollView>          
+            {competition.atletasArray.map((e:any)=>{
+              return e.aprovado ? (
+                <SingleParticipantes key={e._id}>
+                  <Photo source={ImagemPerfil(e.atleta.nome.substring(0,1).toUpperCase())}/>
+                  <NameCompetition>{e.atleta.nome}</NameCompetition> 
+                  <MoreCompetition>  
+                    {e.atleta._id === competition.criador && (<Icon name="crown-circle-outline" />)}                    
+                  </MoreCompetition>                                     
+                </SingleParticipantes>
+              ) : (
+                <SingleParticipantes key={e._id}>
+                  <Photo source={ImagemPerfil(e.atleta.nome.substring(0,1).toUpperCase())}/>
+                  <NameCompetition>{e.atleta.nome}</NameCompetition> 
+                  <MoreCompetition>
+                    <IconWait name="timelapse" />
+                  </MoreCompetition>                                     
+                </SingleParticipantes>
+              )
+            })}            
+          </ScrollView>
+        )}
+        
+      </ContentParticipacao>                     
         {permiteButton ? 
           user?._id === competition.criador ? (
             <Button  onPress={()=>{
@@ -250,10 +251,10 @@ export function Competicao({ route }:Route){
             }} title="Sair"/>
           )
         :
-        <Button onPress={()=>{
-          HandleCadastrar();
-        }} title="Participar"/>
-      }                             
+          <Button onPress={()=>{
+            HandleCadastrar();
+          }} title="Participar"/>
+        } 
       </Content>
     </Container>
   );   

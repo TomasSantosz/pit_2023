@@ -14,38 +14,44 @@ export const InfoCompetition = styled.View`
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
     text-align: center;
-    width: 350px;
-    font-size: ${RFValue(26)}px;
+    width: 50%;
+    font-size: ${RFPercentage(3.5)}px; 
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 export const SubTitles = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
     text-align: center;  
-    font-size: ${RFValue(14)}px;
+    width: 40%;
+    font-size: ${RFPercentage(1.8)}px; 
     font-family: ${({ theme }) => theme.fonts.regular};
 `;
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
+    flex: 1;
+    background-color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const Content = styled.View`
+    flex: 1;
+    width: 100%;
     flex-direction: column;
     justify-content: flex-start;
-    height: 100% ;
     align-items: center;
+    
     background-color: ${({ theme }) => theme.colors.shape};
 `;
 
 //Div participacao
 
 export const ContentParticipacao = styled.View`
-    width: ${RFPercentage(100)}px; 
-    height: ${RFPercentage(54)}px; 
-    border-radius: 15px;
+    width: ${RFValue(310)}px; 
+    height: 57%;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;    
 `;
 export const Photo = styled.Image`
-    width: ${RFValue(35)}px;
-    height: ${RFValue(35)}px;
+    width: 35px;
+    height: 35px;
     border-radius: 50px;
 `;
 
@@ -85,22 +91,17 @@ export const NameCompetitions = styled.Text`
     color: ${({ theme }) => theme.colors.primary};
     font-size: ${RFValue(26)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
-
-    justify-content: center;
-    align-items: flex-end;
-    margin-bottom: 20px;
 `;
 export const SingleParticipantes = styled.View`
-    margin-top: 10px;
-    width: ${RFPercentage(46)}px;   
-    
+    margin-top: 3%;
+    width: ${RFValue(310)}px;
     //background-color: green;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;  
     border-bottom-color: ${({ theme }) => theme.colors.primary} ;
     border-bottom-width: 0.5px;
-    padding: 10px;
+    padding: ${RFPercentage(1.5)}px; 
 `;
 
 export const TypesCompetition = styled.View`
@@ -140,21 +141,17 @@ export const MoreCompetition = styled.Text`
     justify-content: center;
 `;
 
-export const Content = styled.View`
-    padding-top: 15px;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-`;
+
 export const Header = styled.View`
     justify-content: space-around;
     align-items: center;
     
     flex-direction: row;
     width: 100%;
-    height: ${RFPercentage(35)}px;
+    //height: ${RFPercentage(35)}px;
+    padding: ${RFPercentage(1)}px; 
     background-color: ${({ theme }) => theme.colors.primary};
-    margin-bottom: ${RFValue(15)}px;
+    margin-bottom: ${RFPercentage(1.5)}px;
 
     border-bottom-left-radius: ${RFValue(40)}px;
     border-bottom-right-radius: ${RFValue(40)}px;

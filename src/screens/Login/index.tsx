@@ -41,13 +41,13 @@ export function Login(){
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container
             behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={20}
-        >
+            keyboardVerticalOffset={30}
+            >
             <Header>
                 <Title>Login</Title>   
             </Header>
+            <ScrollView>
             <TextSoftware> Software de Competição esportiva </TextSoftware>
-            
             <Form>
                 <Fields>
                     <Input 
@@ -76,6 +76,7 @@ export function Login(){
                 </Fields>
                 
             </Form>
+        </ScrollView>
         </Container>
         </TouchableWithoutFeedback>
     );
