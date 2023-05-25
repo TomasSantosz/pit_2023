@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import { Container, Header, Title, 
     Form, Fields, ContainerDate,ContenteDate, 
-    TextSoftware,Close, DateView, DateText} from './styles';
+    TextSoftware,Close, DateView, DateText, SportSector, Back, IconBack, Content} from './styles';
+import Axios from 'axios';
 import { 
     Modal,
     ScrollView,
@@ -20,7 +21,9 @@ import DatePicker, {getToday, getFormatedDate} from 'react-native-modern-datepic
 import { useNavigation } from '@react-navigation/native';
 import Lottie from 'lottie-react-native';
 import { 
-    Alert
+    Alert,
+    TouchableWithoutFeedback,
+    Keyboard, StatusBar
 } from 'react-native';
 
 interface Route{
@@ -44,6 +47,14 @@ export function InsertCompetition({ route }:Route){
     const [timeInicio, setOpenTimeInicio ] = useState('00:00');
     const [timeTermino, setOpenTimeTermino ] = useState('00:00');
 
+    //form endereoo
+    const [cep , setChangeCep] = useState('');
+    const [numero, setNumero] = useState(0); 
+    const [rua, setRua] = useState(''); 
+    const [bairro, setBairro] = useState('');
+    const [cidade, setCidade] = useState("");
+    const [complemento, setComplemento] = useState("");
+    
     const [esporteModal, setEsporteModal] = useState(false);
     const [nome, onChangeTextNome] = useState("");
     const [descricao, onChangeTextDescricao] = useState("");
@@ -51,6 +62,12 @@ export function InsertCompetition({ route }:Route){
     const [numeroParticipantes, onChangeTextNumeroParticipantes] = useState<any>(0);
     const [local, onChangeTextLocal] = useState("");
     
+    //Steps Formulários
+    const [stepForm, setStepForm] = useState(1);
+    function switchStep ( step:number ){
+        setStepForm(step)
+    }
+
     const [esporte, setEsporte] = useState({
         nome: "Esporte *",
         _id: '',
@@ -75,6 +92,12 @@ export function InsertCompetition({ route }:Route){
                 onChangeTextNumeroParticipantes(response.data.NumPart)
                 onChangeTextLocal(response.data.Local)
                 onChangeTextDescricao(response.data.descricao)
+                setRua(response.data.Endereco.rua)
+                setBairro(response.data.Endereco.bairro)
+                setCidade(response.data.Endereco.cidade)
+                setNumero(response.data.Endereco.numero)
+                setComplemento(response.data.Endereco.complemento)
+                setChangeCep(response.data.Endereco.cep)
                 setEsporte({nome: response.data.esporte.nome, _id: response.data.esporte._id, Regras: response.data.esporte.Regras})
                 setTimeout(function(){
                     setLoading(false); 
@@ -111,7 +134,14 @@ export function InsertCompetition({ route }:Route){
             criador: user?._id,
             descricao,
             NumPart: Number(numeroParticipantes),
-            Local: local,
+            Endereco : {
+                cep, 
+                rua,
+                numero: Number(numero),
+                bairro,
+                cidade,
+                complemento,
+            },
             DataInicio: `${moment(new Date(dataInicio)).format("MM/DD/YYYY")} ${timeInicio}`,
             Datatermino: `${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`
         }
@@ -129,7 +159,7 @@ export function InsertCompetition({ route }:Route){
     }
 
     function InserirCompetition(){
-        if(!nome || !descricao || !numeroParticipantes || !local ){
+        if(!nome || !descricao || !numeroParticipantes || !rua || !bairro || !cidade ){
             return Alert.alert('Atenção', 'Preencha os campos OBRIGATÓRIOS (*)!');
         }
 
@@ -151,10 +181,18 @@ export function InsertCompetition({ route }:Route){
             criador: user?._id,
             descricao,
             NumPart: Number(numeroParticipantes),
-            Local: local,
+            Endereco : {
+                cep, 
+                rua,
+                numero,
+                bairro,
+                cidade,
+                complemento,
+            },
             DataInicio: `${moment(new Date(dataInicio)).format("MM/DD/YYYY")} ${timeInicio}`,
             Datatermino: `${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`
         }
+        console.log(compepe)
         api.post('/competicoes',compepe)
         .then(async(response) => {
             api.post('/competicoes/atleta',{
@@ -171,7 +209,7 @@ export function InsertCompetition({ route }:Route){
             return response.data;
         }).catch(err => {
             return Alert.alert('Falha', 'Falha ao cadastrar!');
-        });
+        }); 
     }
 
     function handleDateInicioChange(propDate:string){
@@ -198,12 +236,13 @@ export function InsertCompetition({ route }:Route){
         setOpenDateModalTermino(!openDateModalTermino);
     }
     return (
-        <Container behavior={Platform.OS == "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={20}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <Container style={{marginTop: StatusBar.currentHeight}}>
+            <Content>
             <Header>
                 <Title>{route.params._id ? "Editar Competição" : "Inserir Competição"}</Title>   
             </Header>
-            <ScrollView>
+                {stepForm === 1 ? ( 
                 <Form>
                     <Fields>
                         <Input 
@@ -215,48 +254,138 @@ export function InsertCompetition({ route }:Route){
                             autoCapitalize='words'
                             autoCorrect={false} 
                         />
-                        <Input 
-                            placeholder='Número de Participantes *'
-                            onChangeText={(text)=>{
-                                onChangeTextNumeroParticipantes(text)
-                            }}
-                            autoCapitalize='none'
-                            defaultValue={route.params._id && String(numeroParticipantes)}
-                            keyboardType='numeric'
-                            autoCorrect={false}  
-                        />
+                        <SportSector>
+                            <Input style={{width: '40%', textAlign: 'center'}}
+                                placeholder='Nº Jogadores'
+                                onChangeText={(text)=>{
+                                    onChangeTextNumeroParticipantes(text)
+                                }}
+                                autoCapitalize='none'
+                                defaultValue={route.params._id && String(numeroParticipantes)}
+                                keyboardType='numeric'
+                                autoCorrect={false}  
+                            />
+                            <Select 
+                                title={esporte.nome}
+                                onPress={handleCloseSelectEsporte}  
+                            />
+                        </SportSector>
                         <Input 
                             placeholder='Descrição *'
+                            multiline
+                            numberOfLines={2}
                             defaultValue={route.params._id && String(descricao)}
                             onChangeText={(text)=>{
                                 onChangeTextDescricao(text)
                             }}
                             autoCorrect={true}  
                         />
-                        <Select 
-                            title={esporte.nome}
-                            onPress={handleCloseSelectEsporte}  
-                        />
-                        <DateView onPress={handleDateInicioPress}>
-                            <DateText>{moment(new Date(dataInicio)).format("DD/MM/YYYY")} {timeInicio} *</DateText>
-                        </DateView>
+                        <SportSector>
+                            <DateView onPress={handleDateInicioPress} style={{width: '50%'}}>
+                                <DateText>{moment(new Date(dataInicio)).format("DD/MM/YYYY")} {timeInicio}</DateText>
+                            </DateView>
 
-                        <DateView onPress={handleDateTerminoPress}>
-                            <DateText>{moment(new Date(dataTermino)).format("DD/MM/YYYY")} {timeTermino} *</DateText>
-                        </DateView>
-                        
-                        <Input 
-                            placeholder='Local *'
-                            defaultValue={route.params._id && String(local)}
-                            onChangeText={(text)=>{
-                                onChangeTextLocal(text)
-                            }}
-                            autoCorrect={false} 
-                            autoCapitalize='none'
-                        />
+                            <DateView onPress={handleDateTerminoPress} style={{width: '50%'}}>
+                                <DateText>{moment(new Date(dataTermino)).format("DD/MM/YYYY")} {timeTermino}</DateText>
+                            </DateView>
+                        </SportSector>
                     </Fields>
-                    <Button title={route.params._id ? "Editar Competição" : "Inserir Competição"} onPress={route.params._id ? EditarCompetition : InserirCompetition} />
-                </Form>
+                    <Button title={"Próximo"} onPress={()=>switchStep(2)} />
+                    </Form>
+                ) : (
+                    <Form>
+                        <Back>
+                            <IconBack onPress={()=>switchStep(1)} name="keyboard-backspace" />
+                        </Back>
+                        <Fields>                            
+                            <SportSector>
+                                <Input 
+                                    style={{width: '50%'}}
+                                    placeholder='CEP'
+                                    defaultValue={route.params._id && String(cep)}
+                                    onChangeText={(text)=>{
+                                        setChangeCep(text)
+                                        if(text.length >= 8){
+                                            Axios.get(`https://viacep.com.br/ws/${text}/json/`)
+                                            .then(response => {
+                                                setRua(response.data.logradouro)
+                                                setBairro(response.data.bairro)
+                                                setCidade(response.data.localidade)
+                                            })
+                                            .catch(error => {
+                                                return console.log(error);
+                                            })
+                                        }                                    
+                                    }}
+                                    autoCorrect={false} 
+                                    autoCapitalize='none'
+                                />
+                                <Input 
+                                    style={{width: '50%'}}
+                                    placeholder='Número'
+                                    defaultValue={String(cep != "" ? numero : 0)}
+                                    onChangeText={(text)=>{
+                                        setNumero(Number(text))
+                                    }}
+                                    autoCorrect={false} 
+                                    autoCapitalize='none'
+                                />
+                            </SportSector>
+                            <Input 
+                                placeholder='Rua *'
+                                defaultValue={String(cep != "" ? rua : "")}
+                                onChangeText={(text)=>{
+                                    setRua(text)
+                                }}
+                                autoCorrect={false} 
+                                autoCapitalize='none'
+                            />
+                            <SportSector>
+                                <Input 
+                                    style={{width: '50%'}}
+                                    placeholder='Bairro *'
+                                    defaultValue={String(cep != "" ? bairro : "")}
+                                    onChangeText={(text)=>{
+                                        setBairro(text)
+                                    }}
+                                    autoCorrect={false} 
+                                    autoCapitalize='none'
+                                />
+                                <Input 
+                                    style={{width: '50%'}}
+                                    placeholder='Cidade *'
+                                    defaultValue={String(cep != "" ? cidade : "")}
+                                    onChangeText={(text)=>{
+                                        setCidade(text)
+                                    }}
+                                    autoCorrect={false} 
+                                    autoCapitalize='none'
+                                />
+                            </SportSector>
+                            {/* <Input 
+                                placeholder='Local *'
+                                defaultValue={route.params._id && String(local)}
+                                onChangeText={(text)=>{
+                                    onChangeTextLocal(text)
+                                }}
+                                autoCorrect={false} 
+                                autoCapitalize='none'
+                            /> */}
+                            <Input 
+                                placeholder='Complemento'
+                                defaultValue={route.params._id && String(complemento)}
+                                onChangeText={(text)=>{
+                                    setComplemento(text)
+                                }}
+                                autoCorrect={false} 
+                                autoCapitalize='none'
+                            />
+                        </Fields>
+                        <Button title={route.params._id ? "Editar Competição" : "Inserir Competição"} onPress={route.params._id ? EditarCompetition : InserirCompetition} />
+                    </Form>
+                )}
+               
+                
                 <Modal visible={esporteModal}>
                     <ModalEsportes 
                         esporte={esporte}
@@ -305,7 +434,8 @@ export function InsertCompetition({ route }:Route){
                         </ContenteDate>
                     </ContainerDate>
                 </Modal>
-            </ScrollView>  
+            </Content>
         </Container>
+        </TouchableWithoutFeedback>
     );
 }

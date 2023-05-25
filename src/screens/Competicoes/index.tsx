@@ -13,12 +13,14 @@ import {
   NumberOfMembers,
   MoreCompetition,
   Header,
-  CompetitionName,
   Content,
-  IconMore
+  CompetitionName,
+  IconMore,
+  Icons,
+  DivDate
 } from './styles';
 import { api } from '../../services/api';
-import { ScrollView, View, ActivityIndicator } from 'react-native';
+import { ScrollView, View,StatusBar, ActivityIndicator } from 'react-native';
 import Lottie from 'lottie-react-native';
 interface Item {
   _id: string;
@@ -94,13 +96,12 @@ export function Competicoes({ route }:Route){
     )
   } 
 
-  return(
-    
-    <Container>
-      <Header>
-        <CompetitionName>Competições</CompetitionName>        
-      </Header>
+  return(    
+    <Container style={{marginTop: StatusBar.currentHeight}}>
       <Content>
+        <Header>
+          <CompetitionName>Competições</CompetitionName>        
+        </Header>
         <ContentCompetitions>
           <ScrollView>
             {competitions.map((item:Item, index)=>{
@@ -110,22 +111,24 @@ export function Competicoes({ route }:Route){
                   numeroAprovados++;
                 }
               })
+              const dataInicioSplit = item.DataInicio.split('T')
               return VerificarDisponibilidade(new Date(item.DataTermino)) === true && (
                 <SingleCompetitions key={item._id}>
                   <TypesCompetition>
                     <NameCompetition>{item.nome}</NameCompetition>
-                    <MoreCompetition ><IconMore onPress={()=> openMoreDetails(item._id)} name="page-next-outline" /></MoreCompetition>
+                    <MoreCompetition ><IconMore onPress={()=> openMoreDetails(item._id)} name="expand-all-outline" /></MoreCompetition>
                   </TypesCompetition>                
                   <TypeSport>{item.esporte.nome}</TypeSport>                
                   <TypesCompetition>      
-                    <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                    <NumberOfMembers>Participantes: {numeroAprovados}/{item.NumPart}</NumberOfMembers>                  
+                    <DivDate><Icons name="calendar-range" /><DateCompetition> {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition></DivDate>
+                    <DivDate><Icons name="clock-time-four-outline" /><DateCompetition> {dataInicioSplit[1].substring(0,5)} </DateCompetition></DivDate>
+                    <DivDate><Icons name="account-multiple" /><NumberOfMembers> {`${numeroAprovados}/${item.NumPart}`}</NumberOfMembers></DivDate>                 
                   </TypesCompetition>                
                 </SingleCompetitions>
               )
             })}             
           </ScrollView>
-        </ContentCompetitions>      
+        </ContentCompetitions>
         <Button title="Inserir Competição" onPress={openInsertCompetition}/>
       </Content>
     </Container>

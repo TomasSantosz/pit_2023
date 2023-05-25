@@ -1,18 +1,22 @@
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
+import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
-export const Container = styled.KeyboardAvoidingView`
+export const Container = styled.SafeAreaView`
     flex: 1;
-    align-items: center;
-    width: 100%;
-    background-color: ${({ theme }) => theme.colors.shape};
+    background-color: ${({ theme }) => theme.colors.primary};
 `;
-
+export const Content = styled.View`
+    flex: 1;
+    background-color: ${({ theme }) => theme.colors.shape};
+    justify-content: center;
+    align-items: center; 
+`;
 export const Header = styled.View`
     width: 100%;
-    height: ${RFPercentage(25)}px;
+    flex: 0.25;
     background-color: ${({ theme }) => theme.colors.primary};
-    margin-bottom: ${RFValue(15)}px;
+    margin-bottom: 15px;
 
     justify-content: center;
     align-items: center; 
@@ -22,28 +26,40 @@ export const Header = styled.View`
 `;
 
 export const Title = styled.Text`
-    margin-top: ${RFValue(50)}px;
     color: ${({ theme }) => theme.colors.shape};
-    font-size: ${RFValue(26)}px;
+    font-size: ${RFPercentage(3)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 
 export const Form = styled.View`
-    flex: 1;
-    padding-top: ${RFValue(24)}px;
     align-items: center;
+    width: 95%;
+    flex: 0.75;
     justify-content: space-between;
-    width: 350px;
-
+    background-color: ${({ theme }) => theme.colors.shape};
 `;
 
-export const Fields = styled.View`
-    
+export const Fields = styled.View`    
     width: 100%;
 `;
 
+export const Back = styled.TouchableOpacity`
+    width: 100%;
+    margin-left: 20px;
+`;
+export const IconBack = styled(MaterialCommunityIcons)`
+    font-size: ${RFValue(30)}px;
+    color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const SportSector = styled.View`    
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+`;
+
 export const TextSoftware = styled.Text`
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFPercentage(2)}px;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.bold};
     text-align: center;
@@ -84,15 +100,14 @@ export const DateView = styled.TouchableOpacity.attrs({
     width:100%;
     
     border-radius: 15px;
-    margin-bottom: 30px;
+    margin-bottom: 25%;
     
     border-bottom-color: ${({ theme }) => theme.colors.primary} ;
-    border-bottom-width: 0.5px;
-    
+    border-bottom-width: 0.5px;    
 `;
 
 export const DateText = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};
     color: ${({ theme }) => theme.colors.text_geral};
-    font-size: ${RFValue(14)}px;
+    font-size: ${RFPercentage(2)}px;
 `;

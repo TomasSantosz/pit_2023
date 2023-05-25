@@ -2,30 +2,7 @@ import styled from 'styled-components/native';
 import { Feather, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
-//Header
-
-export const InfoCompetition = styled.View`
-    align-items: center; 
-    color: ${({ theme }) => theme.colors.shape};
-    font-size: ${RFValue(26)}px;
-    font-family: ${({ theme }) => theme.fonts.bold};
-`;
-
-export const Title = styled.Text`
-    color: ${({ theme }) => theme.colors.shape};
-    text-align: center;
-    width: 50%;
-    font-size: ${RFPercentage(3.5)}px; 
-    font-family: ${({ theme }) => theme.fonts.bold};
-`;
-export const SubTitles = styled.Text`
-    color: ${({ theme }) => theme.colors.shape};
-    text-align: center;  
-    width: 40%;
-    font-size: ${RFPercentage(1.8)}px; 
-    font-family: ${({ theme }) => theme.fonts.regular};
-`;
-
+//Main  
 export const Container = styled.SafeAreaView`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.primary};
@@ -33,19 +10,70 @@ export const Container = styled.SafeAreaView`
 
 export const Content = styled.View`
     flex: 1;
-    width: 100%;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    
     background-color: ${({ theme }) => theme.colors.shape};
+
+    justify-content: center;
+    align-items: center; 
+`;
+
+//Header
+export const Header = styled.View`
+    flex: 0.35;
+    width: 100%;
+    justify-content: center;
+    background-color: ${({ theme }) => theme.colors.primary};
+    padding: 10px;
+    margin-bottom: 20px;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+`;
+
+
+export const InfoCompetition = styled.View`
+    align-items: center;
+    width: 100%;
+    color: ${({ theme }) => theme.colors.shape};
+`;
+
+export const Title = styled.Text`
+    color: ${({ theme }) => theme.colors.shape};
+    text-align: center;
+    font-size: ${RFValue(22)}px; 
+    font-family: ${({ theme }) => theme.fonts.bold};
+`;
+export const DivSubTitles = styled.View`
+    flex-direction: row;
+    justify-content: center;    
+    margin-top:15px;
+    width: 90%;    
+`;
+
+export const SubTitles = styled.Text`
+    color: ${({ theme }) => theme.colors.shape};
+    font-family: ${({ theme }) => theme.fonts.regular};
+    text-align: center;
+    font-size: ${RFValue(13)}px;
+`;
+
+export const Icons = styled(MaterialCommunityIcons)`
+    font-size: ${RFValue(20)}px;
+    color: ${({ theme }) => theme.colors.shape}; 
+    margin-right: 10px;    
+    margin-left: 10px;
+`; 
+
+export const IconSettings = styled(MaterialCommunityIcons)`
+    font-size: ${RFValue(30)}px;
+    color: ${({ theme }) => theme.colors.shape};
+    margin-left: 10px;
+    margin-bottom: 10px;
 `;
 
 //Div participacao
 
 export const ContentParticipacao = styled.View`
     width: ${RFValue(310)}px; 
-    height: 57%;
+    flex: 0.65;
     flex-direction: column;
     align-items: center;    
 `;
@@ -55,11 +83,7 @@ export const Photo = styled.Image`
     border-radius: 50px;
 `;
 
-export const IconSettings = styled(MaterialCommunityIcons)`
-    font-size: ${RFValue(30)}px;
-    color: ${({ theme }) => theme.colors.shape};
-    margin-left: ${RFValue(260)}px;
-`;
+
 
 export const Icon = styled(MaterialCommunityIcons)`
     font-size: ${RFValue(35)}px;
@@ -67,11 +91,11 @@ export const Icon = styled(MaterialCommunityIcons)`
 `;
 
 export const IconAccept = styled(MaterialCommunityIcons)`
-    font-size: ${RFValue(30)}px;
+    font-size: ${RFValue(25)}px;
     color: ${({ theme }) => theme.colors.primary};
 `;
 export const IconDecline = styled(MaterialCommunityIcons)`
-    font-size: ${RFValue(30)}px;
+    font-size: ${RFValue(25)}px;
     color: ${({ theme }) => theme.colors.primary};
 `;
 
@@ -139,22 +163,6 @@ export const MoreCompetition = styled.Text`
     flex-direction: column-reverse;
     align-items: center;
     justify-content: center;
-`;
-
-
-export const Header = styled.View`
-    justify-content: space-around;
-    align-items: center;
-    
-    flex-direction: row;
-    width: 100%;
-    //height: ${RFPercentage(35)}px;
-    padding: ${RFPercentage(1)}px; 
-    background-color: ${({ theme }) => theme.colors.primary};
-    margin-bottom: ${RFPercentage(1.5)}px;
-
-    border-bottom-left-radius: ${RFValue(40)}px;
-    border-bottom-right-radius: ${RFValue(40)}px;
 `;
 
 export const UserInfo = styled.View`

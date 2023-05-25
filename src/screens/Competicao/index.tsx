@@ -17,10 +17,12 @@ import {
   Photo,
   Header,
   Accept,
+  DivSubTitles,
   IconWait,
   IconSettings,
   InfoCompetition,
   SubTitles,
+  Icons,
   Title,
   Content,
 } from './styles';
@@ -184,10 +186,18 @@ export function Competicao({ route }:Route){
       <Content>
       <Header>
         <InfoCompetition>
-            <Title>{competition.nome}</Title>
-            {user?._id === competition.criador && (<IconSettings name="square-edit-outline" onPress={()=>{openEditCompetition(competition._id)}}/> )} 
-            <SubTitles>Data: {moment(competition.DataInicio).format("DD/MM/YYYY")}</SubTitles>
-            <SubTitles>Local: {competition.Local}</SubTitles>
+            
+            <Title>{competition.nome}     {user?._id === competition.criador && (<IconSettings name="square-edit-outline" onPress={()=>{openEditCompetition(competition._id)}}/> )} </Title>
+            <DivSubTitles>
+              <Icons name="calendar-range" />
+              <SubTitles>{moment(competition.DataInicio).format("DD/MM/YYYY") }</SubTitles> 
+              <Icons name="clock-time-four-outline" /> 
+              <SubTitles>{competition.DataInicio.split('T')[1].substring(0,5)}</SubTitles>              
+            </DivSubTitles>
+            <DivSubTitles>
+              <Icons name="map-marker-radius-outline" />
+              <SubTitles>{competition.Endereco.rua}, {competition.Endereco.numero} - {competition.Endereco.bairro}, {competition.Endereco.cidade}</SubTitles>
+            </DivSubTitles>
         </InfoCompetition>                   
       </Header>
       <ContentParticipacao>          
