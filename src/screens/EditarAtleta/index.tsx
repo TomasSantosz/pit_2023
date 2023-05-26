@@ -45,7 +45,6 @@ export function EditarAtleta(){
                 return signOut();
             }).catch(err => {
                 const error = JSON.parse(err.request._response);
-                //console.log(err.request.status)
                 return Alert.alert(error.error);
             }); 
         }

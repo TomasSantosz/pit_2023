@@ -103,7 +103,6 @@ export function InsertCompetition({ route }:Route){
                     setLoading(false); 
                   },100);
             }).catch((err)=>{
-                console.log('eeror')
             })
         }        
     },[])
@@ -145,7 +144,6 @@ export function InsertCompetition({ route }:Route){
             DataInicio: `${moment(new Date(dataInicio)).format("MM/DD/YYYY")} ${timeInicio}`,
             Datatermino: `${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`
         }
-        console.log(compepe)
         api.put(`/competicoes/${competition?._id}`,compepe)
         .then(async(response) => {
             Alert.alert('Editado com sucesso!', `A competição ${compepe.nome} foi editada.`, [
@@ -192,7 +190,6 @@ export function InsertCompetition({ route }:Route){
             DataInicio: `${moment(new Date(dataInicio)).format("MM/DD/YYYY")} ${timeInicio}`,
             Datatermino: `${moment(new Date(dataTermino)).format("MM/DD/YYYY")} ${timeTermino}`
         }
-        console.log(compepe)
         api.post('/competicoes',compepe)
         .then(async(response) => {
             api.post('/competicoes/atleta',{
@@ -208,7 +205,6 @@ export function InsertCompetition({ route }:Route){
             ]);
             return response.data;
         }).catch(err => {
-            console.log(err.request)
             return Alert.alert('Falha', 'Falha ao cadastrar!');
         }); 
     }
@@ -315,7 +311,6 @@ export function InsertCompetition({ route }:Route){
                                                 setCidade(response.data.localidade)
                                             })
                                             .catch(error => {
-                                                return console.log(error);
                                             })
                                         }                                    
                                     }}

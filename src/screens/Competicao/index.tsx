@@ -141,7 +141,6 @@ export function Competicao({ route }:Route){
             {text: 'Ok', onPress: () => openCompetition()}
           ]);
         }).catch(err => {
-            console.log(err.request)
             return Alert.alert('Falha');
         });
       }},
