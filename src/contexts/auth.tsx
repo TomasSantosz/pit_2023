@@ -71,7 +71,6 @@ export function AuthProvider({children}: AuthProviderProps){
             return response.data.Atleta;
         }).catch(err => {
             const error = JSON.parse(err.request._response);
-            //console.log(err.request.status)
             return Alert.alert(error.error);
         });    
     }
