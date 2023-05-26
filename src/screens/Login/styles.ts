@@ -1,7 +1,12 @@
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
-export const Container = styled.KeyboardAvoidingView`
+export const Container = styled.SafeAreaView`
+    flex: 1;
+    background-color: ${({ theme }) => theme.colors.primary};
+`;
+
+export const Content = styled.KeyboardAvoidingView`
     flex: 1;
     align-items: center;
     background-color: ${({ theme }) => theme.colors.shape};
@@ -9,7 +14,7 @@ export const Container = styled.KeyboardAvoidingView`
 
 export const Header = styled.View`
     width: 100%;
-    height: ${RFPercentage(20)}px;
+    flex: 0.2;
     background-color: ${({ theme }) => theme.colors.primary};
 
     justify-content: center;
@@ -18,9 +23,15 @@ export const Header = styled.View`
     border-bottom-left-radius: ${RFValue(40)}px;
     border-bottom-right-radius: ${RFValue(40)}px;
 `;
+export const Form = styled.View`
+    flex: 0.8;
+    width: 90%;
+    justify-content: space-between;
+    padding-top: 30px;
+    padding-bottom: 30px;
+`;
 
 export const Title = styled.Text`
-    margin-top: ${RFPercentage(5)}px;
     color: ${({ theme }) => theme.colors.shape};
     font-size: ${RFValue(20)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
@@ -31,22 +42,10 @@ export const TextSoftware = styled.Text`
     text-align: center;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.bold};
-    margin-top: ${RFPercentage(5)}px;
 `;
 
 export const Fields = styled.View`
-    width: 95%;
-    text-align: center;
     align-items: center;
-`;
-
-export const Form = styled.View`
-    flex: 1;
-    width: 100%;
-    padding-top: ${RFPercentage(5)}px;
-    align-items: center;
-    justify-content: space-between;
-
 `;
 
 export const TextRegister = styled.Text`

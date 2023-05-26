@@ -75,8 +75,8 @@ export function InsertCompetition({ route }:Route){
     });
     
     const today = new Date();
-        const startDate = getFormatedDate(new Date(today.setDate(today.getDate())), "YYYY/MM/DD");
-        const endDate = getFormatedDate(new Date(new Date(dataInicio).setDate(new Date(dataInicio).getDate() + 1)), 'YYYY/MM/DD');
+    const startDate = getFormatedDate(new Date(today.setDate(today.getDate())), "YYYY/MM/DD");
+    const endDate = getFormatedDate(new Date(new Date(dataInicio).setDate(new Date(dataInicio).getDate() + 1)), 'YYYY/MM/DD');
 
     useEffect(()=>{
         if(route.params._id){
@@ -208,6 +208,7 @@ export function InsertCompetition({ route }:Route){
             ]);
             return response.data;
         }).catch(err => {
+            console.log(err.request)
             return Alert.alert('Falha', 'Falha ao cadastrar!');
         }); 
     }
@@ -237,7 +238,8 @@ export function InsertCompetition({ route }:Route){
     }
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container style={{marginTop: StatusBar.currentHeight}}>
+        <Container style={{ backgroundColor:"#555"}}> 
+         <StatusBar  barStyle={'light-content'} backgroundColor={"#555"}/>
             <Content>
             <Header>
                 <Title>{route.params._id ? "Editar Competição" : "Inserir Competição"}</Title>   
@@ -403,7 +405,7 @@ export function InsertCompetition({ route }:Route){
                         <ContenteDate>                            
                             <DatePicker
                                 mode='datepicker'
-                                selected={'12/12/2023'}
+                                selected={startDate}
                                 minimumDate={startDate}
                                 onTimeChange={handleTimeInicioChange}
                                 onDateChange={handleDateInicioChange}
@@ -424,6 +426,7 @@ export function InsertCompetition({ route }:Route){
                             <DatePicker
                                 mode='datepicker'
                                 minimumDate={String(moment(new Date(dataInicio)).format("YYYY/MM/DD"))}
+                                selected={endDate}
                                 maximumDate={endDate}
                                 onTimeChange={handleTimeTerminoChange}
                                 onDateChange={handleDateTerminoChange}

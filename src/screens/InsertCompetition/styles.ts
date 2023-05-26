@@ -43,12 +43,13 @@ export const Fields = styled.View`
     width: 100%;
 `;
 
-export const Back = styled.TouchableOpacity`
+export const Back = styled.View`
     width: 100%;
     margin-left: 20px;
 `;
 export const IconBack = styled(MaterialCommunityIcons)`
     font-size: ${RFValue(30)}px;
+    width: 10%;
     color: ${({ theme }) => theme.colors.primary};
 `;
 

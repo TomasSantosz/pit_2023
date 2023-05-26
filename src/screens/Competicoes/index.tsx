@@ -96,8 +96,10 @@ export function Competicoes({ route }:Route){
     )
   } 
 
-  return(    
-    <Container style={{marginTop: StatusBar.currentHeight}}>
+  return(  
+    <> 
+    <StatusBar  barStyle={'light-content'} backgroundColor={"#555"}/>
+      <Container style={{ backgroundColor:"#555"}}> 
       <Content>
         <Header>
           <CompetitionName>Competições</CompetitionName>        
@@ -111,7 +113,8 @@ export function Competicoes({ route }:Route){
                   numeroAprovados++;
                 }
               })
-              const dataInicioSplit = item.DataInicio.split('T')
+              const data = moment(item.DataInicio).utcOffset('-03:00').format("DD/MM/YYYY HH:mm");
+              const dataInicioSplit = data.split(' ')
               return VerificarDisponibilidade(new Date(item.DataTermino)) === true && (
                 <SingleCompetitions key={item._id}>
                   <TypesCompetition>
@@ -120,7 +123,7 @@ export function Competicoes({ route }:Route){
                   </TypesCompetition>                
                   <TypeSport>{item.esporte.nome}</TypeSport>                
                   <TypesCompetition>      
-                    <DivDate><Icons name="calendar-range" /><DateCompetition> {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition></DivDate>
+                    <DivDate><Icons name="calendar-range" /><DateCompetition> {dataInicioSplit[0]} </DateCompetition></DivDate>
                     <DivDate><Icons name="clock-time-four-outline" /><DateCompetition> {dataInicioSplit[1].substring(0,5)} </DateCompetition></DivDate>
                     <DivDate><Icons name="account-multiple" /><NumberOfMembers> {`${numeroAprovados}/${item.NumPart}`}</NumberOfMembers></DivDate>                 
                   </TypesCompetition>                
@@ -132,5 +135,6 @@ export function Competicoes({ route }:Route){
         <Button title="Inserir Competição" onPress={openInsertCompetition}/>
       </Content>
     </Container>
+    </> 
   );   
 }

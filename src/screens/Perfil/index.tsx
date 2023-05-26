@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native';
 import moment from 'moment';
 import Nivel from '../../util/Nivel';
 import { api } from '../../services/api';
-import { View, ActivityIndicator } from 'react-native';
+import { View, ActivityIndicator, StatusBar, Platform} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { ImagemPerfil } from '../../assets/alfabeto';
 import { 
@@ -23,8 +23,13 @@ import {
   MoreCompetition,
   TypeSport,
   NumberOfMembers,
+  DivDate,
+  ContentCompetitions,
+  Icons,
+  IconMore,
   IconStar,
-  IconEdit
+  IconEdit,
+  PerfilContent
 } from './styles';
 
 import {useAuth} from '../../contexts/auth';
@@ -89,37 +94,53 @@ export function Perfil(){
     )
   }
   return(
-      <Container>        
+    <> 
+    <StatusBar  barStyle={"dark-content"} backgroundColor={"#EBEBEB"}/>
+      <Container style={{ backgroundColor:"#EBEBEB"}}>      
+      <Content>  
         <Header>              
-            <Photo source={ImagemPerfil(user?.nome.substring(0,1).toUpperCase())}/>              
+          <Photo source={ImagemPerfil(user?.nome.substring(0,1).toUpperCase())}/>              
         </Header>
-        <IconEdit onPress={()=> openEditPerfil(user?._id)} name="account-edit" />
-        <User>
-          <UserName>{user?.nome}</UserName>
-          <UserLevel>
-            <Level>Nível {nivel_atual}</Level>
-          </UserLevel>
-        </User>  
-        <ScrollView>                 
-        <TitleParticipacoes>Competições</TitleParticipacoes>
-        <Content>              
-          {competitions.map((item:Item)=>{          
+        
+        <PerfilContent>
+          <User>
+            <IconEdit onPress={()=> openEditPerfil(user?._id)} name="account-edit" />           
+            <UserName>{user?.nome}</UserName>
+            <UserLevel>
+              <Level>Nível {nivel_atual}</Level>
+            </UserLevel>
+          </User> 
+          <ScrollView>                 
+          <TitleParticipacoes>Competições</TitleParticipacoes>
+          
+          {competitions.map((item:Item)=>{    
+            let numeroAprovados = 0
+            item.atletasArray.forEach((res:any)=>{
+              if(res.aprovado === true){
+                numeroAprovados++;
+              }
+            })
+            const data = moment(item.DataInicio).utcOffset('-03:00').format("DD/MM/YYYY HH:mm");
+              const dataInicioSplit = data.split(' ')   
             return VerificarDisponibilidade(new Date(item.DataTermino)) === true &&(
               <SingleCompetitions key={item._id}>
-                <TypesCompetition>
-                  <NameCompetition>{item.nome}</NameCompetition>
-                  <MoreCompetition ><IconStar onPress={()=> openMoreDetails(item._id)} name="page-next-outline" /></MoreCompetition>
-                </TypesCompetition>                
-                <TypeSport>{item.esporte.nome}</TypeSport>                
-                <TypesCompetition>      
-                  <DateCompetition>Data: {moment(item.DataInicio).format("DD/MM/YYYY")} </DateCompetition>
-                  <NumberOfMembers>Participantes: {item.atletasArray.length} /{item.NumPart}</NumberOfMembers>                  
-                </TypesCompetition>                
-              </SingleCompetitions>
+              <TypesCompetition>
+                <NameCompetition>{item.nome}</NameCompetition>
+                <MoreCompetition ><IconMore onPress={()=> openMoreDetails(item._id)} name="expand-all-outline" /></MoreCompetition>
+              </TypesCompetition>                
+              <TypeSport>{item.esporte.nome}</TypeSport>                
+              <TypesCompetition>      
+                <DivDate><Icons name="calendar-range" /><DateCompetition> {dataInicioSplit[0]} </DateCompetition></DivDate>
+                <DivDate><Icons name="clock-time-four-outline" /><DateCompetition> {dataInicioSplit[1].substring(0,5)} </DateCompetition></DivDate>
+                <DivDate><Icons name="account-multiple" /><NumberOfMembers> {`${numeroAprovados}/${item.NumPart}`}</NumberOfMembers></DivDate>                 
+              </TypesCompetition>                
+            </SingleCompetitions>
             )
-          })}             
+          })}      
+        </ScrollView>
+        </PerfilContent>       
         </Content>
-      </ScrollView>
       </Container>
+      </>
     );   
 }

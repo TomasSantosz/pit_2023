@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { 
     Modal, Platform, ScrollView,
     TouchableWithoutFeedback, Keyboard ,
-    Alert
+    Alert,StatusBar
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Container, Header, Title, Form, Fields, TextSoftware} from './styles';
+import { Container, Header, Title, Form, Fields, TextSoftware, Content, ContentForm } from './styles';
 
 import { Input } from '../../components/Forms/Input';
 import { Button } from '../../components/Forms/Button';
@@ -77,90 +77,96 @@ export function Register(){
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container 
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={10}
-            >       
+        <Container
+            style={{ backgroundColor:"#555"}}
+            >
+            <StatusBar  barStyle={"light-content"} backgroundColor={"#555"}/>   
+            <Content
+                behavior={Platform.OS == "ios" ? "padding" : "height"}
+                keyboardVerticalOffset={10}>  
             <Header>
                 <Title>Cadastro</Title>   
-            </Header>            
-            <ScrollView>  
-            <TextSoftware> Software de Competição esportiva </TextSoftware>
-                      
-            <Form>
-                <Fields>
-                    <Input 
-                        placeholder='Nome *'
-                        onChangeText={(text)=>{
-                            onChangeTextNome(text)
-                        }}
-                        autoCapitalize='words'
-                        autoCorrect={false}  
-                    />
-                    <Input 
-                        placeholder='E-mail *'
-                        onChangeText={(text)=>{
-                            onChangeTextEmail(text)
-                        }}
-                        autoCapitalize='none'
-                        autoCorrect={false}                        
-                    />
-                    <Input 
-                        placeholder='Senha *'
-                        onChangeText={(text)=>{
-                            onChangeTextSenha(text)
-                        }}
-                        secureTextEntry={true}
-                        autoCorrect={false} 
-                    />
-                    <Input 
-                        placeholder='Confirmar senha *'
-                        onChangeText={(text)=>{
-                            onChangeTextConfirmarSenha(text)
-                        }}
+            </Header>     
+            <ContentForm>      
+                <ScrollView>  
+                <TextSoftware> Software de Competição esportiva </TextSoftware>
+                        
+                <Form>
+                    <Fields>
+                        <Input 
+                            placeholder='Nome *'
+                            onChangeText={(text)=>{
+                                onChangeTextNome(text)
+                            }}
+                            autoCapitalize='words'
+                            autoCorrect={false}  
+                        />
+                        <Input 
+                            placeholder='E-mail *'
+                            onChangeText={(text)=>{
+                                onChangeTextEmail(text)
+                            }}
+                            autoCapitalize='none'
+                            autoCorrect={false}                        
+                        />
+                        <Input 
+                            placeholder='Senha *'
+                            onChangeText={(text)=>{
+                                onChangeTextSenha(text)
+                            }}
+                            secureTextEntry={true}
+                            autoCorrect={false} 
+                        />
+                        <Input 
+                            placeholder='Confirmar senha *'
+                            onChangeText={(text)=>{
+                                onChangeTextConfirmarSenha(text)
+                            }}
 
-                        secureTextEntry={true}
-                        autoCorrect={false} 
+                            secureTextEntry={true}
+                            autoCorrect={false} 
+                        />
+                        <Input 
+                            placeholder='Idade *'
+                            keyboardType='numeric'
+                            autoCorrect={false}  
+                            onChangeText={(text)=>{
+                                const textNumber = Number(text)
+                                onChangeTextIdade(textNumber)
+                            }}
+                        />
+                        <Input 
+                            placeholder='Altura cm *'
+                            keyboardType='numeric'
+                            autoCorrect={false}  
+                            onChangeText={(text)=>{
+                                const textNumber = Number(text)
+                                onChangeTextAltura(textNumber)
+                            }}
+                        />
+                        <Select 
+                            title={genero.name}
+                            onPress={handleCloseSelectGenero}  
+                        />
+                        
+                    </Fields>
+                    <Button 
+                            title="Cadastrar"
+                            onPress={handleRegister} 
+                        />
+                </Form>
+                
+                
+                <Modal visible={generoModal}>
+                    <GeneroSelect 
+                        genero={genero}
+                        setGenero={setGenero}
+                        closeSelectGenero={handleCloseSelectGenero}                
                     />
-                    <Input 
-                        placeholder='Idade *'
-                        keyboardType='numeric'
-                        autoCorrect={false}  
-                        onChangeText={(text)=>{
-                            const textNumber = Number(text)
-                            onChangeTextIdade(textNumber)
-                        }}
-                    />
-                    <Input 
-                        placeholder='Altura cm *'
-                        keyboardType='numeric'
-                        autoCorrect={false}  
-                        onChangeText={(text)=>{
-                            const textNumber = Number(text)
-                            onChangeTextAltura(textNumber)
-                        }}
-                    />
-                    <Select 
-                        title={genero.name}
-                        onPress={handleCloseSelectGenero}  
-                    />
-                    
-                </Fields>
-                <Button 
-                        title="Cadastrar"
-                        onPress={handleRegister} 
-                    />
-            </Form>
-            
-            
-            <Modal visible={generoModal}>
-                <GeneroSelect 
-                    genero={genero}
-                    setGenero={setGenero}
-                    closeSelectGenero={handleCloseSelectGenero}                
-                />
-            </Modal>  
-            </ScrollView>       
+                </Modal>  
+                </ScrollView> 
+                </ContentForm>  
+            </Content>     
         </Container>
         </TouchableWithoutFeedback>  
     );

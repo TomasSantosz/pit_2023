@@ -3,47 +3,47 @@ import { Feather, MaterialIcons } from '@expo/vector-icons';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { TouchableOpacity } from "react-native";
 
+export const Container = styled.SafeAreaView`
+    background-color: ${({ theme }) => theme.colors.primary};
+    flex: 1;
+`;
 
+export const Content = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    background-color: ${({ theme }) => theme.colors.shape};
+`;
 export const Header = styled.View`
     width: 100%;
-    height: ${RFPercentage(25)}px;
+    flex: 0.25;
     background-color: ${({ theme }) => theme.colors.primary};
-    margin-bottom: ${RFValue(15)}px;
+    margin-bottom: 15px;
 
     justify-content: center;
     align-items: center; 
 
-    border-bottom-left-radius: ${RFValue(40)}px;
-    border-bottom-right-radius: ${RFValue(40)}px;
-`;
-
-
-export const SportName = styled.Text`
-    margin-top: ${RFValue(50)}px;
-    color: ${({ theme }) => theme.colors.shape};
-    font-size: ${RFValue(26)}px;
-    font-family: ${({ theme }) => theme.fonts.bold};
-`;
-
-export const Container = styled.View`
-    background-color: ${({ theme }) => theme.colors.shape};
-    height: 100%;
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
 `;
 
 export const ContentCompetitions = styled.View`
     width: 100% ;
-    height: ${RFValue(430)}px ;
-    border-radius: 15px;
-    padding: ${RFValue(0)}px ${RFValue(25)}px ${RFValue(0)}px ${RFValue(25)}px ;
-    margin-bottom: ${RFValue(20)}px;
+    flex: 0.75;
+    padding: 0px 25px 0px 25px ;
 `;
 
 export const SingleCompetitions = styled(TouchableOpacity)`
-    margin-top: ${RFValue(7)}px;
-    width: 100%;    
+    margin-top: 7px; 
     border-bottom-color: ${({ theme }) => theme.colors.primary} ;
     border-bottom-width: 0.5px;
-    padding: ${RFValue(7)}px;
+    padding: 7px;
+`;
+
+export const SportName = styled.Text`
+    color: ${({ theme }) => theme.colors.shape};
+    font-size: ${RFValue(26)}px;
+    font-family: ${({ theme }) => theme.fonts.bold};
 `;
 
 export const TypesCompetition = styled.View`
@@ -57,7 +57,7 @@ export const TypesCompetition = styled.View`
 export const NameCompetition = styled.Text`
     font-size: ${RFValue(16)}px;
     color: ${({ theme }) => theme.colors.primary};
-    font-family: ${({ theme }) => theme.fonts.bold};
+    font-family: ${({ theme }) => theme.fonts.medium};
 `;
 
 export const DateCompetition = styled.Text`
@@ -70,12 +70,6 @@ export const NumberOfMembers = styled.Text`
     font-size: ${RFValue(14)}px;
     color: ${({ theme }) => theme.colors.primary};
     font-family: ${({ theme }) => theme.fonts.regular};
-`;
-
-export const Content = styled.View`
-    width: 100%;
-    align-items: center;
-    flex-direction: column;
 `;
 
 export const UserInfo = styled.View`

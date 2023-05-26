@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { api } from '../../services/api';
-import { Container, Header, Title, Form, Fields, UserWrapper} from './styles';
+import { Container, Header, Title, Form, Fields, UserWrapper, Content} from './styles';
 
 import { Input } from '../../components/Forms/Input'
 import { Button } from '../../components/Forms/Button'
@@ -8,7 +8,8 @@ import { useNavigation } from '@react-navigation/native';
 import { 
     Alert,
     Keyboard,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    StatusBar
 } from 'react-native';
 export function InsertSport(){
     const [nome, onChangeTextNome] = useState("");
@@ -35,11 +36,11 @@ export function InsertSport(){
     
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <Container>
+            <Container style={{ backgroundColor:"#555"}}> 
+            <StatusBar  barStyle={'light-content'} backgroundColor={"#555"}/>
+                <Content>
                 <Header>
-                    <UserWrapper>
-                        <Title>Inserir Esporte</Title>   
-                    </UserWrapper>
+                    <Title>Inserir Esporte</Title>
                 </Header>
                 <Form>
                     <Fields>
@@ -62,6 +63,7 @@ export function InsertSport(){
                     </Fields>
                     <Button title="Inserir Esporte" onPress={InserirEsporte}/>
                 </Form>
+                </Content>
             </Container>
         </TouchableWithoutFeedback>
     );

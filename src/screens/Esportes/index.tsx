@@ -13,7 +13,7 @@ import {
   Content
 } from './styles';
 import { api } from '../../services/api';
-import { ScrollView, View, ActivityIndicator } from 'react-native';
+import { ScrollView, View,StatusBar, ActivityIndicator } from 'react-native';
 import Lottie from 'lottie-react-native';
 
 interface Item {
@@ -58,14 +58,15 @@ export function Esportes(){
   } 
 
   return(    
-    <Container>
+    <Container style={{ backgroundColor:"#555"}}> 
+    <StatusBar  barStyle={'light-content'} backgroundColor={"#555"}/>
+      <Content>
       <Header>
         <SportName>Esportes</SportName>        
       </Header>
-      <Content>
         <ContentCompetitions>              
           <ScrollView>
-            {esportes.map((item:Item, index)=>{
+            {esportes.map((item:Item)=>{
               return item.aproved && (
                 <SingleCompetitions key={item._id} onPress={()=>openCompetitionWithSport(item.nome)}>
                   <TypesCompetition>

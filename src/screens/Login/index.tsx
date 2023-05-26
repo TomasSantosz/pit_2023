@@ -3,12 +3,12 @@ import { useNavigation } from '@react-navigation/native';
 import { 
     Platform, ScrollView,
     TouchableWithoutFeedback, Keyboard ,
-    Alert
+    Alert,StatusBar
 } from 'react-native';
 
 import { 
     Container, Header, Title, 
-    Form, Fields, TextSoftware, TextRegister} from './styles';
+    Form, Fields, TextSoftware, TextRegister, Content} from './styles';
 
 import { Input } from '../../components/Forms/Input'
 import { Button } from '../../components/Forms/Button'
@@ -40,43 +40,44 @@ export function Login(){
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <Container
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={30}
+            style={{ backgroundColor:"#555"}}
             >
-            <Header>
-                <Title>Login</Title>   
-            </Header>
-            <ScrollView>
-            <TextSoftware> Software de Competição esportiva </TextSoftware>
-            <Form>
-                <Fields>
-                    <Input 
-                        placeholder='E-mail *'
-                        onChangeText={(text)=>{
-                            onChangeTextEmail(text)
-                        }}
-                        autoCapitalize='none'
-                        autoCorrect={false}  
-                    />
-                    <Input 
-                        placeholder='Senha *'
-                        onChangeText={(text)=>{
-                            onChangeTextPassword(text)
-                        }}
-                        secureTextEntry={true}
-                        autoCorrect={false}
-                    />
-                    <Button title="Login"
-                        onPress={handleLogin}                
-                    />
-                
-                    <TextRegister
-                        onPress={openRegister} 
-                    >Registar</TextRegister>
-                </Fields>
-                
-            </Form>
-        </ScrollView>
+            <StatusBar  barStyle={"light-content"} backgroundColor={"#555"}/>
+            <Content
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={30}>
+                <Header>
+                    <Title>Login</Title>   
+                </Header>
+                <Form>
+                    <TextSoftware> Software de Competição esportiva </TextSoftware>
+                    <Fields>
+                        <Input 
+                            placeholder='E-mail *'
+                            onChangeText={(text)=>{
+                                onChangeTextEmail(text)
+                            }}
+                            autoCapitalize='none'
+                            autoCorrect={false}  
+                        />
+                        <Input 
+                            placeholder='Senha *'
+                            onChangeText={(text)=>{
+                                onChangeTextPassword(text)
+                            }}
+                            secureTextEntry={true}
+                            autoCorrect={false}
+                        />
+                        <Button title="Login"
+                            onPress={handleLogin}                
+                        />
+                    
+                        <TextRegister
+                            onPress={openRegister} 
+                        >Registar</TextRegister>
+                    </Fields>                    
+                </Form>
+            </Content>
         </Container>
         </TouchableWithoutFeedback>
     );

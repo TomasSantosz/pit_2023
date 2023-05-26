@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -10,44 +10,63 @@ interface CategoryProps{
 }
 export const Container = styled(GestureHandlerRootView)`
     flex: 1;
-    background-color: ${({ theme }) => theme.colors.background_card};
+    background-color: ${({ theme }) => theme.colors.primary};
+`;
+export const Content = styled.View`
+    flex: 1;
+    background-color: ${({ theme }) => theme.colors.shape};
+    justify-content: space-between;
+    align-items: center; 
 `;
 
 export const Header = styled.View`
-    background-color: ${({ theme }) => theme.colors.background_card};
     width: 100%;
-    height: ${RFValue(113)}px;
-    align-items: center;
-    justify-content: flex-end;
-    padding-bottom: 19px;
-`;
-export const Title = styled.Text`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    color: ${({ theme }) => theme.colors.text_geral};
-    font-size: ${RFValue(18)}px;
+    flex: 0.25;
+    background-color: ${({ theme }) => theme.colors.primary};
+    margin-bottom: 15px;
+
+    justify-content: center;
+    align-items: center; 
+
+    border-bottom-left-radius: ${RFValue(40)}px;
+    border-bottom-right-radius: ${RFValue(40)}px;
 `;
 
+export const Title = styled.Text`
+    font-family: ${({ theme }) => theme.fonts.bold};
+    color: ${({ theme }) => theme.colors.secundary};
+    font-size: ${RFValue(26)}px;
+`;
+
+export const ContentFlatList = styled.View`
+    flex: 0.75;
+    width: 100%;
+    padding: 0px 24px 0px 24px;
+
+    align-items: center;
+    justify-content: space-between;
+`;
 export const GeneroOption = styled.TouchableOpacity<CategoryProps>`
     width: 100%;
-    padding:${RFValue(15)}px;
+    padding:${RFValue(20)}px;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
 
-    background-color: ${({ isActive }) => isActive ? theme.colors.primary : theme.colors.background_card};
+    background-color: ${({ isActive }) => isActive ? theme.colors.primary_light : theme.colors.shape};
 `;
 
 export const Name = styled.Text`
-    font-family: ${({ theme }) => theme.fonts.regular};
-    font-size: ${RFValue(14)}px;
-
+    font-family: ${({ theme }) => theme.fonts.medium};
+    font-size: ${RFValue(16)}px;
 `;
-export const Icon = styled(Feather)`
+export const Icon = styled(MaterialCommunityIcons)`
     font-size: ${RFValue(20)}px;
     margin-right: 10px;
 `;
 
 export const Separator = styled.View`
-    height: 1px;
+    height: 0.5px;
     width: 100%;
     background-color: ${({ theme }) => theme.colors.primary};
 `;

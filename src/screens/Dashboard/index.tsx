@@ -14,7 +14,9 @@ import {
   UserName,
   NivelName,
   Content,
-  Icon
+  Icon,
+  Cards,
+  ContentCard
 } from './styles';
 import {useAuth} from '../../contexts/auth';
 import { Alert } from 'react-native';
@@ -53,6 +55,7 @@ export function Dashboard(){
   }
     return(
       <Container>
+        <Content>
         <Header>
           <UserWrapper>
             <UserInfo>
@@ -63,18 +66,21 @@ export function Dashboard(){
               </User>
             </UserInfo>
             <Icon 
-              name="exit-to-app"
+              name="exit-run"
               onPress={handleSignOut}
             />
           </UserWrapper>            
         </Header>
-        <Content>
-          <HighlightCars name="Esportes" icon={'basketball-hoop-outline'} onPress={openEsportes}/>  
-          <HighlightCars name="Perfil" icon={'account-outline'} onPress={openPefil}/>          
-        </Content>
-        <Content>
-          <HighlightCars name="Competições" icon={'whistle-outline'} onPress={openCompeticoes}/>  
-          <HighlightCars name="Rank" icon={'podium-gold'} onPress={openRank}/>          
+          <ContentCard>
+            <Cards>
+              <HighlightCars name="Esportes" icon={'basketball-hoop-outline'} onPress={openEsportes}/>  
+              <HighlightCars name="Perfil" icon={'account-outline'} onPress={openPefil}/> 
+            </Cards>
+            <Cards>
+              <HighlightCars name="Competições" icon={'whistle-outline'} onPress={openCompeticoes}/>  
+              <HighlightCars name="Rank" icon={'podium-gold'} onPress={openRank}/>
+            </Cards>
+          </ContentCard>          
         </Content>
       </Container>
     );   

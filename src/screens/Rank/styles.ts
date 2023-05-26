@@ -4,16 +4,22 @@ import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 
 
 //Header
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
     flex: 1;    
+`;
+
+export const Content = styled.View`
+    flex: 1;
     background-color: ${({ theme }) => theme.colors.shape};
-    align-items: center;   
+
+    justify-content: center;
+    align-items: center; 
 `;
 
 export const Header = styled.View`
-    padding: ${RFPercentage(3)}px;
     width: 100%;
-    height: ${RFPercentage(40)}px;
+    flex: 0.35;
+    margin-bottom: 15px;
     background-color: ${({ theme }) => theme.colors.primary};
     flex-direction: column;
     align-items: center;
@@ -23,7 +29,7 @@ export const Header = styled.View`
 `;
 export const TitleRank = styled.Text`
     color: ${({ theme }) => theme.colors.secundary};
-    font-size: ${RFValue(35)}px;
+    font-size: ${RFValue(30)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 export const Score = styled.View`
@@ -34,23 +40,20 @@ export const Score = styled.View`
 
 export const ScoreNumber = styled.Text`
     color: ${({ theme }) => theme.colors.secundary};
-    font-size: ${RFValue(45)}px;
+    font-size: ${RFValue(50)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 
 export const ScoreText = styled.Text`
     color: ${({ theme }) => theme.colors.secundary};
-    font-size: ${RFValue(20)}px;
+    font-size: ${RFValue(18)}px;
     font-family: ${({ theme }) => theme.fonts.regular};
 `;
 //Body
-export const Content = styled.View`
-    padding-top: ${RFPercentage(3)}px; 
-    flex-direction: column;
-`;
+
 
 export const RankContent = styled.View`
-    height: ${RFPercentage(61)}px;
+    flex: 0.65;
     padding: ${RFPercentage(1)}px;
     flex-direction: column;
     align-items: center;

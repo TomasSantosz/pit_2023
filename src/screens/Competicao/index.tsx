@@ -66,12 +66,14 @@ export function Competicao({ route }:Route){
   const [competition, setCompetition] = useState<Item | any>(null);
   const [permiteButton, setPermiteButton] = useState({});
   const [aprovados, setAprovados] = useState(0);
+  const [data, setData] = useState<any>(null)
   const { signOut, user } = useAuth();
   
   useEffect(()=>{
     async function getCompetition() { 
       const response = await api.get(`/competicoes/${route.params._id}`);   
       setCompetition(response.data);
+      setData(moment(response.data.DataInicio).utcOffset('-03:00').format("DD/MM/YYYY HH:mm"))
       let numeroAprovados = []
       response.data.atletasArray.forEach((res:any)=>{
         if(res.aprovado === true){
@@ -131,15 +133,15 @@ export function Competicao({ route }:Route){
   }
 
   async function HandleExcluirCompeticao(){    
-    await Alert.alert('Deseja deletar essa competição?', 'A competição será encerrada e todos sairão dela!', [
-      {text: 'Sim', onPress: async() => {
-        await api.delete(`/Competicoes/${competition._id}`)
-        .then(async(response) => {
+    Alert.alert('Deseja deletar essa competição?', 'A competição será encerrada e todos sairão dela!', [
+      {text: 'Sim', onPress: () => {
+        api.delete(`/Competicoes/${competition._id}`)
+        .then((response) => {
           Alert.alert('Removido com sucesso!', 'Você removeu a competição', [
-              {text: 'ok', onPress: () => openCompetition()},
-              {text: 'Cancelar'},
+            {text: 'Ok', onPress: () => openCompetition()}
           ]);
         }).catch(err => {
+            console.log(err.request)
             return Alert.alert('Falha');
         });
       }},
@@ -182,17 +184,19 @@ export function Competicao({ route }:Route){
   } 
 
   return competition._id === route.params._id && (
-    <Container style={{marginTop: StatusBar.currentHeight}}>
+    <> 
+    <StatusBar  barStyle={'light-content'} backgroundColor={"#555"}/>
+      <Container style={{ backgroundColor:"#555"}}> 
       <Content>
       <Header>
         <InfoCompetition>
             
-            <Title>{competition.nome}     {user?._id === competition.criador && (<IconSettings name="square-edit-outline" onPress={()=>{openEditCompetition(competition._id)}}/> )} </Title>
+            <Title>{competition.nome}{user?._id === competition.criador && (<IconSettings name="square-edit-outline" onPress={()=>{openEditCompetition(competition._id)}}/> )} </Title>
             <DivSubTitles>
               <Icons name="calendar-range" />
-              <SubTitles>{moment(competition.DataInicio).format("DD/MM/YYYY") }</SubTitles> 
+              <SubTitles>{data.split(' ')[0].substring(0,5)}</SubTitles> 
               <Icons name="clock-time-four-outline" /> 
-              <SubTitles>{competition.DataInicio.split('T')[1].substring(0,5)}</SubTitles>              
+              <SubTitles>{data.split(' ')[1].substring(0,5)}</SubTitles>              
             </DivSubTitles>
             <DivSubTitles>
               <Icons name="map-marker-radius-outline" />
@@ -267,5 +271,6 @@ export function Competicao({ route }:Route){
         } 
       </Content>
     </Container>
+  </>
   );   
 }

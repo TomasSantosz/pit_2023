@@ -1,17 +1,21 @@
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.SafeAreaView`
     flex: 1;
-    align-items: center;
-    background-color: ${({ theme }) => theme.colors.shape};
+    background-color: ${({ theme }) => theme.colors.primary};
 `;
-
+export const Content = styled.View`
+    flex: 1;
+    background-color: ${({ theme }) => theme.colors.shape};
+    justify-content: space-between;
+    align-items: center; 
+`;
 export const Header = styled.View`
     width: 100%;
-    height: ${RFPercentage(25)}px;
+    flex: 0.25;
     background-color: ${({ theme }) => theme.colors.primary};
-    margin-bottom: ${RFValue(15)}px;
+    margin-bottom: 15px;
 
     justify-content: center;
     align-items: center; 
@@ -20,11 +24,6 @@ export const Header = styled.View`
     border-bottom-right-radius: ${RFValue(40)}px;
 `;
 
-export const UserWrapper = styled.View`
-    margin-top: ${RFValue(50)}px;
-    justify-content: center;    
-    align-items: center;
-`;
 
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.shape};
@@ -33,9 +32,9 @@ export const Title = styled.Text`
 `;
 
 export const Form = styled.View`
-    flex: 1;
+    flex: 0.75;
     width: 100%;
-    padding: 24px;
+    padding: 0px 24px 0px 24px;
 
     align-items: center;
     justify-content: space-between;

@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { 
     Modal, Platform, ScrollView,
     TouchableWithoutFeedback, Keyboard ,
-    Alert
+    Alert,StatusBar
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Container, Header, Title, Form, Fields, TextSoftware} from './styles';
+import { Container, Header, Title, Form, Fields, Content} from './styles';
 
 import { Input } from '../../components/Forms/Input';
 import { Button } from '../../components/Forms/Button';
@@ -58,14 +58,12 @@ export function EditarAtleta(){
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container 
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={20}
-        >            
+        <Container style={{ backgroundColor:"#555"}}> 
+            <StatusBar  barStyle={'light-content'} backgroundColor={"#555"}/>
+            <Content>        
             <Header>
                 <Title>Editar Perfil</Title>   
-            </Header>            
-            <ScrollView>            
+            </Header>              
             <Form>
                 <Fields>
                     <Input 
@@ -125,8 +123,8 @@ export function EditarAtleta(){
                     setGenero={setGenero}
                     closeSelectGenero={handleCloseSelectGenero}                
                 />
-            </Modal>  
-            </ScrollView>      
+            </Modal> 
+        </Content>      
         </Container>
         </TouchableWithoutFeedback>  
     );

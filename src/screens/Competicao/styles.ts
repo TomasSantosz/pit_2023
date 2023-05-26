@@ -65,7 +65,7 @@ export const Icons = styled(MaterialCommunityIcons)`
 export const IconSettings = styled(MaterialCommunityIcons)`
     font-size: ${RFValue(30)}px;
     color: ${({ theme }) => theme.colors.shape};
-    margin-left: 10px;
+    margin-left: 30px;
     margin-bottom: 10px;
 `;
 

@@ -1,22 +1,27 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 
-export const Container = styled.KeyboardAvoidingView`
+export const Container = styled.SafeAreaView`
     flex: 1;
-    align-items: center;
-    background-color: ${({ theme }) => theme.colors.shape};
-    width: 100%;
-`;
-
-export const Header = styled.View`
     background-color: ${({ theme }) => theme.colors.primary};
-
+`;
+export const Content = styled.View`
+    flex: 1;
+    background-color: ${({ theme }) => theme.colors.shape};
+    justify-content: space-between;
+    align-items: center; 
+`;
+export const Header = styled.View`
     width: 100%;
-    height: ${RFValue(113)}px;
+    flex: 0.25;
+    background-color: ${({ theme }) => theme.colors.primary};
+    margin-bottom: 10px;
 
-    align-items: center;
-    justify-content: flex-end;
-    padding-bottom: ${RFValue(19)}px;;
+    justify-content: center;
+    align-items: center; 
+
+    border-bottom-left-radius: ${RFValue(40)}px;
+    border-bottom-right-radius: ${RFValue(40)}px;
 `;
 
 export const Title = styled.Text`
@@ -27,10 +32,8 @@ export const Title = styled.Text`
 `;
 
 export const Form = styled.View`
-    flex: 1;
-    width: 350px;
-    padding-top: ${RFValue(24)}px;
-
+    flex: 0.75;
+    width:100%;
     align-items: center;
     justify-content: space-between;
 

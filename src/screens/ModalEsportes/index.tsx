@@ -3,7 +3,7 @@ import { api } from '../../services/api';
 import { 
     Container, Header, Title, 
     EsporteOption, Icon, Name, 
-    Separator, Footer
+    Separator, Footer, Content, ContentFlatList
 } from './styles';
 import { FlatList } from 'react-native-gesture-handler';
 import { Button } from '../../components/Forms/Button';
@@ -40,24 +40,25 @@ export function ModalEsportes({
           setEsportes(response.data);
         }
         fetchEsportes();
-      },[]); 
+    },[]); 
       
     return(
         <Container>
+            <Content>
             <Header>
                 <Title>Esportes</Title>
             </Header>
+            <ContentFlatList>
             <FlatList 
                 data={esportes}
                 style={{flex: 1, width: '100%'}}
-                keyExtractor={(item) => item.key}
+                keyExtractor={(item) => item._id}
                 ItemSeparatorComponent={(item)=> {
                     return <Separator />              
                 }}
                 renderItem={({ item})=>{
-                    console.log(item, '-')
                     return  item.nome && (
-                        <EsporteOption
+                        <EsporteOption key={item._id}
                             onPress={()=> handleEsporteSelect(item)}
                             isActive={esporte.nome === item.nome}
                         >
@@ -66,11 +67,11 @@ export function ModalEsportes({
                     )
                 }}                
             />
-            <Footer>
+            </ContentFlatList>
                 <Button title="selecionar" 
                 onPress={closeSelectEsporte}
                 />
-            </Footer>
+            </Content>
         </Container>
     )
 }

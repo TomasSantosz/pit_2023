@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView } from 'react-native';
 import { api } from '../../services/api';
-import { View, ActivityIndicator } from 'react-native';
+import { View, StatusBar} from 'react-native';
 import { ImagemPerfil } from '../../assets/alfabeto';
 import { 
   Container,
@@ -42,6 +42,7 @@ export function Rank(){
         setLoading(false); 
       },100);
     }
+    
     fetchCompeticoes();
   },[]);
 
@@ -52,9 +53,12 @@ export function Rank(){
       </View>
     )
   }
-
+  
   return(
-      <Container>        
+      <>
+      <StatusBar  barStyle={'light-content'} backgroundColor={"#555"}/>
+      <Container style={{ backgroundColor:"#555"}}> 
+        <Content>       
         <Header>  
           <TitleRank>Ranking</TitleRank>
           <Score>
@@ -62,7 +66,7 @@ export function Rank(){
             <ScoreText>Sua Colocação</ScoreText>
           </Score>
         </Header>                  
-        <Content>          
+                  
           <RankContent>
             <ScrollView>
               {rank && rank.map((item:any, posicao:number)=>{    
@@ -83,5 +87,6 @@ export function Rank(){
           </RankContent>  
         </Content>
       </Container>
+      </>
     );   
 }
